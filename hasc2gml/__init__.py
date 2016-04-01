@@ -88,13 +88,20 @@ def createOutputGML():
     newField = ogr.FieldDefn("value", ogr.OFTReal)
     outLayer.GetLayerDefn().AddFieldDefn(newField)
     
-    line = ogr.CreateGeometryFromWkt("POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))")
-        
+    polygon = ogr.CreateGeometryFromWkt("POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))")
     outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
-    outFeature.SetGeometryDirectly(line)
+    outFeature.SetGeometryDirectly(polygon)
     outFeature.SetField("value",  100)
     outLayer.CreateFeature(outFeature)
     
+
+# Edge coordinates of an hexagon centered in (x,y) and a side of d:
+#
+#           [x-d/2, y+sqrt(3)*d/2]   [x+d/2, y+sqrt(3)*d/2] 
+#
+#  [x, y-d]                                                 [x, y+d]
+#
+#           [x-d/2, y-sqrt(3)*d/2]   [x+d/2, y-sqrt(3)*d/2]
     
 def readValues(file, line):
        

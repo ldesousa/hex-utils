@@ -4,23 +4,26 @@ key_xll    = "xll"
 key_yll    = "yll"
 key_side   = "side"
 key_nodata = "no_data"
+key_angle  = "angle"
 
 ncols  = None
 nrows  = None
 xll    = None
 yll    = None
 side   = None
-nodata = None
+nodata = ""
+angle  = None
 
-def readHeaderLine(line, key, valType):
+def readHeaderLine(line, key, valType, optional = False):
     
     error = False
     token = line.split()[0]
     value = line.split()[1]
     
     if token.upper() != key.upper():
-        print ("Error, not an hexagonal ASCII raster file. " + 
-            "Expected " + key + " but read " + token)
+        if not optional:
+            print ("Error, not an hexagonal ASCII raster file. " + 
+                "Expected " + key + " but read " + token)
         return None
     
     if type(1) == valType:
@@ -51,20 +54,36 @@ def readHeader(file):
     global yll  
     global side 
     global nodata
+    global angle
     
-    ncols  = readHeaderLine(next(file), key_ncols,  type(1))
-    nrows  = readHeaderLine(next(file), key_nrows,  type(1))
-    xll    = readHeaderLine(next(file), key_xll,    type(1.0))
-    yll    = readHeaderLine(next(file), key_yll,    type(1.0))
-    side   = readHeaderLine(next(file), key_side,   type(1.0))
-    nodata = readHeaderLine(next(file), key_nodata, type("a"))
+    # Mandatory header
+    ncols  = readHeaderLine(file.readline(), key_ncols,  type(1))
+    nrows  = readHeaderLine(file.readline(), key_nrows,  type(1))
+    xll    = readHeaderLine(file.readline(), key_xll,    type(1.0))
+    yll    = readHeaderLine(file.readline(), key_yll,    type(1.0))
+    side   = readHeaderLine(file.readline(), key_side,   type(1.0))
+    # Optional headers
+    nextLine = file.readline()
+    nodata = readHeaderLine(nextLine, key_nodata, type("a"), True)
+    if nodata != "" :
+        nextLine = file.readline()
+    angle  = readHeaderLine(nextLine, key_angle, type(1.0),  True)
+    if angle == None :
+        return nextLine
+    else:
+        return file.readline()
     
-    #TODO: optional headers lines
+def readValues(file, line):
+       
+    while(line):
+        
+        for value in line.split():
+            print(value)
+        line = file.readline()
     
-
 
 f = open('/home/desouslu/git/caddies-api/apps/caddies-tests/HexBasic/example.hasc', 'r')
-readHeader(f)
+line = readHeader(f)
 
 print ("This is what I read")
 print (str(ncols))
@@ -74,5 +93,8 @@ print (str(yll))
 print (str(side))
 print (str(nodata))
 
+print ("The values:")
+readValues(f, line)
 
+f.close()
     

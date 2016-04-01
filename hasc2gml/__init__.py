@@ -1,3 +1,6 @@
+from osgeo import ogr
+from osgeo import osr
+
 key_ncols  = "ncols"
 key_nrows  = "nrows"
 key_xll    = "xll"
@@ -73,6 +76,26 @@ def readHeader(file):
     else:
         return file.readline()
     
+    
+def createOutputGML():
+    
+    driver = ogr.GetDriverByName("GML")
+    outSource = driver.CreateDataSource(
+        "output.gml", 
+        ["XSISCHEMAURI=http://schemas.opengis.net/gml/2.1.2/feature.xsd"])
+    outLayer = outSource.CreateLayer("output", None, ogr.wkbUnknown)
+
+    newField = ogr.FieldDefn("value", ogr.OFTReal)
+    outLayer.GetLayerDefn().AddFieldDefn(newField)
+    
+    line = ogr.CreateGeometryFromWkt("POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))")
+        
+    outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
+    outFeature.SetGeometryDirectly(line)
+    outFeature.SetField("value",  100)
+    outLayer.CreateFeature(outFeature)
+    
+    
 def readValues(file, line):
        
     while(line):
@@ -97,4 +120,6 @@ print ("The values:")
 readValues(f, line)
 
 f.close()
+
+createOutputGML()
     

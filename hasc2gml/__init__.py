@@ -10,16 +10,20 @@ key_side   = "side"
 key_nodata = "no_data"
 key_angle  = "angle"
 
-ncols  = None
-nrows  = None
-xll    = None
-yll    = None
-side   = None
+ncols = None
+nrows = None
+xll = None  
+yll = None  
+side = None
+angle = None 
 nodata = ""
-angle  = None
+
+line = []
+lineIdx = 0
+
 
 def readHeaderLine(line, key, valType, optional = False):
-    
+       
     error = False
     token = line.split()[0]
     value = line.split()[1]
@@ -54,11 +58,11 @@ def readHeader(file):
     
     global ncols
     global nrows
-    global xll  
-    global yll  
-    global side 
-    global nodata
+    global xll
+    global yll
+    global side
     global angle
+    global nodata
     
     # Mandatory header
     ncols  = readHeaderLine(file.readline(), key_ncols,  type(1))
@@ -73,12 +77,26 @@ def readHeader(file):
         nextLine = file.readline()
     angle  = readHeaderLine(nextLine, key_angle, type(1.0),  True)
     if angle == None :
-        return nextLine
+        return nextLine.split()
     else:
-        return file.readline()
+        return file.readline().split()
     
     
-def createOutputGML():
+def readNextValue(file):
+    
+    global line
+    global lineIdx
+    
+    if lineIdx >= len(line):
+        line = file.readline().split()
+        lineIdx = 0
+
+    # Python idiosynchrasies
+    ret = line[lineIdx]
+    lineIdx += 1
+    return float(ret)
+    
+def createOutputGML(file):
     
     driver = ogr.GetDriverByName("GML")
     outSource = driver.CreateDataSource(
@@ -89,17 +107,17 @@ def createOutputGML():
     newField = ogr.FieldDefn("value", ogr.OFTReal)
     outLayer.GetLayerDefn().AddFieldDefn(newField)
 
-# Edge coordinates of an hexagon centered in (x,y) and a side of d:
-#
-#           [x-d/2, y+sqrt(3)*d/2]   [x+d/2, y+sqrt(3)*d/2] 
-#
-#  [x-d, y]                                                 [x+d, y]
-#
-#           [x-d/2, y-sqrt(3)*d/2]   [x+d/2, y-sqrt(3)*d/2]
-
     # The perpendicular distance from cell center to cell edge
     perp = math.sqrt(3) * side / 2
     print ("The perpendicular: " + str(perp))
+    
+    # Edge coordinates of an hexagon centered in (x,y) and a side of d:
+    #
+    #           [x-d/2, y+sqrt(3)*d/2]   [x+d/2, y+sqrt(3)*d/2] 
+    #
+    #  [x-d, y]                                                 [x+d, y]
+    #
+    #           [x-d/2, y-sqrt(3)*d/2]   [x+d/2, y-sqrt(3)*d/2]
 
     for i in range(0, ncols):
         for j in range(0, nrows):
@@ -119,35 +137,23 @@ def createOutputGML():
             
             outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
             outFeature.SetGeometryDirectly(polygon)
-            outFeature.SetField("value",  i + j)
+            outFeature.SetField("value",  readNextValue(file))
             outLayer.CreateFeature(outFeature)
-            
-            
-    
-def readValues(file, line):
-       
-    while(line):
-        
-        for value in line.split():
-            print(value)
-        line = file.readline()
     
 
 f = open('/home/desouslu/git/caddies-api/apps/caddies-tests/HexBasic/example.hasc', 'r')
 line = readHeader(f)
 
-print ("This is what I read")
-print (str(ncols))
-print (str(nrows))
-print (str(xll))
-print (str(yll))
-print (str(side))
-print (str(nodata))
+print ("Header information")
+print ("ncols: " + str(ncols))
+print ("nrows: " + str(nrows))
+print ("xll: " + str(xll))
+print ("yll: " + str(yll))
+print ("side: " + str(side))
+print ("nodata: " + str(nodata))
 
-print ("The values:")
-readValues(f, line)
-
+createOutputGML(f)
 f.close()
 
-createOutputGML()
+
     

@@ -1,5 +1,6 @@
 from osgeo import ogr
 from osgeo import osr
+import math
 
 key_ncols  = "ncols"
 key_nrows  = "nrows"
@@ -87,21 +88,41 @@ def createOutputGML():
 
     newField = ogr.FieldDefn("value", ogr.OFTReal)
     outLayer.GetLayerDefn().AddFieldDefn(newField)
-    
-    polygon = ogr.CreateGeometryFromWkt("POLYGON ((30 10, 40 40, 20 40, 10 20, 30 10))")
-    outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
-    outFeature.SetGeometryDirectly(polygon)
-    outFeature.SetField("value",  100)
-    outLayer.CreateFeature(outFeature)
-    
 
 # Edge coordinates of an hexagon centered in (x,y) and a side of d:
 #
 #           [x-d/2, y+sqrt(3)*d/2]   [x+d/2, y+sqrt(3)*d/2] 
 #
-#  [x, y-d]                                                 [x, y+d]
+#  [x-d, y]                                                 [x+d, y]
 #
 #           [x-d/2, y-sqrt(3)*d/2]   [x+d/2, y-sqrt(3)*d/2]
+
+    # The perpendicular distance from cell center to cell edge
+    perp = math.sqrt(3) * side / 2
+    print ("The perpendicular: " + str(perp))
+
+    for i in range(0, ncols):
+        for j in range(0, nrows):
+            x = xll + i * 3 * side / 2
+            y = yll + j * 2 * perp
+            if (i % 2) != 0:
+                y += perp
+                
+            polygon = ogr.CreateGeometryFromWkt("POLYGON ((" +
+                str(x - side)     + " " +  str(y)        + ", " +
+                str(x - side / 2) + " " +  str(y - perp) + ", " +
+                str(x + side / 2) + " " +  str(y - perp) + ", " +
+                str(x + side)     + " " +  str(y)        + ", " +
+                str(x + side / 2) + " " +  str(y + perp) + ", " +
+                str(x - side / 2) + " " +  str(y + perp) + ", " +
+                str(x - side)     + " " +  str(y)       + "))")
+            
+            outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
+            outFeature.SetGeometryDirectly(polygon)
+            outFeature.SetField("value",  i + j)
+            outLayer.CreateFeature(outFeature)
+            
+            
     
 def readValues(file, line):
        

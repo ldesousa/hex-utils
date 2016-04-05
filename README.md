@@ -26,5 +26,5 @@ Other tools will come.
 Licence
 -------------------------------------------------------------------------------
 
-This grammar is released under the EUPL 1.1 licence. For further details please 
-consult the LICENCE file.
+This suite of programmes is released under the EUPL 1.1 licence. For further 
+details please consult the LICENCE file.

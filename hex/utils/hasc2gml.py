@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # coding=utf8
 #
 # Copyright (c) 2016 - Luís Moreira de Sousa

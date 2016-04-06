@@ -1,26 +1,15 @@
+#!/usr/bin/python3
 # coding=utf8
+
 #import ez_setup
 #ez_setup.use_setuptools()
 
-from setuptools import setup, find_packages
-
+from distutils.core import setup
 setup(
     name = "hex.utils",
-    version = "0.1",
-    packages = find_packages(include=["hex.utils"]),
-    scripts = ['hasc2gml.py'],
-    entry_points = {'console_scripts': ['hasc2gml = hex.utils']},
-
-    # Project uses reStructuredText, so ensure that the docutils get
-    # installed or upgraded on the target machine
-    install_requires = ['docutils>=0.3'],
-
-    #package_data = {
-        # If any package contains *.txt or *.rst files, include them:
-    #    '': ['*.txt', '*.rst'],
-        # And include any *.msg files found in the 'hello' package, too:
-    #    'hello': ['*.msg'],
-    #},
+    version = "0.1.1",
+    packages = ['hex.utils'],
+    #scripts = ['hasc2gml.py'],
 
     # metadata for upload to PyPI
     author = "Luís Moreira de Sousa",

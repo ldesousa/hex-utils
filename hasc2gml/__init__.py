@@ -1,6 +1,6 @@
+import math, sys
 from osgeo import ogr
 from osgeo import osr
-import math
 
 key_ncols  = "ncols"
 key_nrows  = "nrows"
@@ -20,6 +20,28 @@ nodata = ""
 
 line = []
 lineIdx = 0
+
+
+def wrongUsage():
+    
+    print("This programme requires two arguments:\n" +
+          " - path to an input HASC file \n" +
+          " - path to the output GML file \n" + 
+          "Usage example: \n"
+          "   hasc2gml /path/to/input.hasc /path/to/output.gml")
+    sys.exit()
+
+
+def processArguments(args):
+    
+    global inputFile
+    global outputFile
+    
+    if len(args) < 3:
+        wrongUsage() 
+    else:
+        inputFile = str(args[1])
+        outputFile = str(args[2])
 
 
 def readHeaderLine(line, key, valType, optional = False):
@@ -100,7 +122,7 @@ def createOutputGML(file):
     
     driver = ogr.GetDriverByName("GML")
     outSource = driver.CreateDataSource(
-        "output.gml", 
+        outputFile, 
         ["XSISCHEMAURI=http://schemas.opengis.net/gml/2.1.2/feature.xsd"])
     outLayer = outSource.CreateLayer("output", None, ogr.wkbUnknown)
 
@@ -141,7 +163,11 @@ def createOutputGML(file):
             outLayer.CreateFeature(outFeature)
     
 
-f = open('/home/desouslu/git/caddies-api/apps/caddies-tests/HexBasic/example.hasc', 'r')
+# ----- Main ----- #
+
+processArguments(sys.argv)
+
+f = open(inputFile, 'r')
 line = readHeader(f)
 
 print ("Header information")

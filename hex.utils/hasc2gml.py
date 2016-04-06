@@ -1,3 +1,18 @@
+#!/usr/bin/python
+# coding=utf8
+#
+# Copyright (c) 2016 - Luís Moreira de Sousa
+#
+# Transforms ASCII encoded cartographic hexagonal grids [0] into GML.
+# A geometric hexagon is generated for each grid cell and encoded as a feature
+# in the output GML file. The cell value is saved in the 'value' attribute of 
+# the new feature. 
+#
+# Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
+# Date: 31-03-2016 
+#
+# [0] https://github.com/ldesousa/HexAsciiBNF
+
 import math, sys
 from osgeo import ogr
 from osgeo import osr
@@ -28,7 +43,7 @@ def wrongUsage():
           " - path to an input HASC file \n" +
           " - path to the output GML file \n" + 
           "Usage example: \n"
-          "   hasc2gml /path/to/input.hasc /path/to/output.gml")
+          "   utils /path/to/input.hasc /path/to/output.gml")
     sys.exit()
 
 
@@ -131,7 +146,6 @@ def createOutputGML(file):
 
     # The perpendicular distance from cell center to cell edge
     perp = math.sqrt(3) * side / 2
-    print ("The perpendicular: " + str(perp))
     
     # Edge coordinates of an hexagon centered in (x,y) and a side of d:
     #
@@ -170,7 +184,7 @@ processArguments(sys.argv)
 f = open(inputFile, 'r')
 line = readHeader(f)
 
-print ("Header information")
+print ("Converting HASC grid to GML. Header information:")
 print ("ncols: " + str(ncols))
 print ("nrows: " + str(nrows))
 print ("xll: " + str(xll))
@@ -180,6 +194,8 @@ print ("nodata: " + str(nodata))
 
 createOutputGML(f)
 f.close()
+
+print ("Conversion successfully completed.")
 
 
     

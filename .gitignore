@@ -3,3 +3,4 @@
 *.gfs
 .settings
 MANIFEST
+*.tar.*

@@ -4,11 +4,19 @@
 #import ez_setup
 #ez_setup.use_setuptools()
 
-from distutils.core import setup
+#from distutils.core import setup
+from setuptools import setup
+
 setup(
     name = "hex.utils",
     version = "0.1.1",
     packages = ['hex.utils'],
+    install_requires=['pygdal'],
+    entry_points={
+        'console_scripts': [
+            'hasc2gml=hex.utils:hasc2gml',
+        ],
+    },
     #scripts = ['hasc2gml.py'],
 
     # metadata for upload to PyPI

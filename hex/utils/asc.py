@@ -10,6 +10,7 @@
 #
 # [0] http://resources.esri.com/help/9.3/arcgisengine/java/GP_ToolRef/spatial_analyst_tools/esri_ascii_raster_format.htm
 
+import math
 from grid import Grid
 
 class ASC (Grid):
@@ -18,31 +19,43 @@ class ASC (Grid):
     _key_nrows  = "nrows"
     _key_xll    = "xllcorner"
     _key_yll    = "yllcorner"
-    _key_size   = "cellsize"
+    _key__size   = "cellsize"
     _key_nodata = "NODATA_value"
   
-    _size   = 0    
+    __size   = 0
+       
+    @property
+    def size(self):
+        return self.___size
     
     def __init(self, ncols, nrows, xll, yll, size, nodata = ""):
+        Grid.__init__(self, ncols, nrows, xll, yll, nodata)
+        self.__size   = size
         
-        self._ncols  = ncols
-        self._nrows  = nrows
-        self._xll    = xll  
-        self._yll    = yll  
-        self._size   = size
-        self._nodata = nodata
-        self._grid = [[None for x in range(self._ncols)] for x in range(self._nrows)]
-    
     
     def __init__(self, filePath):
+        Grid.__init__(self, filePath)
         
-        self._file = open(filePath, 'r')
-        self._loadHeader()
-        self._loadValues()
-        self._file.close()
-     
+        
+    def getNearestNeighbour(self, x, y):
+        
+        if x < self._xll:
+            x = self._xll
+            
+        if x > self._xll + self._size * self._nrows:
+            x = self._xll + self._size * self._nrows
+        
+        if y < self._yll:
+            y = self._yll
+            
+        if y > self._yll + self._size * self._ncols:
+            x = self._yll + self._size * self._ncols
+            
+        i = math.round((x - self._xll) / self._size)
+        j = math.round((y - self._yll) / self._size)
+ 
+        return self._grid[i][j]
     
-         
     def _loadHeader(self):
     
         # Mandatory header
@@ -50,7 +63,7 @@ class ASC (Grid):
         self._nrows  = self._loadHeaderLine(self._file.readline(), self._key_nrows,  type(1))
         self._xll    = self._loadHeaderLine(self._file.readline(), self._key_xll,    type(1.0))
         self._yll    = self._loadHeaderLine(self._file.readline(), self._key_yll,    type(1.0))
-        self._size   = self._loadHeaderLine(self._file.readline(), self._key_size,   type(1.0))
+        self.__size  = self._loadHeaderLine(self._file.readline(), self._key__size,   type(1.0))
         # Optional headers
         self._nextLine = self._file.readline()
         self._nodata = self._loadHeaderLine(self._nextLine, self._key_nodata, type("a"), True)

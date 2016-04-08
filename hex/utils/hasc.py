@@ -28,24 +28,23 @@ class HASC (Grid):
     _side   = 0
     _angle  = None  
     
+    
     def __init(self, ncols, nrows, xll, yll, side, nodata = "", angle = None):
-        
-        self._ncols  = ncols
-        self._nrows  = nrows
-        self._xll    = xll  
-        self._yll    = yll  
+        Grid.__init__(self, ncols, nrows, xll, yll, nodata)  
         self._side   = side
         self._angle  = angle 
-        self._nodata = nodata
-        self._grid = [[None for x in range(self._ncols)] for x in range(self._nrows)]
-    
+       
     
     def __init__(self, filePath):
+        Grid.__init__(self, filePath)
         
-        self._file = open(filePath, 'r')
-        self._loadHeader()
-        self._loadValues()
-        self._file.close()
+        
+    def set(self, i, j, val):
+        
+        if i >= 0 and i < self._nrows and j >= 0 and  j < self._ncols:
+            self._grid[i][j] = val
+        else:
+            print ("Out of borders!")
     
         
     def _loadHeader(self):
@@ -108,6 +107,5 @@ class HASC (Grid):
                 outFeature.SetGeometryDirectly(polygon)
                 outFeature.SetField("value", self._grid[i][j])
                 outLayer.CreateFeature(outFeature)
-
-        
+    
     

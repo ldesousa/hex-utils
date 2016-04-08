@@ -21,6 +21,44 @@ class Grid:
     _file = None
     _nextLine = None 
     
+    @property
+    def ncols(self):
+        return self._ncols
+    
+    @property
+    def nrows(self):
+        return self._nrows
+    
+    @property
+    def xll(self):
+        return self._xll
+    
+    @property
+    def yll(self):
+        return self._yll
+    
+    @property
+    def nodata(self):
+        return self._nodata
+    
+    
+    def __init(self, ncols, nrows, xll, yll, nodata = ""):
+        
+        self._ncols  = ncols
+        self._nrows  = nrows
+        self._xll    = xll  
+        self._yll    = yll  
+        self._nodata = nodata
+        self._grid = [[None for x in range(self._ncols)] for x in range(self._nrows)]
+    
+    
+    def __init__(self, filePath):
+        
+        self._file = open(filePath, 'r')
+        self._loadHeader()
+        self._loadValues()
+        self._file.close()
+    
     def _loadHeaderLine(self, line, key, valType, optional = False):
        
         error = False

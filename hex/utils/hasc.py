@@ -23,15 +23,15 @@ class HASC:
     _key_nodata = "no_data"
     _key_angle  = "angle"
     
-    _ncols  = None
-    _nrows  = None
-    _xll    = None  
-    _yll    = None  
-    _side   = None
+    _ncols  = 0
+    _nrows  = 0
+    _xll    = 0  
+    _yll    = 0  
+    _side   = 0
     _angle  = None 
     _nodata = ""
     
-    _grid = []
+    _grid = None
     
     _file = None
     _nextLine = None  
@@ -45,21 +45,20 @@ class HASC:
         self._side   = side
         self._angle  = angle 
         self._nodata = nodata
-        self._grid = [ncols][nrows]
+        self._grid = [[None for x in range(self._ncols)] for x in range(self._nrows)]
     
     
     def __init__(self, filePath):
         
         self._file = open(filePath, 'r')
-        self._readHeader()
-        self._readValues()
+        self._loadHeader()
+        self._loadValues()
         self._file.close()
     
     
-    def _readHeaderLine(self, key, valType, optional = False):
+    def _loadHeaderLine(self, line, key, valType, optional = False):
        
         error = False
-        line = self._file.readline()
         token = line.split()[0]
         value = line.split()[1]
         
@@ -87,53 +86,52 @@ class HASC:
         if error:    
             print ("Error converting the string '" + value + "' into " + valType)
             return None
+        
+        
+    def _loadHeader(self):
+    
+        # Mandatory header
+        self._ncols  = self._loadHeaderLine(self._file.readline(), self._key_ncols,  type(1))
+        self._nrows  = self._loadHeaderLine(self._file.readline(), self._key_nrows,  type(1))
+        self._xll    = self._loadHeaderLine(self._file.readline(), self._key_xll,    type(1.0))
+        self._yll    = self._loadHeaderLine(self._file.readline(), self._key_yll,    type(1.0))
+        self._side   = self._loadHeaderLine(self._file.readline(), self._key_side,   type(1.0))
+        # Optional headers
+        self._nextLine = self._file.readline()
+        self._nodata = self._loadHeaderLine(self._nextLine, self._key_nodata, type("a"), True)
+        if self._nodata != "" :
+            self._nextLine = self._file.readline()
+        self._angle  = self._loadHeaderLine(self._nextLine, self._key_angle, type(1.0),  True)
+        if self._angle != None :
+            self._nextLine =  self._file.readline()
 
 
-    def _readLineValue(self, values): 
+    def _loadLineValues(self, values): 
         
         for val in values:
                 
             self._grid[self._colIdx][self._rowIdx] = float(val)
             
+            self._colIdx += 1;
             if self._colIdx >= self._ncols:
                 self._colIdx = 0;
-                self._rowIdx += 1;
-            else:
-                self.coldIdx += 1;
+                self._rowIdx += 1;               
                 
 
 
-    def _readValues(self):
+    def _loadValues(self):
         
         self._colIdx = 0
         self._rowIdx = 0
+        
+        self._grid = [[None for x in range(self._ncols)] for x in range(self._nrows)]
         
         if self._nextLine == None:
             self._nextLine = self._file.readline()
             
         while (self._nextLine):
-            self._readLineValues(self._nextLine.split())
+            self._loadLineValues(self._nextLine.split())
             self._nextLine = self._file.readline()
-        
-        
-    def _readHeader(self):
-    
-        # Mandatory header
-        self._ncols  = self._readHeaderLine(self._key_ncols,  type(1))
-        self._nrows  = self._readHeaderLine(self._key_nrows,  type(1))
-        self._xll    = self._readHeaderLine(self._key_xll,    type(1.0))
-        self._yll    = self._readHeaderLine(self._key_yll,    type(1.0))
-        self._side   = self._readHeaderLine(self._key_side,   type(1.0))
-        # Optional headers
-        nextLine = self._file.readline()
-        self._nodata = self._readHeaderLine(nextLine, self._key_nodata, type("a"), True)
-        if self._nodata != "" :
-            nextLine = self._file.readline()
-        self._angle  = self._readHeaderLine(nextLine, self._key_angle, type(1.0),  True)
-        if self._angle == None :
-            self._nextLine = nextLine
-        else:
-            self._nextLine =  self._file.readline()
     
     
     def createOutputGML(self, outputFilePath):

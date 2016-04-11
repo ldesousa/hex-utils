@@ -42,6 +42,7 @@ class Grid:
         return self._nodata
     
     
+    
     def init(self, ncols, nrows, xll, yll, nodata = ""):
         
         self._ncols  = ncols
@@ -58,6 +59,7 @@ class Grid:
         self._loadHeader()
         self._loadValues()
         self._file.close()
+        
     
     def _loadHeaderLine(self, line, key, valType, optional = False):
        
@@ -95,7 +97,14 @@ class Grid:
         
         for val in values:
                 
-            self._grid[self._colIdx][self._rowIdx] = float(val)
+            try:
+                self._grid[self._colIdx][self._rowIdx] = float(val)
+            except IndexError as ex:
+                raise IndexError(
+                    "Accessing cell matrix out of boundaries: [" + 
+                    str(self._colIdx) + ", " + str(self._rowIdx) + "]. " + 
+                    "Expected something in the range [0.." + 
+                    str(self._ncols - 1) + ", 0.." + str(self._nrows - 1) + "]")
             
             self._colIdx += 1;
             if self._colIdx >= self._ncols:
@@ -116,3 +125,5 @@ class Grid:
         while (self._nextLine):
             self._loadLineValues(self._nextLine.split())
             self._nextLine = self._file.readline()
+            
+            

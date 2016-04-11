@@ -71,6 +71,9 @@ for j in range(hexGrid.nrows):
         y = esriGrid.yll + j * 2 * hexPerp + (j % 2) * hexPerp
         hexGrid.set(i, j, esriGrid.getNearestNeighbour(x, y))
         
+# This must be evolved into HASC save
+hexGrid.createOutputGML("new.gml")
+        
 print ("Done!")
 
 

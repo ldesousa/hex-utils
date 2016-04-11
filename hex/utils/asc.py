@@ -28,11 +28,11 @@ class ASC (Grid):
     def size(self):
         return self._size
     
-        
     
     def init(self, ncols, nrows, xll, yll, size, nodata = ""):
         Grid.init(self, ncols, nrows, xll, yll, nodata)
         self._size   = size
+        
         
         
     def getNearestNeighbour(self, x, y):
@@ -40,19 +40,23 @@ class ASC (Grid):
         if x < self._xll:
             x = self._xll
             
-        if x > self._xll + self._size * self._nrows:
-            x = self._xll + self._size * self._nrows
+        if x > self._xll + self._size * (self._ncols - 1):
+            x = self._xll + self._size * (self._ncols - 1)
         
         if y < self._yll:
             y = self._yll
             
-        if y > self._yll + self._size * self._ncols:
-            x = self._yll + self._size * self._ncols
+        if y > self._yll + self._size * (self._nrows - 1):
+            y = self._yll + self._size * (self._nrows - 1)
             
-        i = math.round((x - self._xll) / self._size)
-        j = math.round((y - self._yll) / self._size)
+        i = round((x - self._xll) / self._size)
+        j = round((y - self._yll) / self._size)
  
-        return self._grid[i][j]
+        try:
+            return self._grid[i][j]
+        except IndexError:
+            raise IndexError("Wrong indexes in nearest neighbour:" + 
+                "i: " + str(i) + " j: " + str(j) + " x: " + str(x) + " y: " + str(y))
     
     def _loadHeader(self):
     

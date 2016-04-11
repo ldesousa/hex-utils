@@ -65,11 +65,11 @@ print("Calcs:" +
 hexGrid = HASC()
 hexGrid.init(hexCols, hexRows, esriGrid.xll, esriGrid.yll, hexSide, esriGrid.nodata)
 
-for j in range(hexGrid.ncols):
-    for i in range(hexGrid.nrows):
+for j in range(hexGrid.nrows):
+    for i in range(hexGrid.ncols):
         x = esriGrid.xll + i * 3 * hexSide / 2
         y = esriGrid.yll + j * 2 * hexPerp + (j % 2) * hexPerp
-        hexGrid.set(i, j, esriGrid.getNearestNEighbour(x, y))
+        hexGrid.set(i, j, esriGrid.getNearestNeighbour(x, y))
         
 print ("Done!")
 

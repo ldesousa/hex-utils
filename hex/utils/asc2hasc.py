@@ -44,7 +44,8 @@ def processArguments(args):
 
 processArguments(sys.argv)
 
-esriGrid = ASC(inputFile)
+esriGrid = ASC()
+esriGrid.loadFromFile(inputFile)
 
 esriArea = math.pow(esriGrid.getSize(), 2)
 
@@ -61,7 +62,8 @@ print("Calcs:" +
       "\nhexRows: " + str(hexRows) +
       "\nhexCols: " + str(hexCols))
 
-hexGrid = HASC(hexRows, hexCols, esriGrid.xll, esriGrid.yll, hexSide, esriGrid.nodata)
+hexGrid = HASC()
+hexGrid.init(hexCols, hexRows, esriGrid.xll, esriGrid.yll, hexSide, esriGrid.nodata)
 
 for j in range(hexGrid.ncols):
     for i in range(hexGrid.nrows):

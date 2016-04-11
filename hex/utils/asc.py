@@ -28,13 +28,11 @@ class ASC (Grid):
     def size(self):
         return self.___size
     
-    def __init(self, ncols, nrows, xll, yll, size, nodata = ""):
-        Grid.__init__(self, ncols, nrows, xll, yll, nodata)
-        self.__size   = size
         
     
-    def __init__(self, filePath):
-        Grid.__init__(self, filePath)
+    def init(self, ncols, nrows, xll, yll, size, nodata = ""):
+        Grid.init(self, ncols, nrows, xll, yll, nodata)
+        self._size   = size
         
         
     def getNearestNeighbour(self, x, y):

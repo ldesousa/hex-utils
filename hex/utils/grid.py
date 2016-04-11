@@ -42,7 +42,7 @@ class Grid:
         return self._nodata
     
     
-    def __init(self, ncols, nrows, xll, yll, nodata = ""):
+    def init(self, ncols, nrows, xll, yll, nodata = ""):
         
         self._ncols  = ncols
         self._nrows  = nrows
@@ -52,7 +52,7 @@ class Grid:
         self._grid = [[None for x in range(self._ncols)] for x in range(self._nrows)]
     
     
-    def __init__(self, filePath):
+    def loadFromFile(self, filePath):
         
         self._file = open(filePath, 'r')
         self._loadHeader()

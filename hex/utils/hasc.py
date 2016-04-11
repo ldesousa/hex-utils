@@ -29,14 +29,12 @@ class HASC (Grid):
     _angle  = None  
     
     
-    def __init(self, ncols, nrows, xll, yll, side, nodata = "", angle = None):
-        Grid.__init__(self, ncols, nrows, xll, yll, nodata)  
+    def init(self, ncols, nrows, xll, yll, side, nodata = "", angle = None):
+        Grid.init(self, ncols, nrows, xll, yll, nodata)  
         self._side   = side
         self._angle  = angle 
        
     
-    def __init__(self, filePath):
-        Grid.__init__(self, filePath)
         
         
     def set(self, i, j, val):

@@ -19,14 +19,14 @@ class ASC (Grid):
     _key_nrows  = "nrows"
     _key_xll    = "xllcorner"
     _key_yll    = "yllcorner"
-    _key__size   = "cellsize"
+    _key_size   = "cellsize"
     _key_nodata = "NODATA_value"
   
-    __size   = 0
+    _size   = 0
        
     @property
     def size(self):
-        return self.___size
+        return self._size
     
         
     
@@ -61,7 +61,7 @@ class ASC (Grid):
         self._nrows  = self._loadHeaderLine(self._file.readline(), self._key_nrows,  type(1))
         self._xll    = self._loadHeaderLine(self._file.readline(), self._key_xll,    type(1.0))
         self._yll    = self._loadHeaderLine(self._file.readline(), self._key_yll,    type(1.0))
-        self.__size  = self._loadHeaderLine(self._file.readline(), self._key__size,   type(1.0))
+        self._size   = self._loadHeaderLine(self._file.readline(), self._key_size,   type(1.0))
         # Optional headers
         self._nextLine = self._file.readline()
         self._nodata = self._loadHeaderLine(self._nextLine, self._key_nodata, type("a"), True)

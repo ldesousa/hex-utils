@@ -47,7 +47,7 @@ processArguments(sys.argv)
 esriGrid = ASC()
 esriGrid.loadFromFile(inputFile)
 
-esriArea = math.pow(esriGrid.getSize(), 2)
+esriArea = math.pow(esriGrid.size, 2)
 
 hexSide = math.sqrt(2 * esriArea / (3 * math.sqrt(3)))
 hexPerp = math.sqrt(3) * hexSide / 2

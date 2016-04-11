@@ -28,21 +28,20 @@ class HASC (Grid):
     _side   = 0
     _angle  = None  
     
-    
+   
     def init(self, ncols, nrows, xll, yll, side, nodata = "", angle = None):
         Grid.init(self, ncols, nrows, xll, yll, nodata)  
         self._side   = side
         self._angle  = angle 
-       
-    
         
         
     def set(self, i, j, val):
         
-        if i >= 0 and i < self._nrows and j >= 0 and  j < self._ncols:
+        if i >= 0 and i < self._ncols and j >= 0 and  j < self._nrows:
             self._grid[i][j] = val
         else:
-            print ("Out of borders!")
+            raise IndexError("Grid index [" + str(i) + "][" + str(j) + "] out of bounds. " + 
+                             "nCols: " + str(self._ncols) + " nRows: " + str(self._nrows))
     
         
     def _loadHeader(self):

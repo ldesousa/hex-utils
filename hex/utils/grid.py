@@ -49,7 +49,7 @@ class Grid:
         self._xll    = xll  
         self._yll    = yll  
         self._nodata = nodata
-        self._grid = [[None for x in range(self._ncols)] for x in range(self._nrows)]
+        self._grid = [[None for x in range(self._nrows)] for y in range(self._ncols)]
     
     
     def loadFromFile(self, filePath):
@@ -108,7 +108,7 @@ class Grid:
         self._colIdx = 0
         self._rowIdx = 0
         
-        self._grid = [[None for x in range(self._ncols)] for x in range(self._nrows)]
+        self._grid = [[None for x in range(self._nrows)] for y in range(self._ncols)]
         
         if self._nextLine == None:
             self._nextLine = self._file.readline()

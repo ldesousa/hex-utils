@@ -60,9 +60,31 @@ class HASC (Grid):
         self._angle  = self._loadHeaderLine(self._nextLine, self._key_angle, type(1.0),  True)
         if self._angle != None :
             self._nextLine =  self._file.readline()
+            
+            
+    def save(self, outputFile):
+        
+        f = open(outputFile,"w")
+        
+        f.write(self._key_ncols + "\t" + str(self._ncols) + "\n")
+        f.write(self._key_nrows + "\t" + str(self._nrows) + "\n")
+        f.write(self._key_xll + "\t" + str(self._xll) + "\n")
+        f.write(self._key_yll + "\t" + str(self._yll) + "\n")
+        f.write(self._key_side + "\t" + str(self._side) + "\n")
+        if self._nodata != "" :
+            f.write(self._key_nodata + "\t" + str(self._nodata) + "\n") 
+        if self._angle != None :
+            f.write(self._key_angle + "\t" + str(self._angle) + "\n")
+            
+        for j in range(self._nrows):
+            
+            line = ""
+            for i in range(self._ncols):
+                line += str(self._grid[i][j]) + " "
+            f.write(line + "\n")
+            
     
     def saveAsGML(self, outputFilePath):
-    
         
         driver = ogr.GetDriverByName("GML")
         outSource = driver.CreateDataSource(

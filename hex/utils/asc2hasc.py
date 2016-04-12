@@ -74,6 +74,7 @@ for j in range(hexGrid.nrows):
 # This must be evolved into HASC save
 hexGrid.saveAsGML("new.gml")
 
+hexGrid.save(outputFile)
         
 print ("Done!")
 

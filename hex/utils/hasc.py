@@ -61,8 +61,8 @@ class HASC (Grid):
         if self._angle != None :
             self._nextLine =  self._file.readline()
     
+    def saveAsGML(self, outputFilePath):
     
-    def createOutputGML(self, outputFilePath):
         
         driver = ogr.GetDriverByName("GML")
         outSource = driver.CreateDataSource(

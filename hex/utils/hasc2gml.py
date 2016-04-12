@@ -43,9 +43,9 @@ def processArguments(args):
 processArguments(sys.argv)
 
 hexGrid = HASC()
-hexGrid.loadFRomFile(inputFile)
-hexGrid.createOutputGML(outputFile)
-
+hexGrid.loadFromFile(inputFile)
+print ("Leaded input HASC, converting...")
+hexGrid.saveAsGML(outputFile)
 print ("Conversion successfully completed.")
 
 

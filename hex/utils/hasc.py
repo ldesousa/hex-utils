@@ -106,7 +106,7 @@ class HASC (Grid):
         #
         #           [x-d/2, y-sqrt(3)*d/2]   [x+d/2, y-sqrt(3)*d/2]
     
-        for j in range(0, self._nrows):
+        for j in range(self._nrows):
             for i in range(0, self._ncols):
                 x = self._xll + i * 3 * self._side / 2
                 y = self._yll + j * 2 * perp
@@ -124,7 +124,7 @@ class HASC (Grid):
                 
                 outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
                 outFeature.SetGeometryDirectly(polygon)
-                outFeature.SetField("value", self._grid[i][j])
+                outFeature.SetField("value", self._grid[i][self._nrows - j - 1])
                 outLayer.CreateFeature(outFeature)
     
     

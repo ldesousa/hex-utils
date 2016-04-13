@@ -25,7 +25,7 @@ def wrongUsage():
           " - path to an input ESRI ASCII file \n" +
           " - path to the output HASC file \n" + 
           "Usage example: \n"
-          "   utils /path/to/input.asc /path/to/output.hasc")
+          "   asc2hasc /path/to/input.asc /path/to/output.hasc")
     sys.exit()
 
 # This method is the same as in other command line utils

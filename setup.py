@@ -1,23 +1,19 @@
 #!/usr/bin/python3
 # coding=utf8
 
-#import ez_setup
-#ez_setup.use_setuptools()
-
-#from distutils.core import setup
 from setuptools import setup
 
 setup(
     name = "hex.utils",
     version = "0.1.1",
     packages = ['hex.utils'],
-    install_requires=['pygdal'],
+    install_requires=[],
     entry_points={
         'console_scripts': [
             'hasc2gml=hex.utils:hasc2gml',
+            'asc2hasc=hex.utils:asc2hasc'
         ],
     },
-    #scripts = ['hasc2gml.py'],
 
     # metadata for upload to PyPI
     author = "Luís Moreira de Sousa",

@@ -11,8 +11,6 @@
 # [0] https://github.com/ldesousa/HexAsciiBNF
 
 import math
-from osgeo import ogr
-
 from grid import Grid
 
 class HASC (Grid):
@@ -85,6 +83,13 @@ class HASC (Grid):
             
     
     def saveAsGML(self, outputFilePath):
+        
+        try:
+            from osgeo import ogr
+        except ImportError:
+            raise (""" ERROR: Could not find the GDAL/OGR Python library. 
+                       On Debian based systems you can install it with this command:
+                       apt install python-gdal""") 
         
         driver = ogr.GetDriverByName("GML")
         outSource = driver.CreateDataSource(

@@ -49,8 +49,8 @@ class ASC (Grid):
         if y > self._yll + self._size * (self._nrows - 1):
             y = self._yll + self._size * (self._nrows - 1)
             
-        i = round((x - self._xll) / self._size)
-        j = round((y - self._yll) / self._size)
+        i = math.trunc((x - self._xll) // self._size)
+        j = math.trunc((y - self._yll) // self._size)
  
         try:
             return self._grid[i][j]

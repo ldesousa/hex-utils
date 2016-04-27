@@ -64,13 +64,21 @@ class Grid:
     def _loadHeaderLine(self, line, key, valType, optional = False):
        
         error = False
-        token = line.split()[0]
-        value = line.split()[1]
+        elements = line.split()
+        
+        if len(elements) < 2:
+            if not optional:
+                print ("Error, malformed file. " + 
+                       "Could not read " + key + " header line.")
+            return None
+        
+        token = elements[0]
+        value = elements[1]
         
         if token.upper() != key.upper():
             if not optional:
-                print ("Error, not an hexagonal ASCII raster file. " + 
-                    "Expected " + key + " but read " + token)
+                print ("Error, malformed file. " + 
+                       "Expected " + key + " but read " + token)
             return None
         
         if type(1) == valType:

@@ -56,12 +56,14 @@ hexPerp = math.sqrt(3) * hexSide / 2
 hexRows = math.ceil((esriGrid.nrows * esriGrid.size) / (2 * hexPerp)) 
 hexCols = math.ceil((esriGrid.ncols * esriGrid.size) / (3 * hexSide / 2))
 
-print("Calcs:" + 
-      "\nesriArea: " + str(esriArea) + 
-      "\nhexSide: " + str(hexSide) +
-      "\nhexPerp: " + str(hexPerp) +
-      "\nhexRows: " + str(hexRows) +
-      "\nhexCols: " + str(hexCols))
+print("Geometries:" + 
+      "\n Input square cell area: " + str(esriArea) + 
+      "\n Hexagon side length   : " + str(hexSide) +
+      "\n Hexagon perpendicular : " + str(hexPerp) +
+      "\n Num rows in hasc grid : " + str(hexRows) +
+      "\n Num cols in hasc grid : " + str(hexCols))
+
+print("\nConverting ...")
 
 hexGrid = HASC()
 hexGrid.init(hexCols, hexRows, esriGrid.xll, esriGrid.yll, hexSide, esriGrid.nodata)
@@ -77,6 +79,6 @@ hexGrid.saveAsGML("new.gml")
 
 hexGrid.save(outputFile)
         
-print ("Done!")
+print ("Finished successfully.")
 
 

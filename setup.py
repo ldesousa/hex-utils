@@ -5,13 +5,13 @@ from setuptools import setup
 
 setup(
     name = "hex.utils",
-    version = "0.1.1",
-    packages = ['hex.utils'],
+    version = "0.2",
+    packages = ['src'],
     install_requires=[],
     entry_points={
         'console_scripts': [
-            'hasc2gml=hex.utils:hasc2gml',
-            'asc2hasc=hex.utils:asc2hasc'
+            'hasc2gml=src:hasc2gml',
+            'asc2hasc=src:asc2hasc'
         ],
     },
 
@@ -21,7 +21,7 @@ setup(
     description = "Utilities for ASCII encoded hexagonal grids",
     license = "EUPL v1.1",
     keywords = "hexagon hexagonal grid HASC",
-    url = "https://github.com/ldesousa/hex.utils",   # project home page, if any
+    url = "https://github.com/ldesousa/hex-utils",   # project home page, if any
     classifiers = [
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",

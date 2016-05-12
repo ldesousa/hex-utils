@@ -49,7 +49,9 @@ esriGrid.loadFromFile(inputFile)
 
 esriArea = math.pow(esriGrid.size, 2)
 
-# Comment here the logic to get to this hexagon cell size
+# The resulting hexagons have the same are of the input squares.
+# In the future it might be interesting to produce hexagons that
+# preserve the same spatial resolution.
 hexSide = math.sqrt(2 * esriArea / (3 * math.sqrt(3)))
 hexPerp = math.sqrt(3) * hexSide / 2
 

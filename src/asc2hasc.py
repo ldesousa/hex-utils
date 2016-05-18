@@ -19,13 +19,19 @@ import math
 from asc import ASC
 from hasc import HASC
 
+RES_FACTOR = 1.134
+
 def wrongUsage():
     
-    print("This programme requires two arguments:\n" +
+    print("This programme requires three arguments:\n" +
+          " - conversion mode \n" +
           " - path to an input ESRI ASCII file \n" +
-          " - path to the output HASC file \n" + 
+          " - path to the output HASC file \n\n" + 
+          "The conversion can be of two types: \n" +
+          " -a : preserve cell area  \n" +
+          " -r : preserve spatial resolution \n\n" +
           "Usage example: \n"
-          "   asc2hasc /path/to/input.asc /path/to/output.hasc")
+          "   asc2hasc -r /path/to/input.asc /path/to/output.hasc")
     sys.exit()
 
 # This method is the same as in other command line utils
@@ -34,11 +40,11 @@ def processArguments(args):
     global inputFile
     global outputFile
     
-    if len(args) < 3:
+    if len(args) < 4 or (str(args[1]) != '-r' and str(args[1]) != '-a'):
         wrongUsage() 
     else:
-        inputFile = str(args[1])
-        outputFile = str(args[2])
+        inputFile = str(args[2])
+        outputFile = str(args[3])
 
 # ------------ Main ------------ #
 
@@ -48,13 +54,20 @@ esriGrid = ASC()
 esriGrid.loadFromFile(inputFile)
 
 esriArea = math.pow(esriGrid.size, 2)
+hexArea = 0
 
-# The resulting hexagons have the same are of the input squares.
-# In the future it might be interesting to produce hexagons that
-# preserve the same spatial resolution.
-hexSide = math.sqrt(2 * esriArea / (3 * math.sqrt(3)))
+# Preserve spatial resolution: increase cell area.
+if (sys.argv[1] == '-r'): 
+    hexArea = esriArea * RES_FACTOR
+# Preserve cell area: used the same as the original grid.
+else:
+    hexArea = esriArea
+
+# Calculate hexagonal cell geometry as a function of area
+hexSide = math.sqrt(2 * hexArea / (3 * math.sqrt(3)))
 hexPerp = math.sqrt(3) * hexSide / 2
 
+# Calculate grid span
 hexRows = math.ceil((esriGrid.nrows * esriGrid.size) / (2 * hexPerp)) 
 hexCols = math.ceil((esriGrid.ncols * esriGrid.size) / (3 * hexSide / 2))
 
@@ -75,9 +88,6 @@ for j in range(hexGrid.nrows):
         x = esriGrid.xll + i * 3 * hexSide / 2
         y = esriGrid.yll + j * 2 * hexPerp + (j % 2) * hexPerp
         hexGrid.set(i, j, esriGrid.getNearestNeighbour(x, y))
-        
-# This must be evolved into HASC save
-hexGrid.saveAsGML("new.gml")
 
 hexGrid.save(outputFile)
         

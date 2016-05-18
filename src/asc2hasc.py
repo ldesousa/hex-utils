@@ -90,8 +90,9 @@ hexGrid.init(hexCols, hexRows, hexXLL, hexYLL, hexSide, esriGrid.nodata)
 
 for j in range(hexGrid.nrows):
     for i in range(hexGrid.ncols):
-        x = esriGrid.xll + i * 3 * hexSide / 2
-        y = esriGrid.yll + j * 2 * hexPerp + (j % 2) * hexPerp
+        x = hexXLL + i * 3 * hexSide / 2
+        y = hexYLL + (hexRows - 1 - j) * 2 * hexPerp + (i % 2) * hexPerp
+
         hexGrid.set(i, j, esriGrid.getNearestNeighbour(x, y))
 
 hexGrid.save(outputFile)

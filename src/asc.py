@@ -34,7 +34,6 @@ class ASC (Grid):
         self._size   = size
         
         
-        
     def getNearestNeighbour(self, x, y):
         
         if x < self._xll:
@@ -49,14 +48,15 @@ class ASC (Grid):
         if y > self._yll + self._size * (self._nrows - 1):
             y = self._yll + self._size * (self._nrows - 1)
             
-        i = math.trunc((x - self._xll) // self._size)
-        j = math.trunc((y - self._yll) // self._size)
+        i = math.trunc((x - self._xll) / self._size)
+        j = self._nrows - 1 - math.trunc((y - self._yll) / self._size)
  
         try:
             return self._grid[i][j]
         except IndexError:
             raise IndexError("Wrong indexes in nearest neighbour:" + 
                 "i: " + str(i) + " j: " + str(j) + " x: " + str(x) + " y: " + str(y))
+    
     
     def _loadHeader(self):
     

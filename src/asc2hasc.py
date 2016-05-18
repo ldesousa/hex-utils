@@ -63,25 +63,30 @@ if (sys.argv[1] == '-r'):
 else:
     hexArea = esriArea
 
-# Calculate hexagonal cell geometry as a function of area
+# Calculate hexagonal cell geometry as function of area
 hexSide = math.sqrt(2 * hexArea / (3 * math.sqrt(3)))
 hexPerp = math.sqrt(3) * hexSide / 2
+
+# Position first hexagon
+hexXLL = esriGrid.xll + hexSide / 2
+hexYLL = esriGrid.yll + hexPerp / 2 # this / 2 is a cosmetic option
 
 # Calculate grid span
 hexRows = math.ceil((esriGrid.nrows * esriGrid.size) / (2 * hexPerp)) 
 hexCols = math.ceil((esriGrid.ncols * esriGrid.size) / (3 * hexSide / 2))
 
 print("Geometries:" + 
-      "\n Input square cell area: " + str(esriArea) + 
-      "\n Hexagon side length   : " + str(hexSide) +
-      "\n Hexagon perpendicular : " + str(hexPerp) +
-      "\n Num rows in hasc grid : " + str(hexRows) +
-      "\n Num cols in hasc grid : " + str(hexCols))
+      "\n Input square cell area : " + str(esriArea) + 
+      "\n Hexagon cell area      : " + str(hexArea)  +
+      "\n Hexagon side length    : " + str(hexSide)  +
+      "\n Hexagon perpendicular  : " + str(hexPerp)  +
+      "\n Num rows in hasc grid  : " + str(hexRows)  +
+      "\n Num cols in hasc grid  : " + str(hexCols))
 
 print("\nConverting ...")
 
 hexGrid = HASC()
-hexGrid.init(hexCols, hexRows, esriGrid.xll, esriGrid.yll, hexSide, esriGrid.nodata)
+hexGrid.init(hexCols, hexRows, hexXLL, hexYLL, hexSide, esriGrid.nodata)
 
 for j in range(hexGrid.nrows):
     for i in range(hexGrid.ncols):

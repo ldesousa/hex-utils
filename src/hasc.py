@@ -112,7 +112,7 @@ class HASC (Grid):
         #           [x-d/2, y-sqrt(3)*d/2]   [x+d/2, y-sqrt(3)*d/2]
     
         for j in range(self._nrows):
-            for i in range(0, self._ncols):
+            for i in range(self._ncols):
                 x = self._xll + i * 3 * self._side / 2
                 y = self._yll + j * 2 * perp
                 if (i % 2) != 0:

@@ -11,7 +11,7 @@
 # [0] https://github.com/ldesousa/HexAsciiBNF
 
 import math
-from grid import Grid
+from hex_utils.grid import Grid
 
 class HASC (Grid):
     

@@ -14,7 +14,7 @@
 # [0] https://github.com/ldesousa/HexAsciiBNF
 
 import sys
-from hasc import HASC
+from hex_utils.hasc import HASC
 
 def wrongUsage():
     
@@ -39,14 +39,15 @@ def processArguments(args):
     
 
 # ----- Main ----- #
+def main():
+        
+    processArguments(sys.argv)
+    
+    hexGrid = HASC()
+    hexGrid.loadFromFile(inputFile)
+    print ("Leaded input HASC, converting...")
+    hexGrid.saveAsGML(outputFile)
+    print ("Conversion successfully completed.")
 
-processArguments(sys.argv)
-
-hexGrid = HASC()
-hexGrid.loadFromFile(inputFile)
-print ("Leaded input HASC, converting...")
-hexGrid.saveAsGML(outputFile)
-print ("Conversion successfully completed.")
-
-
+main()
     

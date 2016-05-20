@@ -11,7 +11,7 @@
 # [0] http://resources.esri.com/help/9.3/arcgisengine/java/GP_ToolRef/spatial_analyst_tools/esri_ascii_raster_format.htm
 
 import math
-from grid import Grid
+from hex_utils.grid import Grid
 
 class ASC (Grid):
 

@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 # coding=utf8
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
-    name = "hex.utils",
+    name = "hex-utils",
     version = "0.2",
-    packages = ['src'],
+    packages = find_packages(),#['utils'],
     install_requires=[],
     entry_points={
         'console_scripts': [
-            'hasc2gml=src:hasc2gml',
-            'asc2hasc=src:asc2hasc'
+            'hasc2gml=hex_utils.hasc2gml:main',
+            'asc2hasc=hex_utils.asc2hasc:main'
         ],
     },
 

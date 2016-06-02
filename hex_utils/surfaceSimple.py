@@ -11,30 +11,37 @@ from matplotlib import cm
 from matplotlib.colors import LightSource
 import random
 
+oo = 9.2676
+xn = 8.2776
+yn = 10.1108
+dx = (xn - oo) / 2000.0
+dy = (yn - oo) / 2000.0 
+
 def well(x, y, x0, y0, depth):
 
-    return depth + ((x - x0)/300.0)**(2) + ((y - y0)/300.0)**(2)
+    return depth + ((x - x0)/200.0)**(2) + ((y - y0)/200.0)**(2)
 
 def fun(x, y):
 
     z = []
-    z.append(well(x, y,  250,  250, 9.4))
-    z.append(well(x, y,  250,  750, 9.1))
-    z.append(well(x, y,  250, 1250, 8.9))
-    z.append(well(x, y,  250, 1750, 8.6))
-    z.append(well(x, y,  750,  250, 9.2))
-    z.append(well(x, y,  750,  750, 8.9))
-    z.append(well(x, y,  750, 1250, 8.7))
-    z.append(well(x, y,  750, 1750, 8.4))
-    z.append(well(x, y, 1250,  250, 8.9))
-    z.append(well(x, y, 1250,  750, 8.6))
-    z.append(well(x, y, 1250, 1250, 8.4))
-    z.append(well(x, y, 1250, 1750, 8.1))
-    z.append(well(x, y, 1750,  250, 8.7))
-    z.append(well(x, y, 1750,  750, 8.4))
-    z.append(well(x, y, 1750, 1250, 8.1))
-    z.append(well(x, y, 1750, 1750, 7.9))
-    z.append(10 - (x/1900.0) - (y/1900.0))
+#     z.append(well(x, y,  250,  250, 9.4))
+#     z.append(well(x, y,  250,  750, 9.1))
+    z.append(well(x, y,  250, 1250, 8.8676))
+    z.append(well(x, y,  250, 1750, 9.2))
+#     z.append(well(x, y,  750,  250, 9.2))
+#     z.append(well(x, y,  750,  750, 8.9))
+    z.append(well(x, y,  750, 1250, 8.6176))
+    z.append(well(x, y,  750, 1750, 8.95))
+#     z.append(well(x, y, 1250,  250, 8.9))
+#     z.append(well(x, y, 1250,  750, 8.6))
+    z.append(well(x, y, 1250, 1250, 8.3699))
+    z.append(well(x, y, 1250, 1750, 8.7))
+#     z.append(well(x, y, 1750,  250, 8.7))
+#     z.append(well(x, y, 1750,  750, 8.4))
+    z.append(well(x, y, 1750, 1250, 8.1216))
+    z.append(well(x, y, 1750, 1750, 8.45))
+    
+    z.append(oo + (x * dx) - (y * dx))
     
     z.sort()
     return z[0]

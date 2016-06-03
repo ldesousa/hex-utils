@@ -72,5 +72,14 @@ class ASC (Grid):
         if self._nodata != "" :
             self._nextLine = self._file.readline()
   
-        
+    
+    def _saveHeader(self, f):
+           
+        f.write(self._key_ncols + "\t" + str(self._ncols) + "\n")
+        f.write(self._key_nrows + "\t" + str(self._nrows) + "\n")
+        f.write(self._key_xll   + "\t" + str(self._xll)   + "\n")
+        f.write(self._key_yll   + "\t" + str(self._yll)   + "\n")
+        f.write(self._key_size  + "\t" + str(self._size)  + "\n")
+        if self._nodata != "" :
+            f.write(self._key_nodata + "\t" + str(self._nodata) + "\n")   
     

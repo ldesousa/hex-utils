@@ -60,6 +60,15 @@ class Grid:
         self._loadValues()
         self._file.close()
         
+        
+    def set(self, i, j, val):
+        
+        if i >= 0 and i < self._ncols and j >= 0 and  j < self._nrows:
+            self._grid[i][j] = val
+        else:
+            raise IndexError("Grid index [" + str(i) + "][" + str(j) + "] out of bounds. " + 
+                             "nCols: " + str(self._ncols) + " nRows: " + str(self._nrows))
+        
     
     def _loadHeaderLine(self, line, key, valType, optional = False):
        
@@ -133,5 +142,21 @@ class Grid:
         while (self._nextLine):
             self._loadLineValues(self._nextLine.split())
             self._nextLine = self._file.readline()
+    
+    
+    def _saveHeader(self, f):
+        raise NotImplementedError("Please Implement this method")
             
+    def save(self, outputFile):
+        
+        f = open(outputFile,"w")
+        
+        self._saveHeader(f)
+            
+        for j in range(self._nrows):
+            
+            line = ""
+            for i in range(self._ncols):
+                line += str(self._grid[i][j]) + " "
+            f.write(line + "\n")        
             

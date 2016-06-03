@@ -31,15 +31,6 @@ class HASC (Grid):
         Grid.init(self, ncols, nrows, xll, yll, nodata)  
         self._side   = side
         self._angle  = angle 
-        
-        
-    def set(self, i, j, val):
-        
-        if i >= 0 and i < self._ncols and j >= 0 and  j < self._nrows:
-            self._grid[i][j] = val
-        else:
-            raise IndexError("Grid index [" + str(i) + "][" + str(j) + "] out of bounds. " + 
-                             "nCols: " + str(self._ncols) + " nRows: " + str(self._nrows))
     
         
     def _loadHeader(self):
@@ -58,12 +49,10 @@ class HASC (Grid):
         self._angle  = self._loadHeaderLine(self._nextLine, self._key_angle, type(1.0),  True)
         if self._angle != None :
             self._nextLine =  self._file.readline()
-            
-            
-    def save(self, outputFile):
-        
-        f = open(outputFile,"w")
-        
+    
+    
+    def _saveHeader(self, f):
+           
         f.write(self._key_ncols + "\t" + str(self._ncols) + "\n")
         f.write(self._key_nrows + "\t" + str(self._nrows) + "\n")
         f.write(self._key_xll + "\t" + str(self._xll) + "\n")
@@ -72,14 +61,7 @@ class HASC (Grid):
         if self._nodata != "" :
             f.write(self._key_nodata + "\t" + str(self._nodata) + "\n") 
         if self._angle != None :
-            f.write(self._key_angle + "\t" + str(self._angle) + "\n")
-            
-        for j in range(self._nrows):
-            
-            line = ""
-            for i in range(self._ncols):
-                line += str(self._grid[i][j]) + " "
-            f.write(line + "\n")
+            f.write(self._key_angle + "\t" + str(self._angle) + "\n") 
             
     
     def saveAsGML(self, outputFilePath):

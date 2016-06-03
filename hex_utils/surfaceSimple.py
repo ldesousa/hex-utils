@@ -17,29 +17,29 @@ yn = 10.1108
 dx = (xn - oo) / 2000.0
 dy = (yn - oo) / 2000.0 
 
-def well(x, y, x0, y0, depth):
+def pit(x, y, x0, y0, depth, widening):
 
-    return depth + ((x - x0)/200.0)**(2) + ((y - y0)/200.0)**(2)
+    return depth + ((x - x0)/widening)**(2) + ((y - y0)/widening)**(2)
 
 def fun(x, y):
 
     z = []
-#     z.append(well(x, y,  250,  250, 9.4))
-#     z.append(well(x, y,  250,  750, 9.1))
-    z.append(well(x, y,  250, 1250, 8.8676))
-    z.append(well(x, y,  250, 1750, 9.2))
-#     z.append(well(x, y,  750,  250, 9.2))
-#     z.append(well(x, y,  750,  750, 8.9))
-    z.append(well(x, y,  750, 1250, 8.6176))
-    z.append(well(x, y,  750, 1750, 8.95))
-#     z.append(well(x, y, 1250,  250, 8.9))
-#     z.append(well(x, y, 1250,  750, 8.6))
-    z.append(well(x, y, 1250, 1250, 8.3699))
-    z.append(well(x, y, 1250, 1750, 8.7))
-#     z.append(well(x, y, 1750,  250, 8.7))
-#     z.append(well(x, y, 1750,  750, 8.4))
-    z.append(well(x, y, 1750, 1250, 8.1216))
-    z.append(well(x, y, 1750, 1750, 8.45))
+    z.append(pit(x, y,  270,  250, 8.2052, 200.0))
+    z.append(pit(x, y,  270,  730, 8.5342, 215.0))
+    z.append(pit(x, y,  270, 1230, 8.8676, 230.0))
+    z.append(pit(x, y,  270, 1730, 9.2032, 245.0))
+    z.append(pit(x, y,  770,  250, 7.9552, 200.0))
+    z.append(pit(x, y,  770,  730, 8.2866, 215.0))
+    z.append(pit(x, y,  770, 1230, 8.6176, 230.0))
+    z.append(pit(x, y,  770, 1730, 8.9509, 245.0))
+    z.append(pit(x, y, 1270,  250, 7.7052, 200.0))
+    z.append(pit(x, y, 1270,  730, 8.0366, 215.0))
+    z.append(pit(x, y, 1270, 1230, 8.3699, 230.0))
+    z.append(pit(x, y, 1270, 1730, 8.7009, 245.0))
+    z.append(pit(x, y, 1770,  250, 7.4552, 200.0))
+    z.append(pit(x, y, 1770,  730, 7.7883, 215.0))
+    z.append(pit(x, y, 1770, 1230, 8.1216, 230.0))
+    z.append(pit(x, y, 1770, 1730, 8.4509, 245.0))
     
     z.append(oo + (x * dx) - (y * dx))
     

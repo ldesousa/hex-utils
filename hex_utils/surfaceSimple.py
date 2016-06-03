@@ -12,14 +12,17 @@ from matplotlib.colors import LightSource
 import random
 
 oo = 9.2676
+y_top = 9.1208
 xn = 8.2776
 yn = 10.1108
 dx = (xn - oo) / 2000.0
-dy = (yn - oo) / 2000.0 
+dy = (yn - y_top) / 2000.0 
+
 
 def pit(x, y, x0, y0, depth, widening):
 
     return depth + ((x - x0)/widening)**(2) + ((y - y0)/widening)**(2)
+
 
 def fun(x, y):
 
@@ -46,23 +49,26 @@ def fun(x, y):
     z.sort()
     return z[0]
 
+
+def main():    
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    x = y = np.arange(0, 2000, 2)
+    X, Y = np.meshgrid(x, y)
+    zs = np.array([fun(x,y) for x,y in zip(np.ravel(X), np.ravel(Y))])
+    Z = zs.reshape(X.shape)
     
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-x = y = np.arange(0, 2000, 2)
-X, Y = np.meshgrid(x, y)
-zs = np.array([fun(x,y) for x,y in zip(np.ravel(X), np.ravel(Y))])
-Z = zs.reshape(X.shape)
-
-ls = LightSource(270, 45)
-# To use a custom hillshading mode, override the built-in shading and pass
-# in the rgb colors of the shaded surface calculated from "shade".
-rgb = ls.shade(Z, cmap=cm.gist_earth, vert_exag=0.1, blend_mode='soft')
-
-ax.plot_surface(X, Y, Z, facecolors=rgb)
-
-ax.set_xlabel('X')
-ax.set_ylabel('Y')
-ax.set_zlabel('Height')
-
-plt.show()
+    ls = LightSource(270, 45)
+    # To use a custom hillshading mode, override the built-in shading and pass
+    # in the rgb colors of the shaded surface calculated from "shade".
+    rgb = ls.shade(Z, cmap=cm.gist_earth, vert_exag=0.1, blend_mode='soft')
+    
+    ax.plot_surface(X, Y, Z, facecolors=rgb)
+    
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Height')
+    
+    plt.show()
+    
+# main()

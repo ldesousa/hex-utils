@@ -30,7 +30,11 @@ def main():
 		x_start,
 		y_start,
 		size, "")
-		
+	
+	print("(0,0): " + str(fun(0,0)))	
+	print("(0,2000): " + str(fun(0,2000)))
+	print("(2000,0): " + str(fun(2000,0)))
+	print("(2000,2000): " + str(fun(2000,2000)))
 	
 	for i in range(grid.ncols):
 		for j in range(grid.nrows):

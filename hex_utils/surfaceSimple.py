@@ -15,36 +15,79 @@ oo = 9.2676
 y_top = 9.1208
 xn = 8.2776
 yn = 10.1108
-dx = (xn - oo) / 2000.0
-dy = (yn - y_top) / 2000.0 
+dx = (xn - oo) / 1980.0
+dy = -((yn - y_top) / 1980.0) 
+
+wide01 = 310.0
+wide02 = 320.0
+wide03 = 340.0
+wide04 = 360.0
 
 
-def pit(x, y, x0, y0, depth, widening):
+def pitParabolic(x, y, x0, y0, depth, widening):
 
-    return depth + ((x - x0)/widening)**(2) + ((y - y0)/widening)**(2)
+    return depth + (abs(x - x0)/widening)**(1.5) + (abs(y - y0)/widening)**(1.5)
+    
+    
+def pitPyramid(x, y, x0, y0, depth, widening):
+    
+    return depth + abs((x - x0)/widening) + abs((y - y0)/widening)
 
+
+def pitHubbert(x, y, x0, y0, bottom, depth, slope, widening):
+
+    res = (bottom + depth) - (2 * depth / \
+                     ( 1 + np.cosh(slope * \
+                        (((x - x0)/widening)**2 + ((y - y0)/widening)**2)))) 
+    
+    # discard if too far from the bottom
+    if (res - bottom) > (depth * 0.95):
+        return np.Infinity
+    else:
+        return res 
+    
 
 def fun(x, y):
 
     z = []
-    z.append(pit(x, y,  270,  250, 8.2052, 200.0))
-    z.append(pit(x, y,  270,  730, 8.5342, 215.0))
-    z.append(pit(x, y,  270, 1230, 8.8676, 230.0))
-    z.append(pit(x, y,  270, 1730, 9.2032, 245.0))
-    z.append(pit(x, y,  770,  250, 7.9552, 200.0))
-    z.append(pit(x, y,  770,  730, 8.2866, 215.0))
-    z.append(pit(x, y,  770, 1230, 8.6176, 230.0))
-    z.append(pit(x, y,  770, 1730, 8.9509, 245.0))
-    z.append(pit(x, y, 1270,  250, 7.7052, 200.0))
-    z.append(pit(x, y, 1270,  730, 8.0366, 215.0))
-    z.append(pit(x, y, 1270, 1230, 8.3699, 230.0))
-    z.append(pit(x, y, 1270, 1730, 8.7009, 245.0))
-    z.append(pit(x, y, 1770,  250, 7.4552, 200.0))
-    z.append(pit(x, y, 1770,  730, 7.7883, 215.0))
-    z.append(pit(x, y, 1770, 1230, 8.1216, 230.0))
-    z.append(pit(x, y, 1770, 1730, 8.4509, 245.0))
+    #z.append(pitParabolic(x, y,  270,  250, 8.2052, wide01))
+#     z.append(pitParabolic(x, y,  270,  730, 8.5342, wide02))
+#     z.append(pitParabolic(x, y,  270, 1230, 8.8676, wide03))
+#     z.append(pitParabolic(x, y,  270, 1730, 9.2032, wide04))
+#     z.append(pitParabolic(x, y,  770,  250, 7.9552, wide01))
+#     z.append(pitParabolic(x, y,  770,  730, 8.2866, wide02))
+#     z.append(pitParabolic(x, y,  770, 1230, 8.6176, wide03))
+#     z.append(pitParabolic(x, y,  770, 1730, 8.9509, wide04))
+#     z.append(pitParabolic(x, y, 1270,  250, 7.7052, wide01))
+#     z.append(pitParabolic(x, y, 1270,  730, 8.0366, wide02))
+#     z.append(pitParabolic(x, y, 1270, 1230, 8.3699, wide03))
+#     z.append(pitParabolic(x, y, 1270, 1730, 8.7009, wide04))
+#     z.append(pitParabolic(x, y, 1770,  250, 7.4552, wide01))
+#     z.append(pitParabolic(x, y, 1770,  730, 7.7883, wide02))
+#     z.append(pitParabolic(x, y, 1770, 1230, 8.1216, wide03))
+#     z.append(pitParabolic(x, y, 1770, 1730, 8.4509, wide04))
     
-    z.append(oo + (x * dx) - (y * dx))
+    z.append(pitHubbert(x, y,  270,  250, 8.2052, 1, 5, 400))
+    z.append(pitHubbert(x, y,  270,  730, 8.5342, 1, 5, 400))
+    z.append(pitHubbert(x, y,  270, 1230, 8.8676, 1, 5, 400))
+    z.append(pitHubbert(x, y,  270, 1730, 9.2032, 1, 5, 400))
+    
+    z.append(pitHubbert(x, y,  770,  250, 7.9552, 1, 5, 400))
+    z.append(pitHubbert(x, y,  770,  730, 8.2866, 1, 5, 400))
+    z.append(pitHubbert(x, y,  770, 1230, 8.6176, 1, 5, 400))
+    z.append(pitHubbert(x, y,  770, 1730, 8.9509, 1, 5, 400))
+    
+    z.append(pitHubbert(x, y, 1270,  250, 7.7052, 1, 5, 400))
+    z.append(pitHubbert(x, y, 1270,  730, 8.0366, 1, 5, 400))
+    z.append(pitHubbert(x, y, 1270, 1230, 8.3699, 1, 5, 400))
+    z.append(pitHubbert(x, y, 1270, 1730, 8.7009, 1, 5, 400))
+    
+    z.append(pitHubbert(x, y, 1770,  250, 7.4552, 1, 5, 400))
+    z.append(pitHubbert(x, y, 1770,  730, 7.7883, 1, 5, 400))
+    z.append(pitHubbert(x, y, 1770, 1230, 8.1216, 1, 5, 400))
+    z.append(pitHubbert(x, y, 1770, 1730, 8.4509, 1, 5, 400))
+    
+    z.append(oo + ((x - 10) * dx) - ((y - 10) * dy))
     
     z.sort()
     return z[0]
@@ -53,7 +96,7 @@ def fun(x, y):
 def main():    
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    x = y = np.arange(0, 2000, 2)
+    x = y = np.arange(0, 2000, 5)
     X, Y = np.meshgrid(x, y)
     zs = np.array([fun(x,y) for x,y in zip(np.ravel(X), np.ravel(Y))])
     Z = zs.reshape(X.shape)
@@ -71,4 +114,4 @@ def main():
     
     plt.show()
     
-# main()
+main()

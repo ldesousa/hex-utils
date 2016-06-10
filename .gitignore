@@ -6,3 +6,4 @@ MANIFEST
 *.tar.*
 build
 dist
+hex_utils/__pycache__

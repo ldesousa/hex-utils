@@ -14,12 +14,14 @@ import random
 
 peakValue = 5
 peakPoint = 5
-slope = 0.2
+slope = 3
+widenning = 4
 
 
 def fun(x, y):                      
                        
-    return peakValue - (2 * peakValue / ( 1 + np.cosh(slope * ((x - peakPoint)**2 + (y - peakPoint)**2)))) 
+    return peakValue - (2 * peakValue / ( 1 + np.cosh(slope * \
+                        (((x - peakPoint)/widenning)**2 + ((y - peakPoint)/widenning)**2)))) 
 
 
 def main():    

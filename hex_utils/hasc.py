@@ -76,6 +76,14 @@ class HASC (Grid):
         if self._angle != None :
             f.write(self._key_angle + "\t" + str(self._angle) + "\n") 
             
+            
+    def getCellCentroidCoords(self, i, j):
+        
+        x = self._xll + i * 3 * self._side / 2
+        y = self._yll + (self._nrows - 1 - j) * 2 * self._hexPerp + (i % 2) * self._hexPerp
+        
+        return (x, y)
+            
     
     def saveAsGML(self, outputFilePath):
         

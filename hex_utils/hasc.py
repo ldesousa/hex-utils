@@ -23,14 +23,27 @@ class HASC (Grid):
     _key_nodata = "no_data"
     _key_angle  = "angle"
      
-    _side   = 0
-    _angle  = None  
+    _side    = 0
+    _angle   = None  
+    _hexPerp = 0
     
+    @property
+    def side(self):
+        return self._side
+    
+    @property
+    def angle(self):
+        return self._angle
+    
+    @property
+    def hexPerp(self):
+        return self._hexPerp
    
     def init(self, ncols, nrows, xll, yll, side, nodata = "", angle = None):
         Grid.init(self, ncols, nrows, xll, yll, nodata)  
         self._side   = side
         self._angle  = angle 
+        self._hexPerp = math.sqrt(3) * self._side / 2
     
         
     def _loadHeader(self):

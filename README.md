@@ -13,7 +13,7 @@ document licence.
 Description
 -------------------------------------------------------------------------------
 
-This project aims to deliver a series of tools to facilitate the manipulation and usage of hexagonal raster grids. These tools rely on the Hexagonal ASCII file format (or HASC for short) [0] for the physical storage of hexagonal rasters.
+This project aims to deliver a series of tools to facilitate the manipulation and usage of hexagonal raster grids. These tools rely on the Hexagonal [ASCII file format](https://github.com/ldesousa/HexAsciiBNF) (or HASC for short) for the physical storage of hexagonal rasters.
 
  - **hasc2gml** - from an input HASC file creates a GML file with a vector feature for each hexagonal cell. Simplifies the display of hexagonal rasters in common desktop GIS software.
  
@@ -21,13 +21,9 @@ This project aims to deliver a series of tools to facilitate the manipulation an
  
  - **surface2hasc** - creates an HASC file from a continuous surface function (still in development).
  
-This tool suite can be installed from the PyPi repository [1].
+This tool suite can be installed from the [PyPi repository](https://pypi.python.org/pypi/hex-utils).
 
 Future work includes the development of a Graphical User Interface (GUI) for these tools on QGIS, making the usage of hexagonal grids even simpler.
-
-[0] https://github.com/ldesousa/HexAsciiBNF
-
-[1] https://pypi.python.org/pypi/hex-utils
 
 
 Licence

@@ -13,7 +13,7 @@ document licence.
 Description
 -------------------------------------------------------------------------------
 
-This project aims to deliver a series of tools to facilitate the manipulation and usage of hexagonal raster grids. These tools rely on the Hexagonal ASCII file format [0] (or HASC for short) for the physical storage of hexagonal rasters.
+This project aims to deliver a series of tools to facilitate the manipulation and usage of hexagonal raster grids. These tools rely on the Hexagonal ASCII file format (or HASC for short) [0] for the physical storage of hexagonal rasters.
 
  - **hasc2gml** - from an input HASC file creates a GML file with a vector feature for each hexagonal cell. Simplifies the display of hexagonal rasters in common desktop GIS software.
  

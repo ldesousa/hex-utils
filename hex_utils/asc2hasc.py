@@ -91,7 +91,7 @@ def main():
     
     for j in range(hexGrid.nrows):
         for i in range(hexGrid.ncols):
-            x,y = hexGrid.getCellCentroidCoords(i, j)
+            x, y = hexGrid.getCellCentroidCoords(i, j)
             hexGrid.set(i, j, esriGrid.getNearestNeighbour(x, y))
     
     hexGrid.save(outputFile)

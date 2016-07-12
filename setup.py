@@ -30,7 +30,7 @@ setup(
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: European Union Public Licence 1.1 (EUPL 1.1)",
         "Operating System :: OS Independent",
-        "Topic :: Scientific/Engineering :: GIS"
+        "Topic :: Scientific/Engineering :: GIS",
         ],
 
 

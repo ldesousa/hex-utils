@@ -41,7 +41,7 @@ def pitHubbert(x, y, x0, y0, bottom, depth, slope, widening):
                         (((x - x0)/widening)**2 + ((y - y0)/widening)**2)))) 
     
     # discard if too far from the bottom
-    if (res - bottom) > (depth * 0.95):
+    if (res - bottom) > (depth * 0.999):
         return np.Infinity
     else:
         return res 
@@ -50,42 +50,26 @@ def pitHubbert(x, y, x0, y0, bottom, depth, slope, widening):
 def fun(x, y):
 
     z = []
-    #z.append(pitParabolic(x, y,  270,  250, 8.2052, wide01))
-#     z.append(pitParabolic(x, y,  270,  730, 8.5342, wide02))
-#     z.append(pitParabolic(x, y,  270, 1230, 8.8676, wide03))
-#     z.append(pitParabolic(x, y,  270, 1730, 9.2032, wide04))
-#     z.append(pitParabolic(x, y,  770,  250, 7.9552, wide01))
-#     z.append(pitParabolic(x, y,  770,  730, 8.2866, wide02))
-#     z.append(pitParabolic(x, y,  770, 1230, 8.6176, wide03))
-#     z.append(pitParabolic(x, y,  770, 1730, 8.9509, wide04))
-#     z.append(pitParabolic(x, y, 1270,  250, 7.7052, wide01))
-#     z.append(pitParabolic(x, y, 1270,  730, 8.0366, wide02))
-#     z.append(pitParabolic(x, y, 1270, 1230, 8.3699, wide03))
-#     z.append(pitParabolic(x, y, 1270, 1730, 8.7009, wide04))
-#     z.append(pitParabolic(x, y, 1770,  250, 7.4552, wide01))
-#     z.append(pitParabolic(x, y, 1770,  730, 7.7883, wide02))
-#     z.append(pitParabolic(x, y, 1770, 1230, 8.1216, wide03))
-#     z.append(pitParabolic(x, y, 1770, 1730, 8.4509, wide04))
     
-    z.append(pitHubbert(x, y,  270,  250, 8.2052, 1, 5, 400))
-    z.append(pitHubbert(x, y,  270,  730, 8.5342, 1, 5, 400))
-    z.append(pitHubbert(x, y,  270, 1230, 8.8676, 1, 5, 400))
-    z.append(pitHubbert(x, y,  270, 1730, 9.2032, 1, 5, 400))
+    z.append(pitHubbert(x, y,  270,  250, 8.2052, 1.3, 5, 350))
+    z.append(pitHubbert(x, y,  270,  730, 8.5342, 1.3, 5, 350))
+    z.append(pitHubbert(x, y,  270, 1230, 8.8676, 1.3, 5, 350))
+    z.append(pitHubbert(x, y,  270, 1730, 9.2032, 1.3, 5, 350))
     
-    z.append(pitHubbert(x, y,  770,  250, 7.9552, 1, 5, 400))
-    z.append(pitHubbert(x, y,  770,  730, 8.2866, 1, 5, 400))
-    z.append(pitHubbert(x, y,  770, 1230, 8.6176, 1, 5, 400))
-    z.append(pitHubbert(x, y,  770, 1730, 8.9509, 1, 5, 400))
+    z.append(pitHubbert(x, y,  770,  250, 7.9552, 1.3, 5, 350))
+    z.append(pitHubbert(x, y,  770,  730, 8.2866, 1.3, 5, 350))
+    z.append(pitHubbert(x, y,  770, 1230, 8.6176, 1.3, 5, 350))
+    z.append(pitHubbert(x, y,  770, 1730, 8.9509, 1.3, 5, 350))
     
-    z.append(pitHubbert(x, y, 1270,  250, 7.7052, 1, 5, 400))
-    z.append(pitHubbert(x, y, 1270,  730, 8.0366, 1, 5, 400))
-    z.append(pitHubbert(x, y, 1270, 1230, 8.3699, 1, 5, 400))
-    z.append(pitHubbert(x, y, 1270, 1730, 8.7009, 1, 5, 400))
+    z.append(pitHubbert(x, y, 1270,  250, 7.7052, 1.3, 5, 350))
+    z.append(pitHubbert(x, y, 1270,  730, 8.0366, 1.3, 5, 350))
+    z.append(pitHubbert(x, y, 1270, 1230, 8.3699, 1.3, 5, 350))
+    z.append(pitHubbert(x, y, 1270, 1730, 8.7009, 1.3, 5, 350))
     
-    z.append(pitHubbert(x, y, 1770,  250, 7.4552, 1, 5, 400))
-    z.append(pitHubbert(x, y, 1770,  730, 7.7883, 1, 5, 400))
-    z.append(pitHubbert(x, y, 1770, 1230, 8.1216, 1, 5, 400))
-    z.append(pitHubbert(x, y, 1770, 1730, 8.4509, 1, 5, 400))
+    z.append(pitHubbert(x, y, 1770,  250, 7.4552, 1.3, 5, 350))
+    z.append(pitHubbert(x, y, 1770,  730, 7.7883, 1.3, 5, 350))
+    z.append(pitHubbert(x, y, 1770, 1230, 8.1216, 1.3, 5, 350))
+    z.append(pitHubbert(x, y, 1770, 1730, 8.4509, 1.3, 5, 350))
     
     z.append(oo + ((x - 10) * dx) - ((y - 10) * dy))
     
@@ -114,4 +98,4 @@ def main():
     
     plt.show()
     
-main()
+#main()

@@ -22,7 +22,7 @@ def main():
     x_end = 2001
     y_end = 2001
     side = 12.408064788
-    moduleName = 'surfaceSimple'
+    moduleName = 'surfaces.surfaceSimple'
     functionName = 'fun'
     
     # Calculate hexagonal cell geometry

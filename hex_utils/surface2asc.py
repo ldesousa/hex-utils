@@ -19,7 +19,7 @@ def main():
 	x_end = 2000
 	y_end = 2000
 	size = 20
-	moduleName = 'surfaceSimple'
+	moduleName = 'surfaces.surfaceSimple'
 	functionName = 'fun'
 	
 	grid = ASC()

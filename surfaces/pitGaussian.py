@@ -5,22 +5,17 @@ Created on 21 July 2016
 '''
 
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
 from pit import Pit
 
-
 class Gaussian(Pit):
-
-    slope = 0.25
-    widenning = 2
     
-
     def fun(self, x, y):                      
         
-        return 2.5 * self.peakValue / np.sqrt(2*np.pi) * \
-            np.exp(-(((x - self.peakPoint)/self.widenning)**2/2)-(((y - self.peakPoint)/self.widenning)**2/2))
+        return 2.5 * (self.bottom + self.depth) / np.sqrt(2*np.pi) * \
+            np.exp(-(((x - self.x0)/self.widenning)**2/2) \
+                   -(((y - self.y0)/self.widenning)**2/2))
 
     
 g = Gaussian()
+g.widenning = 2
 g.display()

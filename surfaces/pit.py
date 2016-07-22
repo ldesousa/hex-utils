@@ -11,8 +11,30 @@ import matplotlib.pyplot as plt
 
 class Pit:
     
-    peakValue = 5
-    peakPoint = 5
+    bottom = 5
+    depth = 5
+    x0 = 5
+    y0 = 5
+    slope = 0.25
+    widenning = 1
+    
+        
+    def __init__(self, x0 = None, y0 = None, bottom = None, depth = None, 
+                        slope = None, widenning = None):
+    
+        if x0 != None: 
+            self.x0 = x0
+        if y0 != None: 
+            self.y0 = y0
+        if bottom != None: 
+            self.bottom = bottom
+        if depth != None: 
+            self.depth = depth
+        if slope != None: 
+            self.slope = slope
+        if widenning != None: 
+            self.widenning = widenning
+            
     
     def fun(self, x, y):                      
     

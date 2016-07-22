@@ -5,22 +5,25 @@ Created on 30 May 2016
 '''
 
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
 from pit import Pit
 
 
 class Hubbert(Pit):
 
-    slope = 0.25
-    widenning = 0.5
-
-
-    def fun(self, x, y):                      
+    def fun(self, x, y, checkDist = False):                      
                            
-        return self.peakValue - (2 * self.peakValue / ( 1 + self.widenning * np.cosh( \
-                        self.slope * (((x - self.peakPoint))**2 + ((y - self.peakPoint))**2)))) 
+        res =  (self.bottom + self.depth) - (2 * self.depth / \
+                ( 1 + np.cosh(self.slope * \
+                 (((x - self.x0)/self.widenning)**2 + 
+                  ((y - self.y0)/self.widenning)**2)))) 
 
+        # discard if too far from the bottom
+        if checkDist and (res - self.bottom) > (self.depth * 0.999):
+            return np.Infinity
+        else:
+            return res
+        
 
 g = Hubbert()
+g.widenning = 1
 g.display()

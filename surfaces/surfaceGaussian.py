@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
 from matplotlib.colors import LightSource
-from pitHubbert import Hubbert
+from pitGaussian import Gaussian
 
 oo = 9.2676
 y_top = 9.1208
@@ -19,27 +19,27 @@ dy = -((yn - y_top) / 1980.0)
 
 depth = 1.3
 slope = 5
-widenning = 350
+widenning = 200
 
-p1  = Hubbert( 270,  250, 8.2052, depth, slope, widenning)
-p2  = Hubbert( 270,  730, 8.5342, depth, slope, widenning)
-p3  = Hubbert( 270, 1230, 8.8676, depth, slope, widenning)
-p4  = Hubbert( 270, 1730, 9.2032, depth, slope, widenning)
+p1  = Gaussian( 270,  250, 8.2052, depth, slope, widenning)
+p2  = Gaussian( 270,  730, 8.5342, depth, slope, widenning)
+p3  = Gaussian( 270, 1230, 8.8676, depth, slope, widenning)
+p4  = Gaussian( 270, 1730, 9.2032, depth, slope, widenning)
     
-p5  = Hubbert( 770,  250, 7.9552, depth, slope, widenning)
-p6  = Hubbert( 770,  730, 8.2866, depth, slope, widenning)
-p7  = Hubbert( 770, 1230, 8.6176, depth, slope, widenning)
-p8  = Hubbert( 770, 1730, 8.9509, depth, slope, widenning)
+p5  = Gaussian( 770,  250, 7.9552, depth, slope, widenning)
+p6  = Gaussian( 770,  730, 8.2866, depth, slope, widenning)
+p7  = Gaussian( 770, 1230, 8.6176, depth, slope, widenning)
+p8  = Gaussian( 770, 1730, 8.9509, depth, slope, widenning)
     
-p9  = Hubbert(1270,  250, 7.7052, depth, slope, widenning)
-p10 = Hubbert(1270,  730, 8.0366, depth, slope, widenning)
-p11 = Hubbert(1270, 1230, 8.3699, depth, slope, widenning)
-p12 = Hubbert(1270, 1730, 8.7009, depth, slope, widenning)
+p9  = Gaussian(1270,  250, 7.7052, depth, slope, widenning)
+p10 = Gaussian(1270,  730, 8.0366, depth, slope, widenning)
+p11 = Gaussian(1270, 1230, 8.3699, depth, slope, widenning)
+p12 = Gaussian(1270, 1730, 8.7009, depth, slope, widenning)
     
-p13 = Hubbert(1770,  250, 7.4552, depth, slope, widenning)
-p14 = Hubbert(1770,  730, 7.7883, depth, slope, widenning)
-p15 = Hubbert(1770, 1230, 8.1216, depth, slope, widenning)
-p16 = Hubbert(1770, 1730, 8.4509, depth, slope, widenning)
+p13 = Gaussian(1770,  250, 7.4552, depth, slope, widenning)
+p14 = Gaussian(1770,  730, 7.7883, depth, slope, widenning)
+p15 = Gaussian(1770, 1230, 8.1216, depth, slope, widenning)
+p16 = Gaussian(1770, 1730, 8.4509, depth, slope, widenning)
     
 
 def fun(x, y):

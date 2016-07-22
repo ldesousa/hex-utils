@@ -24,6 +24,7 @@ class Hubbert(Pit):
             return res
         
 
-g = Hubbert()
-g.widenning = 1
-g.display()
+# Uncomment these lines to test a single pit.
+#g = Hubbert()
+#g.widenning = 1
+#g.display()

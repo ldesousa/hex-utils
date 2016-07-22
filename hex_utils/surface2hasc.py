@@ -21,8 +21,9 @@ def main():
     y_start = 0
     x_end = 2001
     y_end = 2001
-    side = 12.408064788
-    moduleName = 'surfaces.surfaceSimple'
+    # side = 12.408064788 # Area = 400 m2
+    side = 13.2191028998 # Area = 454 m2 : 400 x 1.135
+    moduleName = 'surfaces.surfaceGaussian'
     functionName = 'fun'
     
     # Calculate hexagonal cell geometry
@@ -37,7 +38,7 @@ def main():
     hexCols = math.ceil(y_end / (3 * side / 2))
 
     grid = HASC()
-    grid.init(hexCols, hexRows, hexXLL, hexYLL, side, "E")
+    grid.init(hexCols, hexRows, hexXLL, hexYLL, side, "9999")
     
     # Dynamically import surface function
     module = __import__(moduleName, globals(), locals(), [functionName])
@@ -48,8 +49,8 @@ def main():
             x, y = grid.getCellCentroidCoords(i, j)
             grid.set(i, j, function(x, y))
         
-    grid.save("temp.hasc")
-    grid.saveAsGML("temp.hasc.gml")
+    grid.save("tempGaussian.hasc")
+    grid.saveAsGML("tempGaussian.hasc.gml")
     print("Created new grid successfully")
     
 main()

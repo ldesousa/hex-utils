@@ -19,7 +19,7 @@ def main():
 	x_end = 2000
 	y_end = 2000
 	size = 20
-	moduleName = 'surfaces.surfaceSimple'
+	moduleName = 'surfaces.surfaceGaussian'
 	functionName = 'fun'
 	
 	grid = ASC()
@@ -42,7 +42,7 @@ def main():
 			grid.set(i, grid.nrows - j - 1, 
 				function(x_start + i * size, y_start + j * size))
 		
-	grid.save("temp.asc")
+	grid.save("tempGaussian.asc")
 	
 	print("Created new grid successfully")
 	

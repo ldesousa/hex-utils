@@ -5,7 +5,7 @@ Created on 30 May 2016
 '''
 
 import numpy as np
-from pit import Pit
+from surfaces.pit import Pit
 
 
 class Hubbert(Pit):

@@ -5,7 +5,7 @@ Created on 21 July 2016
 '''
 
 import numpy as np
-from pit import Pit
+from surfaces.pit import Pit
 
 class Gaussian(Pit):
     

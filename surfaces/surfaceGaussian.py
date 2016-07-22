@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
 from matplotlib.colors import LightSource
-from pitGaussian import Gaussian
+from surfaces.pitGaussian import Gaussian
 
 oo = 9.2676
 y_top = 9.1208
@@ -19,7 +19,7 @@ dy = -((yn - y_top) / 1980.0)
 
 depth = 1.3
 slope = 5
-widenning = 200
+widenning = 300
 
 p1  = Gaussian( 270,  250, 8.2052, depth, slope, widenning)
 p2  = Gaussian( 270,  730, 8.5342, depth, slope, widenning)
@@ -94,4 +94,4 @@ def main():
     
     plt.show()
     
-main()
+#main()

@@ -22,7 +22,7 @@ def wrongUsage():
           " - path to an input HASC file \n" +
           " - path to the output GML file \n" + 
           "Usage example: \n"
-          "   utils /path/to/input.hasc /path/to/output.gml")
+          "   hasc2gml /path/to/input.hasc /path/to/output.gml")
     sys.exit()
 
 

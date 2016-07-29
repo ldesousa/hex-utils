@@ -61,13 +61,23 @@ class Grid:
         self._file.close()
         
         
-    def set(self, i, j, val):
+    def _checkGridBounds(self, i, j):
         
-        if i >= 0 and i < self._ncols and j >= 0 and  j < self._nrows:
-            self._grid[i][j] = val
-        else:
+        if i < 0 or i >= self._ncols or j < 0 or  j >= self._nrows:
             raise IndexError("Grid index [" + str(i) + "][" + str(j) + "] out of bounds. " + 
                              "nCols: " + str(self._ncols) + " nRows: " + str(self._nrows))
+   
+        
+    def get(self, i, j):
+        
+        self._checkGridBounds(i, j)
+        return self._grid[i][j]    
+        
+        
+    def set(self, i, j, val):
+        
+        self._checkGridBounds(i, j)
+        self._grid[i][j] = val
         
     
     def _loadHeaderLine(self, line, key, valType, optional = False):

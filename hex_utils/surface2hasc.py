@@ -4,6 +4,9 @@
 # Copyright (c) 2016 - Luís Moreira de Sousa
 #
 # Creates an hexagonal ASCII grid [0] by sampling a a given surface.
+# Usage examples:
+# surface2hasc -x 0 -y 0 -X 2001 -Y 2001 -s 12.4080647880 -m surfaces.surfaceGaussian -f fun -o output.hasc
+# surface2hasc -x 0 -y 0 -X 2001 -Y 2001 -s 13.2191028998 -m surfaces.surfaceGaussian -f fun -o output.hasc
 #
 # [0] https://github.com/ldesousa/HexAsciiBNF
 #
@@ -11,46 +14,60 @@
 # Date: 15-06-2016 
 
 import math
+import argparse
 from hex_utils.hasc import HASC
 
+def setArguments():
+    
+    parser = argparse.ArgumentParser(description='Convert continuous surface into HASC grid.')
+    parser.add_argument("-x", "--xmin", dest="xmin", default = 0,
+                      type=float, help="leftmost xx coordinate" )
+    parser.add_argument("-y", "--ymin", dest="ymin", default = 0,
+                      type=float, help="bottom yy coordinate" )
+    parser.add_argument("-X", "--xmax", dest="xmax", default = 10,
+                      type=float, help="rightmost xx coordinate" )
+    parser.add_argument("-Y", "--ymax", dest="ymax", default = 10,
+                      type=float, help="top xx coordinate" )
+    parser.add_argument("-s", "--side", dest="side", default = 1,
+                      type=float, help="hexagon side length" )
+    parser.add_argument("-m", "--module", dest="module", required = True,
+                      help="Python module containing the surface function" )
+    parser.add_argument("-f", "--function", dest="function", required = True,
+                      help="surface function" )
+    parser.add_argument("-o", "--output", dest="output", default = "surface.hasc",
+                      help="output HASC file" )
+    return parser
 
 # ----- Main ----- #
 def main():
     
-    x_start = 0
-    y_start = 0
-    x_end = 2001
-    y_end = 2001
-    # side = 12.408064788 # Area = 400 m2
-    side = 13.2191028998 # Area = 454 m2 : 400 x 1.135
-    moduleName = 'surfaces.surfaceGaussian'
-    functionName = 'fun'
+    args = setArguments().parse_args()
     
     # Calculate hexagonal cell geometry
-    hexPerp = math.sqrt(3) * side / 2
+    hexPerp = math.sqrt(3) * args.side / 2
     
     # Position first hexagon
-    hexXLL = x_start + side / 2
-    hexYLL = y_start + hexPerp / 2 # this / 2 is a cosmetic option
+    hexXLL = args.xmin + args.side / 2
+    hexYLL = args.ymin + hexPerp / 2 # this / 2 is a cosmetic option
     
     # Calculate grid span
-    hexRows = math.ceil(x_end / (2 * hexPerp)) 
-    hexCols = math.ceil(y_end / (3 * side / 2))
+    hexRows = math.ceil(args.xmax / (2 * hexPerp)) 
+    hexCols = math.ceil(args.ymax / (3 * args.side / 2))
 
     grid = HASC()
-    grid.init(hexCols, hexRows, hexXLL, hexYLL, side, "9999")
+    grid.init(hexCols, hexRows, hexXLL, hexYLL, args.side, "9999")
     
     # Dynamically import surface function
-    module = __import__(moduleName, globals(), locals(), [functionName])
-    function = getattr(module, functionName)
+    module = __import__(args.module, globals(), locals(), [args.function])
+    function = getattr(module, args.function)
     
     for i in range(grid.ncols):
         for j in range(grid.nrows):
             x, y = grid.getCellCentroidCoords(i, j)
             grid.set(i, j, function(x, y))
         
-    grid.save("tempGaussian.hasc")
-    grid.saveAsGML("tempGaussian.hasc.gml")
+    grid.save(args.output)
+    grid.saveAsGML(args.output + ".gml")
     print("Created new grid successfully")
     
 main()

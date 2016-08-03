@@ -68,13 +68,16 @@ def main():
     hexSide = math.sqrt(2 * hexArea / (3 * math.sqrt(3)))
     hexPerp = math.sqrt(3) * hexSide / 2
     
-    # Position first hexagon
-    hexXLL = esriGrid.xll + hexSide / 2
-    hexYLL = esriGrid.yll + hexPerp / 2 # this / 2 is a cosmetic option
-    
     # Calculate grid span
     hexRows = math.ceil((esriGrid.nrows * esriGrid.size) / (2 * hexPerp)) 
     hexCols = math.ceil((esriGrid.ncols * esriGrid.size) / (3 * hexSide / 2))
+    
+        
+    # Position first hexagon
+    # yy position tries to minimise the area of square cells outside the HASC grid
+    hexXLL = esriGrid.xll + hexSide / 2
+    hexYLL = (esriGrid.yll + esriGrid.nrows * esriGrid.size) - \
+        hexRows * 2 * hexPerp + hexPerp
     
     print("Geometries:" + 
           "\n Input square cell area : " + str(esriArea) + 

@@ -13,6 +13,7 @@
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
 # Date: 15-06-2016 
 
+import sys
 import math
 import argparse
 from hex_utils.hasc import HASC
@@ -66,8 +67,13 @@ def main():
             x, y = grid.getCellCentroidCoords(i, j)
             grid.set(i, j, function(x, y))
         
-    grid.save(args.output)
-    grid.saveAsGML(args.output + ".gml")
+    try:
+        grid.save(args.output)
+        grid.saveAsGML(args.output + ".gml")
+    except (ImportError, IOError) as ex:
+        print("Error saving the grid %s: %s" % (args.output, ex))
+        sys.exit()
+    
     print("Created new grid successfully")
     
 main()

@@ -99,7 +99,7 @@ class HASC (Grid):
         try:
             from osgeo import ogr
         except ImportError:
-            raise (""" ERROR: Could not find the GDAL/OGR Python library. 
+            raise ImportError(""" ERROR: Could not find the GDAL/OGR Python library. 
                        On Debian based systems you can install it with this command:
                        apt install python-gdal""") 
         

@@ -9,10 +9,9 @@ Copyright (c) 2016 Luís Moreira de Sousa. All rights reserved.
 Any use of this document constitutes full acceptance of all terms of the 
 document licence.
 
+
 Description
 -------------------------------------------------------------------------------
-
-
 
 This project aims to deliver a series of tools to facilitate the manipulation 
 and usage of hexagonal raster grids. These tools rely on the 
@@ -33,6 +32,21 @@ Future work includes the development of a Graphical User Interface (GUI) for
 these tools on QGIS, making the usage of hexagonal grids even simpler.
 
 [1] https://pypi.python.org/pypi/hex-utils
+
+
+Software dependencies
+-------------------------------------------------------------------------------
+
+The `hasc2gml` script requires the GDAL library. On Debian based systems it can
+be installed with the following command:
+
+`apt install python-gdal` 
+
+It can also be installed from the PyPi repository (the best option for virtual 
+environments):
+
+`pip instal GDAL`
+
 
 Licence
 -------------------------------------------------------------------------------

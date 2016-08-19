@@ -9,9 +9,11 @@ Copyright (c) 2016 Luís Moreira de Sousa. All rights reserved.
 Any use of this document constitutes full acceptance of all terms of the 
 document licence.
 
+
 Description
 -------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 
 
 This project aims to deliver a series of tools to facilitate the manipulation 
@@ -19,10 +21,15 @@ and usage of hexagonal raster grids. These tools rely on the
 [Hexagonal ASCII file format](https://github.com/ldesousa/HexAsciiBNF) 
 (or HASC for short) for the physical storage of hexagonal rasters.
 
+=======
+This project aims to deliver a series of tools to facilitate the manipulation and usage of hexagonal raster grids. These tools rely on the Hexagonal [ASCII file format](https://github.com/ldesousa/HexAsciiBNF) (or HASC for short) for the physical storage of hexagonal rasters.
+
+>>>>>>> ae57e2f92739bae55944e9c75f12490c812110ec
  - **hasc2gml** - from an input HASC file creates a GML file with a vector feature for each hexagonal cell. Simplifies the display of hexagonal rasters in common desktop GIS software.
  
  - **asc2hasc** - creates an HASC file from an input ESRI ASCII grid. It can either preserve cell area or approximate spatial resolution.
  
+<<<<<<< HEAD
  - **surface2hasc** - creates an HASC file from a continuous surface function.
  
  - **surface2asc** - creates an ESRI ASCII file from a continuous surface function.
@@ -33,6 +40,14 @@ Future work includes the development of a Graphical User Interface (GUI) for
 these tools on QGIS, making the usage of hexagonal grids even simpler.
 
 [1] https://pypi.python.org/pypi/hex-utils
+=======
+ - **surface2hasc** - creates an HASC file from a continuous surface function (still in development).
+ 
+This tool suite can be installed from the [PyPi repository](https://pypi.python.org/pypi/hex-utils).
+
+Future work includes the development of a Graphical User Interface (GUI) for these tools on QGIS, making the usage of hexagonal grids even simpler.
+
+>>>>>>> ae57e2f92739bae55944e9c75f12490c812110ec
 
 Licence
 -------------------------------------------------------------------------------

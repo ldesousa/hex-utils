@@ -31,8 +31,6 @@ these tools on QGIS, making the usage of hexagonal grids even simpler.
 
 This tool suite can be installed from the [PyPi repository](https://pypi.python.org/pypi/hex-utils).
 
-Future work includes the development of a Graphical User Interface (GUI) for these tools on QGIS, making the usage of hexagonal grids even simpler.
-
 
 Licence
 -------------------------------------------------------------------------------

@@ -11,7 +11,9 @@ setup(
     entry_points={
         'console_scripts': [
             'hasc2gml=hex_utils.hasc2gml:main',
-            'asc2hasc=hex_utils.asc2hasc:main'
+            'asc2hasc=hex_utils.asc2hasc:main',
+            'asc2hasc=hex_utils.surface2hasc:main',
+            'asc2hasc=hex_utils.surface2asc:main'
         ],
     },
 
@@ -32,7 +34,6 @@ setup(
         "Operating System :: OS Independent",
         "Topic :: Scientific/Engineering :: GIS",
         ],
-
 
     # could also include long_description, download_url, classifiers, etc.
 )

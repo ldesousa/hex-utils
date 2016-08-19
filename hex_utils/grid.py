@@ -8,6 +8,8 @@
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
 # Date: 08-04-2016 
 
+import math
+
 class Grid:
     
     _ncols  = 0
@@ -180,6 +182,9 @@ class Grid:
             
             line = ""
             for i in range(self._ncols):
-                line += str(self._grid[i][j]) + " "
+                if (self._grid[i][j] is None or math.isnan(self._grid[i][j])):
+                    line += str(self._nodata) + " "
+                else:
+                    line += str(self._grid[i][j]) + " "
             f.write(line + "\n")        
             

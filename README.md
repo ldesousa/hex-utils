@@ -9,10 +9,9 @@ Copyright (c) 2016 Luís Moreira de Sousa. All rights reserved.
 Any use of this document constitutes full acceptance of all terms of the 
 document licence.
 
+
 Description
 -------------------------------------------------------------------------------
-
-
 
 This project aims to deliver a series of tools to facilitate the manipulation 
 and usage of hexagonal raster grids. These tools rely on the 
@@ -27,12 +26,13 @@ and usage of hexagonal raster grids. These tools rely on the
  
  - **surface2asc** - creates an ESRI ASCII file from a continuous surface function.
  
-This tool suite can be installed from the PyPi repository [1].
-
 Future work includes the development of a Graphical User Interface (GUI) for 
 these tools on QGIS, making the usage of hexagonal grids even simpler.
 
-[1] https://pypi.python.org/pypi/hex-utils
+This tool suite can be installed from the [PyPi repository](https://pypi.python.org/pypi/hex-utils).
+
+Future work includes the development of a Graphical User Interface (GUI) for these tools on QGIS, making the usage of hexagonal grids even simpler.
+
 
 Licence
 -------------------------------------------------------------------------------

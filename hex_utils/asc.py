@@ -29,9 +29,17 @@ class ASC (Grid):
         return self._size
     
     
+    def _set_size(self, size):
+                
+        if (size <= 0):
+            raise ValueError('Invalid cell size')
+        self._size = size
+        
+    
     def init(self, ncols, nrows, xll, yll, size, nodata = ""):
+        
         Grid.init(self, ncols, nrows, xll, yll, nodata)
-        self._size   = size
+        self._set_size(size)
         
         
     def getNearestNeighbour(self, x, y):
@@ -61,11 +69,11 @@ class ASC (Grid):
     def _loadHeader(self):
     
         # Mandatory header
-        self._ncols  = self._loadHeaderLine(self._file.readline(), self._key_ncols,  type(1))
-        self._nrows  = self._loadHeaderLine(self._file.readline(), self._key_nrows,  type(1))
-        self._xll    = self._loadHeaderLine(self._file.readline(), self._key_xll,    type(1.0))
-        self._yll    = self._loadHeaderLine(self._file.readline(), self._key_yll,    type(1.0))
-        self._size   = self._loadHeaderLine(self._file.readline(), self._key_size,   type(1.0))
+        self._set_ncols(self._loadHeaderLine(self._file.readline(), self._key_ncols,  type(1)))
+        self._set_nrows(self._loadHeaderLine(self._file.readline(), self._key_nrows,  type(1)))
+        self._xll     = self._loadHeaderLine(self._file.readline(), self._key_xll,    type(1.0))
+        self._yll     = self._loadHeaderLine(self._file.readline(), self._key_yll,    type(1.0))
+        self._set_size( self._loadHeaderLine(self._file.readline(), self._key_size,   type(1.0)))
         # Optional headers
         self._nextLine = self._file.readline()
         self._nodata = self._loadHeaderLine(self._nextLine, self._key_nodata, type("a"), True)

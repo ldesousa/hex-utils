@@ -50,9 +50,13 @@ def processArguments(args):
 def main():
     
     processArguments(sys.argv)
-    
+     
     esriGrid = ASC()
-    esriGrid.loadFromFile(inputFile)
+    try:
+        esriGrid.loadFromFile(inputFile)
+    except (ValueError, IOError) as ex:
+        print("Error loading the grid %s: %s" % (inputFile, ex))
+        sys.exit()
     
     esriArea = math.pow(esriGrid.size, 2)
     hexArea = 0

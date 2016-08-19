@@ -42,15 +42,28 @@ class Grid:
         return self._nodata
     
     
-    
-    def init(self, ncols, nrows, xll, yll, nodata = ""):
+    def _set_ncols(self, ncols):
         
-        self._ncols  = ncols
-        self._nrows  = nrows
-        self._xll    = xll  
-        self._yll    = yll  
-        self._nodata = nodata
-        self._grid = [[None for x in range(self._nrows)] for y in range(self._ncols)]
+        if (ncols <= 0):
+            raise ValueError('Invalid number of columns')
+        self._ncols = ncols
+    
+    
+    def _set_nrows(self, nrows):
+        
+        if (nrows <= 0):
+            raise ValueError('Invalid number of rows')
+        self._nrows = nrows
+        
+            
+    def init(self, ncols, nrows, xll, yll, nodata = ""):
+         
+        self._set_ncols(ncols)
+        self._set_nrows(nrows)
+        self._xll     = xll  
+        self._yll     = yll  
+        self._nodata  = nodata
+        self._grid    = [[None for x in range(self._nrows)] for y in range(self._ncols)]
     
     
     def loadFromFile(self, filePath):

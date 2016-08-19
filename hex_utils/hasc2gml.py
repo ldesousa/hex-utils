@@ -44,8 +44,12 @@ def main():
     processArguments(sys.argv)
     
     hexGrid = HASC()
-    hexGrid.loadFromFile(inputFile)
-    print ("Leaded input HASC, converting...")
+    try:
+        hexGrid.loadFromFile(inputFile)
+    except (ValueError, IOError) as ex:
+        print("Error loading the grid %s: %s" % (inputFile, ex))
+        sys.exit()
+    print ("Loaded input HASC, converting...")
     hexGrid.saveAsGML(outputFile)
     print ("Conversion successfully completed.")
 

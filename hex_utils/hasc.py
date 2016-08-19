@@ -38,22 +38,31 @@ class HASC (Grid):
     @property
     def hexPerp(self):
         return self._hexPerp
+
+    
+    def _set_side(self, side):
+                
+        if (side <= 0):
+            raise ValueError('Invalid cell side')
+        self._side = side
+
    
     def init(self, ncols, nrows, xll, yll, side, nodata = "", angle = None):
+        
         Grid.init(self, ncols, nrows, xll, yll, nodata)  
-        self._side   = side
-        self._angle  = angle 
+        self._set_side( side)
+        self._angle   = angle 
         self._hexPerp = math.sqrt(3) * self._side / 2
     
         
     def _loadHeader(self):
     
         # Mandatory header
-        self._ncols  = self._loadHeaderLine(self._file.readline(), self._key_ncols,  type(1))
-        self._nrows  = self._loadHeaderLine(self._file.readline(), self._key_nrows,  type(1))
-        self._xll    = self._loadHeaderLine(self._file.readline(), self._key_xll,    type(1.0))
-        self._yll    = self._loadHeaderLine(self._file.readline(), self._key_yll,    type(1.0))
-        self._side   = self._loadHeaderLine(self._file.readline(), self._key_side,   type(1.0))
+        self._set_ncols(self._loadHeaderLine(self._file.readline(), self._key_ncols,  type(1)))
+        self._set_nrows(self._loadHeaderLine(self._file.readline(), self._key_nrows,  type(1)))
+        self._xll     = self._loadHeaderLine(self._file.readline(), self._key_xll,    type(1.0))
+        self._yll     = self._loadHeaderLine(self._file.readline(), self._key_yll,    type(1.0))
+        self._set_side( self._loadHeaderLine(self._file.readline(), self._key_side,   type(1.0)))
         # Optional headers
         self._nextLine = self._file.readline()
         self._nodata = self._loadHeaderLine(self._nextLine, self._key_nodata, type("a"), True)

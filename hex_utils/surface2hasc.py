@@ -15,34 +15,22 @@
 
 import sys
 import math
-import argparse
 from hex_utils.hasc import HASC
+from hex_utils.surfaceParser import setBasicArguments
 
-def setArguments():
+
+def getArguments():
     
-    parser = argparse.ArgumentParser(description='Convert continuous surface into HASC grid.')
-    parser.add_argument("-x", "--xmin", dest="xmin", default = 0,
-                      type=float, help="leftmost xx coordinate" )
-    parser.add_argument("-y", "--ymin", dest="ymin", default = 0,
-                      type=float, help="bottom yy coordinate" )
-    parser.add_argument("-X", "--xmax", dest="xmax", default = 10,
-                      type=float, help="rightmost xx coordinate" )
-    parser.add_argument("-Y", "--ymax", dest="ymax", default = 10,
-                      type=float, help="top xx coordinate" )
+    parser = setBasicArguments()
     parser.add_argument("-s", "--side", dest="side", default = 1,
                       type=float, help="hexagon side length" )
-    parser.add_argument("-m", "--module", dest="module", required = True,
-                      help="Python module containing the surface function" )
-    parser.add_argument("-f", "--function", dest="function", required = True,
-                      help="surface function" )
-    parser.add_argument("-o", "--output", dest="output", default = "surface.hasc",
-                      help="output HASC file" )
-    return parser
+    return parser.parse_args()
+
 
 # ----- Main ----- #
 def main():
     
-    args = setArguments().parse_args()
+    args = getArguments()
     
     # Calculate hexagonal cell geometry
     hexPerp = math.sqrt(3) * args.side / 2

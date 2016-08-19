@@ -10,36 +10,24 @@
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
 # Date: 03-06-2016 
 
+import sys
 import math
-import argparse
 from hex_utils.asc import ASC
+from hex_utils.surfaceParser import setBasicArguments
 
-def setArguments():
-	
-	parser = argparse.ArgumentParser(description='Convert continuous surface into ESRI ASCII grid.')
-	parser.add_argument("-x", "--xmin", dest="xmin", default = 0,
-	                  type=float, help="leftmost xx coordinate" )
-	parser.add_argument("-y", "--ymin", dest="ymin", default = 0,
-	                  type=float, help="bottom yy coordinate" )
-	parser.add_argument("-X", "--xmax", dest="xmax", default = 10,
-	                  type=float, help="rightmost xx coordinate" )
-	parser.add_argument("-Y", "--ymax", dest="ymax", default = 10,
-	                  type=float, help="top xx coordinate" )
+
+def getArguments():
+
+	parser = setBasicArguments()
 	parser.add_argument("-s", "--size", dest="size", default = 1,
-	                  type=float, help="cell size (width and height)" )
-	parser.add_argument("-m", "--module", dest="module", required = True,
-	                  help="Python module containing the surface function" )
-	parser.add_argument("-f", "--function", dest="function", required = True,
-	                  help="surface function" )
-	parser.add_argument("-o", "--output", dest="output", default = "surface.asc",
-	                  help="output ASC file" )
-	return parser
+						type=float, help="cell size (width and height)" )
+	return parser.parse_args()
 
 
 # ----- Main ----- #
 def main():
 	
-	args = setArguments().parse_args()
+	args = getArguments()
 	
 	grid = ASC()
 	grid.init(	
@@ -60,9 +48,13 @@ def main():
 		for j in range(grid.nrows):
 			grid.set(i, grid.nrows - j - 1, 
 				function(args.xmin + i * args.size, args.ymin + j * args.size))
-		
-	grid.save(args.output)
 	
+	try:	
+		grid.save(args.output)
+	except IOError as ex:
+		print("Error saving the grid %s: %s" % (args.output, ex))
+		sys.exit()
+
 	print("Created new grid successfully")
 	
 main()

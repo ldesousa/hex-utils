@@ -32,6 +32,21 @@ these tools on QGIS, making the usage of hexagonal grids even simpler.
 This tool suite can be installed from the [PyPi repository](https://pypi.python.org/pypi/hex-utils).
 
 
+
+Software dependencies
+-------------------------------------------------------------------------------
+
+The `hasc2gml` script requires the GDAL library. On Debian based systems it can
+be installed with the following command:
+
+`apt install python-gdal` 
+
+It can also be installed from the PyPi repository (the best option for virtual 
+environments):
+
+`pip instal GDAL`
+
+
 Licence
 -------------------------------------------------------------------------------
 

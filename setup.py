@@ -12,8 +12,8 @@ setup(
         'console_scripts': [
             'hasc2gml=hex_utils.hasc2gml:main',
             'asc2hasc=hex_utils.asc2hasc:main',
-            'asc2hasc=hex_utils.surface2hasc:main',
-            'asc2hasc=hex_utils.surface2asc:main'
+            'surface2hasc=hex_utils.surface2hasc:main',
+            'surface2asc=hex_utils.surface2asc:main'
         ],
     },
 

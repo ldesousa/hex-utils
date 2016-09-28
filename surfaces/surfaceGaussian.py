@@ -37,5 +37,5 @@ def fun(x, y):
     return gauss.fun(x, y)
 
 # Uncomment this lines for auto-plotting
-gauss.plot()
+# gauss.plot()
 

@@ -39,4 +39,4 @@ def fun(x, y):
     return hubbert.fun(x, y)
 
 # Uncomment these lines for auto-plotting
-hubbert.plot()
+# hubbert.plot()

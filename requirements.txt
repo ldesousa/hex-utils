@@ -1,0 +1,11 @@
+cycler==0.10.0
+GDAL==2.1.0
+hex-utils==0.2
+matplotlib==1.5.3
+numpy==1.11.1
+pkg-resources==0.0.0
+pyparsing==2.1.9
+python-dateutil==2.5.3
+pytz==2016.6.1
+scipy==0.18.1
+six==1.10.0

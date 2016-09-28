@@ -10,7 +10,8 @@
 #
 # [0] http://resources.esri.com/help/9.3/arcgisengine/java/GP_ToolRef/spatial_analyst_tools/esri_ascii_raster_format.htm
 
-import math
+import sys, math
+from scipy import interpolate
 from hex_utils.grid import Grid
 
 class ASC (Grid):
@@ -42,7 +43,7 @@ class ASC (Grid):
         self._set_size(size)
         
         
-    def getNearestNeighbour(self, x, y):
+    def _getNearestNeighbourGridCoords(self, x, y):
         
         if x < self._xll:
             x = self._xll
@@ -58,14 +59,84 @@ class ASC (Grid):
             
         i = math.trunc((x - self._xll) / self._size)
         j = self._nrows - 1 - math.trunc((y - self._yll) / self._size)
+        
+        return i, j
+        
+        
+    def getNearestNeighbour(self, x, y):
+        
+        i, j = self._getNearestNeighbourGridCoords(x, y)
  
         try:
             return self._grid[i][j]
         except IndexError:
             raise IndexError("Wrong indexes in nearest neighbour:" + 
                 "i: " + str(i) + " j: " + str(j) + " x: " + str(x) + " y: " + str(y))
+            
+            
+    def _getNeighbourhoodGridCoords(self, i, j):
+        
+        ii = []
+        jj = []
+        
+        if i > 0:
+            
+            if j > 0:
+                ii.append(i-1)
+                jj.append(j-1)
+            
+            ii.append(i-1)
+            jj.append(j)
+            
+            if j < self.nrows - 1:
+                ii.append(i-1)
+                jj.append(j+1)
+            
+        if j > 0:
+            ii.append(i)
+            jj.append(j-1)
+        
+        ii.append(i)
+        jj.append(j)
+        
+        if j < self.nrows - 1:
+            ii.append(i)
+            jj.append(j+1)
+            
+        if i < self.ncols - 1:
+            
+            if j > 0:
+                ii.append(i+1)
+                jj.append(j-1)
+            
+            ii.append(i+1)
+            jj.append(j)
+            
+            if j < self.nrows - 1:
+                ii.append(i+1)
+                jj.append(j+1)
+            
+        return ii, jj
+                
     
+    def interpolMultiquadratic(self, x, y, epsilon=100):
+        
+        xx = []
+        yy = []
+        vals = []
+        i, j = self._getNearestNeighbourGridCoords(x, y)
+        ii, jj = self._getNeighbourhoodGridCoords(i, j)
+        
+        for n in range(len(ii)):
+            if ii[n] != None and jj[n] != None and self._grid[ii[n]][jj[n]] != None:
+                xx.append(self._xll + ii[n] * self._size + self._size / 2)
+                yy.append(self._yll + self._nrows * self._size - jj[n] * self._size - self._size / 2)
+                vals.append(self._grid[ii[n]][jj[n]])
+               
+        f = interpolate.Rbf(xx, yy, vals, epsilon=epsilon)
+        return f(x,y)
     
+
     def _loadHeader(self):
     
         # Mandatory header

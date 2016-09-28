@@ -148,10 +148,10 @@ class Grid:
                     "Expected something in the range [0.." + 
                     str(self._ncols - 1) + ", 0.." + str(self._nrows - 1) + "]")
             
-            self._colIdx += 1;
+            self._colIdx += 1
             if self._colIdx >= self._ncols:
-                self._colIdx = 0;
-                self._rowIdx += 1;               
+                self._colIdx = 0
+                self._rowIdx += 1               
                 
 
     def _loadValues(self):
@@ -167,7 +167,7 @@ class Grid:
         while (self._nextLine):
             self._loadLineValues(self._nextLine.split())
             self._nextLine = self._file.readline()
-    
+            
     
     def _saveHeader(self, f):
         raise NotImplementedError("Please Implement this method")

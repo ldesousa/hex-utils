@@ -6,8 +6,8 @@
 # Transforms rectangular ESRI ASCCI grids into ASCII encoded cartographic 
 # hexagonal grids (HASC) [0]. The resulting hexagonal grid is created with a
 # spatial resolution similar to the input rectangular grid. The values of the
-# resulting hexagonal grid are computed using a simple nearest-neighbour 
-# algorithm.
+# resulting hexagonal grid are computed using a simple nearest-neighbour or
+# a multi-quadratic interpolation.
 #
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
 # Date: 31-03-2016 

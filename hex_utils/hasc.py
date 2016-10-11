@@ -111,11 +111,8 @@ class HASC (Grid):
     
         newField = ogr.FieldDefn("value", ogr.OFTReal)
         outLayer.GetLayerDefn().AddFieldDefn(newField)
-    
-        # The perpendicular distance from cell center to cell edge
-        perp = math.sqrt(3) * self._side / 2
         
-        # Edge coordinates of an hexagon centered in (x,y) and a side of d:
+        # Edge coordinates of an hexagon centered in (x,y) having a side of d:
         #
         #           [x-d/2, y+sqrt(3)*d/2]   [x+d/2, y+sqrt(3)*d/2] 
         #
@@ -126,22 +123,22 @@ class HASC (Grid):
         for j in range(self._nrows):
             for i in range(self._ncols):
                 x = self._xll + i * 3 * self._side / 2
-                y = self._yll + j * 2 * perp
+                y = self._yll + j * 2 * self._hexPerp
                 if (i % 2) != 0:
-                    y += perp
+                    y += self._hexPerp
                     
                 polygon = ogr.CreateGeometryFromWkt("POLYGON ((" +
-                    str(x - self._side)     + " " +  str(y)        + ", " +
-                    str(x - self._side / 2) + " " +  str(y - perp) + ", " +
-                    str(x + self._side / 2) + " " +  str(y - perp) + ", " +
-                    str(x + self._side)     + " " +  str(y)        + ", " +
-                    str(x + self._side / 2) + " " +  str(y + perp) + ", " +
-                    str(x - self._side / 2) + " " +  str(y + perp) + ", " +
-                    str(x - self._side)     + " " +  str(y)       + "))")
+                    str(x - self._side)     + " " +  str(y)                 + ", " +
+                    str(x - self._side / 2) + " " +  str(y - self._hexPerp) + ", " +
+                    str(x + self._side / 2) + " " +  str(y - self._hexPerp) + ", " +
+                    str(x + self._side)     + " " +  str(y)                 + ", " +
+                    str(x + self._side / 2) + " " +  str(y + self._hexPerp) + ", " +
+                    str(x - self._side / 2) + " " +  str(y + self._hexPerp) + ", " +
+                    str(x - self._side)     + " " +  str(y)                 + "))")
                 
                 outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
                 outFeature.SetGeometryDirectly(polygon)
                 outFeature.SetField("value", self._grid[i][self._nrows - j - 1])
                 outLayer.CreateFeature(outFeature)
     
-    
+                

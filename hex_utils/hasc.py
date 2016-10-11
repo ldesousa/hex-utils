@@ -58,19 +58,21 @@ class HASC (Grid):
     def _loadHeader(self):
     
         # Mandatory header
-        self._set_ncols(self._loadHeaderLine(self._file.readline(), self._key_ncols,  type(1)))
-        self._set_nrows(self._loadHeaderLine(self._file.readline(), self._key_nrows,  type(1)))
-        self._xll     = self._loadHeaderLine(self._file.readline(), self._key_xll,    type(1.0))
-        self._yll     = self._loadHeaderLine(self._file.readline(), self._key_yll,    type(1.0))
-        self._set_side( self._loadHeaderLine(self._file.readline(), self._key_side,   type(1.0)))
+        ncols = self._loadHeaderLine(self._file.readline(), self._key_ncols,  type(1))
+        nrows = self._loadHeaderLine(self._file.readline(), self._key_nrows,  type(1))
+        xll   = self._loadHeaderLine(self._file.readline(), self._key_xll,    type(1.0))
+        yll   = self._loadHeaderLine(self._file.readline(), self._key_yll,    type(1.0))
+        side  = self._loadHeaderLine(self._file.readline(), self._key_side,   type(1.0))
         # Optional headers
         self._nextLine = self._file.readline()
-        self._nodata = self._loadHeaderLine(self._nextLine, self._key_nodata, type("a"), True)
-        if self._nodata != "" :
+        nodata = self._loadHeaderLine(self._nextLine, self._key_nodata, type("a"), True)
+        if nodata != "" :
             self._nextLine = self._file.readline()
-        self._angle  = self._loadHeaderLine(self._nextLine, self._key_angle, type(1.0),  True)
-        if self._angle != None :
+        angle = self._loadHeaderLine(self._nextLine, self._key_angle, type(1.0),  True)
+        if angle != None :
             self._nextLine =  self._file.readline()
+            
+        self.init(ncols, nrows, xll, yll, side, nodata, angle)
     
     
     def _saveHeader(self, f):
@@ -122,6 +124,7 @@ class HASC (Grid):
     
         for j in range(self._nrows):
             for i in range(self._ncols):
+                
                 x = self._xll + i * 3 * self._side / 2
                 y = self._yll + j * 2 * self._hexPerp
                 if (i % 2) != 0:
@@ -140,5 +143,40 @@ class HASC (Grid):
                 outFeature.SetGeometryDirectly(polygon)
                 outFeature.SetField("value", self._grid[i][self._nrows - j - 1])
                 outLayer.CreateFeature(outFeature)
+             
     
+    def saveAsGeoJSON(self, outputFilePath):
+           
+        try:
+            from geojson import Feature, Polygon, FeatureCollection, dump
+        except ImportError:
+            raise ImportError(""" ERROR: Could not find the GeoJSON Python library.""")
+        
+        collection = FeatureCollection([])
+        
+        for j in range(self._nrows):
+            for i in range(self._ncols):
+                
+                x,y = self.getCellCentroidCoords(i, j)
+                
+                collection.features.append(
+                    Feature(
+                        geometry = Polygon([[
+                            (x - self._side,      y                 ),  
+                            (x - self._side / 2,  y - self._hexPerp ), 
+                            (x + self._side / 2,  y - self._hexPerp ), 
+                            (x + self._side,      y                 ),                 
+                            (x + self._side / 2,  y + self._hexPerp ),
+                            (x - self._side / 2,  y + self._hexPerp ), 
+                            (x - self._side,      y                 )
+                           ]]), 
+                        properties = {"value": self._grid[i][self._nrows - j - 1]}))
+        
+        with open(outputFilePath, 'w') as fp:
+            dump(collection, fp)
+        
+        
+        
+              
+           
                 

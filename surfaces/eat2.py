@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2016 - Luís Moreira de Sousa
 #
-# Base class for synthetic surfaces inspired in the EAT2 test.
+# Abstract base class for synthetic surfaces inspired in the EAT2 test.
 #
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
 # Date: 30-05-2016
@@ -12,8 +12,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
 from matplotlib.colors import LightSource
+from mpl_toolkits.mplot3d import Axes3D
+from surfaces.surface import Surface
 
-class Surface:
+class EAT2(Surface):
 
     oo = 9.2676
     y_top = 9.1208
@@ -80,28 +82,4 @@ class Surface:
         z.sort()
         return z[0]
 
-
-    def plot(self):
-        
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-        x = y = np.arange(0, 2000, 5)
-        X, Y = np.meshgrid(x, y)
-        zs = np.array([self.fun(x,y) for x,y in zip(np.ravel(X), np.ravel(Y))])
-        Z = zs.reshape(X.shape)
-        
-        ls = LightSource(270, 45)
-        # To use a custom hillshading mode, override the built-in shading and pass
-        # in the rgb colors of the shaded surface calculated from "shade".
-        rgb = ls.shade(Z, cmap=cm.gist_earth, vert_exag=0.1, blend_mode='soft')
-        
-        ax.plot_surface(X, Y, Z, facecolors=rgb)
-        
-        ax.set_xlabel('X')
-        ax.set_ylabel('Y')
-        ax.set_zlabel('Height')
-        
-        plt.show()
-
-    
         

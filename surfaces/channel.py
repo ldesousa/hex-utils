@@ -8,9 +8,9 @@ import math
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+from surfaces.surface import Surface
 
-
-class Channel:
+class Channel(Surface):
     
     angle = 30
     slope = 0.25
@@ -40,27 +40,9 @@ class Channel:
             return plane - self.depth
         else:
             return plane 
-    
-    
-    def display(self):
-            
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-        x = y = np.arange(0, 10, 0.1)
-        X, Y = np.meshgrid(x, y)
-        zs = np.array([self.fun(x,y) for x,y in zip(np.ravel(X), np.ravel(Y))])
-        Z = zs.reshape(X.shape)
-        
-        ax.plot_wireframe(X, Y, Z)
-        
-        ax.set_xlabel('X')
-        ax.set_ylabel('Y')
-        ax.set_zlabel('Height')
-        
-        plt.show()
         
 
 # Uncomment these lines to test a single pit.    
 c = Channel()
-c.display()
+c.plotWireFrame()
 

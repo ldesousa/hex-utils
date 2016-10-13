@@ -5,7 +5,7 @@
 #
 # Creates a rectangular ESRI ASCII grid by sampling a a given surface.
 # Usage example:
-# surface2asc -x 0 -y 0 -X 2000 -Y 2000 -s 20 -m surfaces.surfaceGaussian -f fun -o output.asc
+# surface2asc -x 0 -y 0 -X 2000 -Y 2000 -s 20 -m surfaces.eat2Gaussian -f fun -o output.asc
 #
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
 # Date: 03-06-2016 

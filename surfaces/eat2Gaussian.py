@@ -8,10 +8,10 @@
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
 # Date: 30-05-2016
 
-from surfaces.surfaceBase import Surface
+from surfaces.eat2 import EAT2
 from surfaces.pitGaussian import Gaussian
 
-gauss = Surface()
+gauss = EAT2()
         
 gauss.p1  = Gaussian( 270,  250, 8.2052, gauss.depth, gauss.slope, gauss.widenning)
 gauss.p2  = Gaussian( 270,  730, 8.5342, gauss.depth, gauss.slope, gauss.widenning)
@@ -37,5 +37,5 @@ def fun(x, y):
     return gauss.fun(x, y)
 
 # Uncomment this lines for auto-plotting
-# gauss.plot()
+# gauss.plotRainbow()
 

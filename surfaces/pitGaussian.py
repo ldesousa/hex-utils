@@ -1,8 +1,12 @@
-'''
-Created on 21 July 2016
-
-@author: lads
-'''
+#!/usr/bin/python3
+# coding=utf8
+#
+# Copyright (c) 2016 - Luís Moreira de Sousa
+#
+# Gaussian pit.
+#
+# Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
+# Date: 21-07-2016
 
 import numpy as np
 from surfaces.pit import Pit
@@ -23,6 +27,6 @@ class Gaussian(Pit):
             return res
 
 # Uncomment these lines to test a single pit.    
-#g = Gaussian()
-#g.widenning = 2
-#g.display()
+# g = Gaussian()
+# g.widenning = 2
+# g.plotWireFrame()

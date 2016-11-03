@@ -58,19 +58,21 @@ class HASC (Grid):
     def _loadHeader(self):
     
         # Mandatory header
-        self._set_ncols(self._loadHeaderLine(self._file.readline(), self._key_ncols,  type(1)))
-        self._set_nrows(self._loadHeaderLine(self._file.readline(), self._key_nrows,  type(1)))
-        self._xll     = self._loadHeaderLine(self._file.readline(), self._key_xll,    type(1.0))
-        self._yll     = self._loadHeaderLine(self._file.readline(), self._key_yll,    type(1.0))
-        self._set_side( self._loadHeaderLine(self._file.readline(), self._key_side,   type(1.0)))
+        ncols = self._loadHeaderLine(self._file.readline(), self._key_ncols,  type(1))
+        nrows = self._loadHeaderLine(self._file.readline(), self._key_nrows,  type(1))
+        xll   = self._loadHeaderLine(self._file.readline(), self._key_xll,    type(1.0))
+        yll   = self._loadHeaderLine(self._file.readline(), self._key_yll,    type(1.0))
+        side  = self._loadHeaderLine(self._file.readline(), self._key_side,   type(1.0))
         # Optional headers
         self._nextLine = self._file.readline()
-        self._nodata = self._loadHeaderLine(self._nextLine, self._key_nodata, type("a"), True)
-        if self._nodata != "" :
+        nodata = self._loadHeaderLine(self._nextLine, self._key_nodata, type("a"), True)
+        if nodata != "" :
             self._nextLine = self._file.readline()
-        self._angle  = self._loadHeaderLine(self._nextLine, self._key_angle, type(1.0),  True)
-        if self._angle != None :
+        angle = self._loadHeaderLine(self._nextLine, self._key_angle, type(1.0),  True)
+        if angle != None :
             self._nextLine =  self._file.readline()
+            
+        self.init(ncols, nrows, xll, yll, side, nodata, angle)
     
     
     def _saveHeader(self, f):
@@ -111,11 +113,8 @@ class HASC (Grid):
     
         newField = ogr.FieldDefn("value", ogr.OFTReal)
         outLayer.GetLayerDefn().AddFieldDefn(newField)
-    
-        # The perpendicular distance from cell center to cell edge
-        perp = math.sqrt(3) * self._side / 2
         
-        # Edge coordinates of an hexagon centered in (x,y) and a side of d:
+        # Edge coordinates of an hexagon centered in (x,y) having a side of d:
         #
         #           [x-d/2, y+sqrt(3)*d/2]   [x+d/2, y+sqrt(3)*d/2] 
         #
@@ -125,23 +124,59 @@ class HASC (Grid):
     
         for j in range(self._nrows):
             for i in range(self._ncols):
+                
                 x = self._xll + i * 3 * self._side / 2
-                y = self._yll + j * 2 * perp
+                y = self._yll + j * 2 * self._hexPerp
                 if (i % 2) != 0:
-                    y += perp
+                    y += self._hexPerp
                     
                 polygon = ogr.CreateGeometryFromWkt("POLYGON ((" +
-                    str(x - self._side)     + " " +  str(y)        + ", " +
-                    str(x - self._side / 2) + " " +  str(y - perp) + ", " +
-                    str(x + self._side / 2) + " " +  str(y - perp) + ", " +
-                    str(x + self._side)     + " " +  str(y)        + ", " +
-                    str(x + self._side / 2) + " " +  str(y + perp) + ", " +
-                    str(x - self._side / 2) + " " +  str(y + perp) + ", " +
-                    str(x - self._side)     + " " +  str(y)       + "))")
+                    str(x - self._side)     + " " +  str(y)                 + ", " +
+                    str(x - self._side / 2) + " " +  str(y - self._hexPerp) + ", " +
+                    str(x + self._side / 2) + " " +  str(y - self._hexPerp) + ", " +
+                    str(x + self._side)     + " " +  str(y)                 + ", " +
+                    str(x + self._side / 2) + " " +  str(y + self._hexPerp) + ", " +
+                    str(x - self._side / 2) + " " +  str(y + self._hexPerp) + ", " +
+                    str(x - self._side)     + " " +  str(y)                 + "))")
                 
                 outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
                 outFeature.SetGeometryDirectly(polygon)
                 outFeature.SetField("value", self._grid[i][self._nrows - j - 1])
                 outLayer.CreateFeature(outFeature)
+             
     
-    
+    def saveAsGeoJSON(self, outputFilePath):
+           
+        try:
+            from geojson import Feature, Polygon, FeatureCollection, dump
+        except ImportError:
+            raise ImportError(""" ERROR: Could not find the GeoJSON Python library.""")
+        
+        collection = FeatureCollection([])
+        
+        for j in range(self._nrows):
+            for i in range(self._ncols):
+                
+                x,y = self.getCellCentroidCoords(i, j)
+                
+                collection.features.append(
+                    Feature(
+                        geometry = Polygon([[
+                            (x - self._side,      y                 ),  
+                            (x - self._side / 2,  y - self._hexPerp ), 
+                            (x + self._side / 2,  y - self._hexPerp ), 
+                            (x + self._side,      y                 ),                 
+                            (x + self._side / 2,  y + self._hexPerp ),
+                            (x - self._side / 2,  y + self._hexPerp ), 
+                            (x - self._side,      y                 )
+                           ]]), 
+                        properties = {"value": self._grid[i][self._nrows - j - 1]}))
+        
+        with open(outputFilePath, 'w') as fp:
+            dump(collection, fp)
+        
+        
+        
+              
+           
+                

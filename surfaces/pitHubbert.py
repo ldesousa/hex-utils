@@ -1,8 +1,12 @@
-'''
-Created on 30 May 2016
-
-@author: lads
-'''
+#!/usr/bin/python3
+# coding=utf8
+#
+# Copyright (c) 2016 - Luís Moreira de Sousa
+#
+# Hubbert pit.
+#
+# Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
+# Date: 30-05-2016
 
 import numpy as np
 from surfaces.pit import Pit
@@ -25,6 +29,6 @@ class Hubbert(Pit):
         
 
 # Uncomment these lines to test a single pit.
-#g = Hubbert()
-#g.widenning = 1
-#g.display()
+# g = Hubbert()
+# g.widenning = 1
+# g.plotWireFrame()

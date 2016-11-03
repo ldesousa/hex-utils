@@ -5,8 +5,8 @@
 #
 # Creates an hexagonal ASCII grid [0] by sampling a a given surface.
 # Usage examples:
-# surface2hasc -x 0 -y 0 -X 2001 -Y 2001 -s 12.4080647880 -m surfaces.surfaceGaussian -f fun -o output.hasc
-# surface2hasc -x 0 -y 0 -X 2001 -Y 2001 -s 13.2191028998 -m surfaces.surfaceGaussian -f fun -o output.hasc
+# surface2hasc -x 0 -y 0 -X 2001 -Y 2001 -s 12.4080647880 -m surfaces.eat2Gaussian -f fun -o output.hasc
+# surface2hasc -x 0 -y 0 -X 2001 -Y 2001 -s 13.2191028998 -m surfaces.eat2Gaussian -f fun -o output.hasc
 #
 # [0] https://github.com/ldesousa/HexAsciiBNF
 #

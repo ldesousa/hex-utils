@@ -8,10 +8,10 @@
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
 # Date: 30-05-2016
 
-from surfaces.surfaceBase import Surface
+from surfaces.eat2 import EAT2
 from surfaces.pitHubbert import Hubbert
 
-hubbert = Surface()
+hubbert = EAT2()
 
 hubbert.widenning = 350
 
@@ -39,4 +39,4 @@ def fun(x, y):
     return hubbert.fun(x, y)
 
 # Uncomment these lines for auto-plotting
-# hubbert.plot()
+# hubbert.plotRainbow()

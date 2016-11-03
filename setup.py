@@ -5,9 +5,16 @@ from setuptools import setup, find_packages
 
 setup(
     name = "hex-utils",
-    version = "0.2",
+    version = "0.2.2.3",
     packages = find_packages(),#['utils'],
-    install_requires=[],
+    install_requires=[
+        'cycler',
+        'numpy',
+        'pyparsing',
+        'python-dateutil',
+        'pytz',
+        'six',
+    ],
     entry_points={
         'console_scripts': [
             'hasc2gml=hex_utils.hasc2gml:main',

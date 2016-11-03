@@ -1,15 +1,20 @@
-'''
-Created on 21 Jul 2016
-
-@author: lads
-'''
+#!/usr/bin/python3
+# coding=utf8
+#
+# Copyright (c) 2016 - Luís Moreira de Sousa
+#
+# Base class for pits.
+#
+# Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
+# Date: 21-07-2016
 
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+from surfaces.surface import Surface
 
 
-class Pit:
+class Pit(Surface):
     
     bottom = 5
     depth = 5
@@ -34,27 +39,6 @@ class Pit:
             self.slope = slope
         if widenning != None: 
             self.widenning = widenning
-            
-    
-    def fun(self, x, y):                      
-    
-        return x**2 + y**2
-    
-    
-    def display(self):    
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-        x = y = np.arange(0, 10, 0.1)
-        X, Y = np.meshgrid(x, y)
-        zs = np.array([self.fun(x,y) for x,y in zip(np.ravel(X), np.ravel(Y))])
-        Z = zs.reshape(X.shape)
-        
-        ax.plot_wireframe(X, Y, Z)
-        
-        ax.set_xlabel('X')
-        ax.set_ylabel('Y')
-        ax.set_zlabel('Height')
-        
-        plt.show()
+
     
 

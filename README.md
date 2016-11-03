@@ -6,7 +6,7 @@ Copyright
 -------------------------------------------------------------------------------
 
 Copyright (c) 2016 Luís Moreira de Sousa. All rights reserved. 
-Any use of this document constitutes full acceptance of all terms of the 
+Any use of this software constitutes full acceptance of all terms of the 
 document licence.
 
 
@@ -75,7 +75,7 @@ It is possible to install directly from the `master` branch, but it is more
 advisable to use of the [tagged releases](https://github.com/ldesousa/hex-utils/releases), 
 *e.g.*:
 
-`git checkout tags/v2.2`
+`git checkout tags/v0.2.2`
 
 Then install the scripts system wide:
 

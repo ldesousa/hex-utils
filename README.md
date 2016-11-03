@@ -26,30 +26,64 @@ and usage of hexagonal raster grids. These tools rely on the
  
  - **surface2asc** - creates an ESRI ASCII file from a continuous surface function.
  
-This tool suite can be installed from the PyPi repository [1].
+This tool suite can be installed from the [Python Package Index](https://pypi.python.org/pypi/hex-utils).
 
 Future work includes the development of a Graphical User Interface (GUI) for 
 these tools on QGIS, making the usage of hexagonal grids even simpler.
 
-[1] https://pypi.python.org/pypi/hex-utils
 
-
-Software dependencies
+Installation Requirements
 -------------------------------------------------------------------------------
 
-The `hasc2gml` script requires the GDAL library. On Debian based systems it can
-be installed with the following command:
+The `hasc2gml` script requires the Python GDAL library; the `asc2hasc` script 
+requires the `scipy` library. At this moment there are no functional universal 
+Python packages available for these libraries. Therefore system specific 
+packages are required in these cases. On Debian based systems they can be 
+installed with the following command:
 
-`apt install python-gdal` 
+`sudo apt install python3-gdal python3-scipy` 
 
-It can also be installed from the PyPi repository (the best option for virtual 
-environments):
+The Python package manager is required to install dependencies; on Debian based 
+systems it can be obtained like:
 
-`pip instal GDAL`
+`sudo apt install python3-pip`
 
+Installing from PyPi
+-------------------------------------------------------------------------------
+
+The easiest way to install `hex-utils` is through the universal package 
+available from the Python Package Index (PyPi); an example again on Debian 
+based systems:
+
+`sudo pip3 install hex-utils`
+
+Installing from GitHub
+-------------------------------------------------------------------------------
+
+Start by cloning the repository to your system:
+
+`git clone git@github.com:ldesousa/hex-utils.git`
+
+Change to the new folder:
+
+`cd hex-utils.git`
+
+It is possible to install directly from the `master` branch, but it is more 
+advisable to use of the [tagged releases](https://github.com/ldesousa/hex-utils/releases), 
+*e.g.*:
+
+`git checkout tags/v2.2`
+
+Then install the scripts system wide:
+
+`sudo python3 setup.py install`
+
+Finally, install the remaining dependencies:
+
+`sudo pip3 install -r requirements.txt`
 
 Licence
 -------------------------------------------------------------------------------
 
-This suite of programmes is released under the EUPL 1.1 licence. For further 
-details please consult the LICENCE file.
+This suite of programmes is released under the [EUPL 1.1 licence](https://joinup.ec.europa.eu/community/eupl/og_page/introduction-eupl-licence). 
+For full details please consult the LICENCE file.

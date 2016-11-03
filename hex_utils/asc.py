@@ -88,7 +88,7 @@ class ASC (Grid):
             ii.append(i-1)
             jj.append(j)
             
-            if j < self.nrows - 1:
+            if j < self._nrows - 1:
                 ii.append(i-1)
                 jj.append(j+1)
             
@@ -99,11 +99,11 @@ class ASC (Grid):
         ii.append(i)
         jj.append(j)
         
-        if j < self.nrows - 1:
+        if j < self._nrows - 1:
             ii.append(i)
             jj.append(j+1)
             
-        if i < self.ncols - 1:
+        if i < self._ncols - 1:
             
             if j > 0:
                 ii.append(i+1)
@@ -112,7 +112,7 @@ class ASC (Grid):
             ii.append(i+1)
             jj.append(j)
             
-            if j < self.nrows - 1:
+            if j < self._nrows - 1:
                 ii.append(i+1)
                 jj.append(j+1)
             

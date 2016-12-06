@@ -141,7 +141,7 @@ class HASC (Grid):
                 
                 outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
                 outFeature.SetGeometryDirectly(polygon)
-                outFeature.SetField("value", self._grid[i][self._nrows - j - 1])
+                outFeature.SetField("value", str(self._grid[i][self._nrows - j - 1]))
                 outLayer.CreateFeature(outFeature)
              
     

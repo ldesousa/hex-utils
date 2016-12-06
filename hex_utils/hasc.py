@@ -170,7 +170,7 @@ class HASC (Grid):
                             (x - self._side / 2,  y + self._hexPerp ), 
                             (x - self._side,      y                 )
                            ]]), 
-                        properties = {"value": self._grid[i][self._nrows - j - 1]}))
+                        properties = {"value": str(self._grid[i][j])}))
         
         with open(outputFilePath, 'w') as fp:
             dump(collection, fp)

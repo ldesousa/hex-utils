@@ -53,6 +53,26 @@ class HASC (Grid):
         self._set_side( side)
         self._angle   = angle 
         self._hexPerp = math.sqrt(3) * self._side / 2
+        
+    
+    def initWithExtent(self, cellArea, xll, yll, xtr, ytr, nodata = "", angle = None):
+        
+        # Calculate hexagonal cell geometry as function of area
+        self._side = math.sqrt(2 * cellArea / (3 * math.sqrt(3)))
+        self._hexPerp = math.sqrt(3) * self._side / 2
+        
+        # Calculate grid span
+        self._set_nrows(math.ceil((ytr - yll) / (2 * self._hexPerp))) 
+        self._set_ncols(math.ceil((xtr - xll) / (3 * self._side / 2) + (self._side / 2)))
+        
+        # Position first hexagon
+        # yy position tries to minimise the area of square cells outside the given extent
+        self._xll = xll + self._side / 2
+        self._xll = ytr - self._nrows * 2 * self._hexPerp + self._hexPerp
+        
+        self._nodata = nodata
+        self._angle = angle
+        self._grid    = [[None for x in range(self._nrows)] for y in range(self._ncols)]
     
         
     def _loadHeader(self):

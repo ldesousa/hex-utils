@@ -18,7 +18,9 @@ setup(
     entry_points={
         'console_scripts': [
             'hasc2gml=hex_utils.hasc2gml:main',
+            'hasc2geojson=hex_utils.hasc2geojson:main',
             'asc2hasc=hex_utils.asc2hasc:main',
+            'csv2hasc=hex_utils.csv2hasc:main',
             'surface2hasc=hex_utils.surface2hasc:main',
             'surface2asc=hex_utils.surface2asc:main'
         ],

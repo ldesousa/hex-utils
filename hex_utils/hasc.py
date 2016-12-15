@@ -55,10 +55,10 @@ class HASC (Grid):
         self._hexPerp = math.sqrt(3) * self._side / 2
         
     
-    def initWithExtent(self, cellArea, xll, yll, xtr, ytr, nodata = "", angle = None):
+    def initWithExtent(self, side, xll, yll, xtr, ytr, nodata = "", angle = None):
         
-        # Calculate hexagonal cell geometry as function of area
-        self._side = math.sqrt(2 * cellArea / (3 * math.sqrt(3)))
+        # Calculate hexagonal cell geometry
+        self._side = side
         self._hexPerp = math.sqrt(3) * self._side / 2
         
         # Calculate grid span
@@ -72,7 +72,12 @@ class HASC (Grid):
         
         self._nodata = nodata
         self._angle = angle
-        self._grid    = [[None for x in range(self._nrows)] for y in range(self._ncols)]
+        self._grid = [[None for x in range(self._nrows)] for y in range(self._ncols)]
+    
+    
+    def cellArea(self):
+        
+        return self._side * self.hexPerp * 3
     
         
     def _loadHeader(self):

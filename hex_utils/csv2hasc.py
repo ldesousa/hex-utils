@@ -4,6 +4,7 @@
 # Copyright (c) 2016 - Luís Moreira de Sousa
 #
 # Creates an hexagonal ASCII grid [0] from CSV file with a set of point samples.
+# Values in the new raster are interpolated using the multiquadratic method.
 # It assumes the CSV file to be organised into three columns, with xx, yy 
 # coordinates and values in succession, as:
 # xx1;yy1;value1;
@@ -28,7 +29,13 @@ from hex_utils.hasc import HASC
 
 def getArguments():
 
-    parser = argparse.ArgumentParser(description='Creates an HASC raster from a CSV file with a set of point samples.')
+    parser = argparse.ArgumentParser(description=
+        '''Creates an HASC raster from a CSV file with a set of point samples.
+           Values in the new raster are interpolated using the multiquadratic method.
+           It assumes the CSV file has no headers and is organised into three columns, 
+           with xx, yy coordinates and values in succession, as:
+           xx1;yy1;value1;
+           xx2;yy2;value2;''')
     parser.add_argument("-x", "--xmin", dest="xmin", default = 0,
                       type=float, help="leftmost xx coordinate" )
     parser.add_argument("-y", "--ymin", dest="ymin", default = 0,

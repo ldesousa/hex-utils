@@ -56,7 +56,8 @@ def getArguments():
 # ----- Main ----- #
 def main():
     
-    neighbours = 4
+    neighbours = 5
+    tolerance = 0.1
     epsilon = 100
     
     coords_list = []
@@ -74,22 +75,20 @@ def main():
                                  
     coords = numpy.array(coords_list)
     values = numpy.array(values_list)
-    
     tree = spatial.KDTree(coords)
-    d,i = tree.query(numpy.array([5,5]),4)    
-    
+    # Set maximum and minimum admissable values
+    max_value = values.max() + (values.max() - values.min()) * tolerance
+    min_value = values.min() - (values.max() - values.min()) * tolerance
+      
     hexGrid = HASC()
     hexGrid.initWithExtent(args.side, args.xmin, args.ymin, args.xmax, args.ymax)
     
     print("Geometries:" + 
-          "\n Hexagon cell area      : " + str(hexGrid.cellArea())  +
-          "\n Hexagon side length    : " + str(hexGrid.side)  +
-          "\n Hexagon perpendicular  : " + str(hexGrid.hexPerp)  +
-          "\n Num rows in hasc grid  : " + str(hexGrid.nrows)  +
-          "\n Num cols in hasc grid  : " + str(hexGrid.ncols))
-    
-    x, y = hexGrid.getCellCentroidCoords(6, 6)
-    d, ind = tree.query(numpy.array([x, y]),neighbours + 1) 
+          "\n Hexagon cell area     : " + str(hexGrid.cellArea())  +
+          "\n Hexagon side length   : " + str(hexGrid.side)  +
+          "\n Hexagon perpendicular : " + str(hexGrid.hexPerp)  +
+          "\n Num rows in HASC mesh : " + str(hexGrid.nrows)  +
+          "\n Num cols in hasc mesh : " + str(hexGrid.ncols))
     
     for j in range(hexGrid.nrows):
         for i in range(hexGrid.ncols):
@@ -106,7 +105,13 @@ def main():
                 vals.append(values[ind[n]])
                 
             f = interpolate.Rbf(xx, yy, vals, epsilon=epsilon)
-            hexGrid.set(i, j, f(x,y))
+            new_value = f(x,y)
+            if new_value < min_value:
+                hexGrid.set(i, j, min_value)
+            elif new_value > max_value:
+                hexGrid.set(i, j, max_value)
+            else:
+                hexGrid.set(i, j, new_value)
             
     hexGrid.save(args.output)        
     hexGrid.saveAsGeoJSON(args.output + ".json") 

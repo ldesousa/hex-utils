@@ -13,12 +13,14 @@ from surfaces.surface import Surface
 class Channel(Surface):
     
     angle = 30
-    slope = 0.25
+    slope = 0.05
     centre_x = 5
     centre_y = 5
     centre_z = 5
     radius = 0.5
     depth = 1
+    length = 7
+    weir_height = 0.15
     
         
     def __init__(self, slope = None):
@@ -37,12 +39,14 @@ class Channel(Surface):
     
         if  (y - self.centre_y) >= (centre - self.radius) and \
             (y - self.centre_y) <= (centre + self.radius): 
-            return plane - self.depth
+            if y > self.centre_y and math.sqrt((x - self.centre_x)**2 + (y - self.centre_y)**2) > (self.length / 2):
+                return plane - self.depth + self.weir_height
+            else:
+                return plane - self.depth
         else:
             return plane 
         
-
-# Uncomment these lines to test a single pit.    
+    
 c = Channel()
 c.plotWireFrame()
 

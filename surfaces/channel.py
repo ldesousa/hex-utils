@@ -13,12 +13,12 @@ from surfaces.surface import Surface
 class Channel(Surface):
     
     angle = 30
-    slope = 0.05
+    slope = 0.014893617021
     centre_x = 5
     centre_y = 5
     centre_z = 5
-    radius = 0.5
-    depth = 1
+    radius = 0.15
+    depth = 0.3
     length = 7
     weir_height = 0.15
     
@@ -39,14 +39,22 @@ class Channel(Surface):
     
         if  (y - self.centre_y) >= (centre - self.radius) and \
             (y - self.centre_y) <= (centre + self.radius): 
-            if y > self.centre_y and math.sqrt((x - self.centre_x)**2 + (y - self.centre_y)**2) > (self.length / 2):
+            if y > self.centre_y and \
+               math.sqrt((x - self.centre_x)**2 + (y - self.centre_y)**2) > (self.length / 2):
                 return plane - self.depth + self.weir_height
             else:
                 return plane - self.depth
         else:
             return plane 
+      
+      
+c = Channel()      
+c.plotWireFrame()
+        
+def fun(x, y):
+    return c.fun(x, y)
         
     
-c = Channel()
-c.plotWireFrame()
+
+
 

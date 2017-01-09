@@ -21,7 +21,11 @@ class Channel(Surface):
     depth = 0.3
     length = 7
     weir_height = 0.15
+<<<<<<< HEAD
     weir_lenght = 0.1
+=======
+    weir_lenght = 0.3
+>>>>>>> branch 'develop' of git@github.com:ldesousa/hex-utils.git
     
         
     def __init__(self, slope = None):

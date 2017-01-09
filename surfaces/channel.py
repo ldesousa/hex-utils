@@ -21,6 +21,7 @@ class Channel(Surface):
     depth = 0.3
     length = 7
     weir_height = 0.15
+    weir_lenght = 0.1
     
         
     def __init__(self, slope = None):
@@ -36,12 +37,15 @@ class Channel(Surface):
                
         centre = (x - self.centre_x) / math.sin(math.radians(90 - self.angle)) * \
                  math.sin(math.radians(self.angle))
+                 
+        dist_centre = math.sqrt((x - self.centre_x)**2 + (y - self.centre_y)**2)
     
         if  (y - self.centre_y) >= (centre - self.radius) and \
             (y - self.centre_y) <= (centre + self.radius): 
             if y > self.centre_y and \
-               math.sqrt((x - self.centre_x)**2 + (y - self.centre_y)**2) > (self.length / 2):
-                return plane - self.depth + self.weir_height
+               dist_centre > (self.length / 2) and \
+               dist_centre < (self.length / 2 + self.weir_lenght):
+                    return plane - self.depth + self.weir_height
             else:
                 return plane - self.depth
         else:

@@ -12,7 +12,7 @@ from surfaces.surface import Surface
 
 class Channel(Surface):
     
-    angle = 30
+    angle = 15
     slope = 0.014893617021
     centre_x = 5
     centre_y = 5
@@ -21,11 +21,7 @@ class Channel(Surface):
     depth = 0.3
     length = 7
     weir_height = 0.15
-<<<<<<< HEAD
-    weir_lenght = 0.1
-=======
-    weir_lenght = 0.3
->>>>>>> branch 'develop' of git@github.com:ldesousa/hex-utils.git
+    weir_lenght = 0.05
     
         
     def __init__(self, slope = None):
@@ -37,27 +33,37 @@ class Channel(Surface):
     def fun(self, x, y):   
         
         plane = ((self.centre_x - x) * self.slope + self.centre_z) * math.cos(math.radians(self.angle)) + \
-                ((self.centre_y - y) * self.slope + self.centre_z) * math.sin(math.radians(self.angle))                    
-               
-        centre = (x - self.centre_x) / math.sin(math.radians(90 - self.angle)) * \
-                 math.sin(math.radians(self.angle))
-                 
+                ((self.centre_y - y) * self.slope + self.centre_z) * math.sin(math.radians(self.angle))                         
+
+        # line expressions:
+        # y = gradient * x + intercept
+        # y = gradient * (x - centre_x) + centre_y     
+        # gradient * x - y + intercept = 0    
+        gradient = math.cos(math.radians(90 - self.angle))
+        intercept = self.centre_y - gradient * self.centre_x
+        
+        # point to line distance
+        dist_channel = math.fabs(gradient * x - y + intercept) / math.sqrt(gradient**2 + 1)
+        
+        # distance to the centre point of the channel (5,5)
         dist_centre = math.sqrt((x - self.centre_x)**2 + (y - self.centre_y)**2)
-    
-        if  (y - self.centre_y) >= (centre - self.radius) and \
-            (y - self.centre_y) <= (centre + self.radius): 
-            if y > self.centre_y and \
+        
+        if dist_channel < self.radius:
+            
+            if x > self.centre_x and \
                dist_centre > (self.length / 2) and \
                dist_centre < (self.length / 2 + self.weir_lenght):
                     return plane - self.depth + self.weir_height
+                 
             else:
                 return plane - self.depth
+            
         else:
-            return plane 
+            return plane
       
       
 c = Channel()      
-c.plotWireFrame()
+#c.plotWireFrame()
         
 def fun(x, y):
     return c.fun(x, y)

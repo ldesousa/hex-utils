@@ -27,6 +27,8 @@ class HASC (Grid):
     _angle   = None  
     _hexPerp = 0
     
+    _angle_rd = 0
+    
     @property
     def side(self):
         return self._side
@@ -51,8 +53,9 @@ class HASC (Grid):
         
         Grid.init(self, ncols, nrows, xll, yll, nodata)  
         self._set_side( side)
-        self._angle   = angle 
-        self._hexPerp = math.sqrt(3) * self._side / 2
+        self._angle    = angle 
+        self._angle_rd = math.radians(angle)
+        self._hexPerp  = math.sqrt(3) * self._side / 2
         
     
     def initWithExtent(self, side, xll, yll, xtr, ytr, nodata = "", angle = None):
@@ -72,6 +75,7 @@ class HASC (Grid):
         
         self._nodata = nodata
         self._angle = angle
+        self._angle_rd = math.radians(angle)
         self._grid = [[None for x in range(self._nrows)] for y in range(self._ncols)]
     
     
@@ -201,7 +205,25 @@ class HASC (Grid):
             dump(collection, fp)
         
         
+    def rotate(self, pointX, pointY):
+        """
+        Rotates a point relative to the mesh origin by the angle specified in the angle property.
+        Uses the angle formed between the segment linked the point or interest to the origin and
+        the parallel intersection the origin. This angle is called beta in the code.
+        """    
+        if(self.angle == 0 or self.angle == None):
+            return(pointX, pointY)
         
               
+        # 1. Compute the segment length
+        length = math.sqrt((pointX - self.xll) ** 2 + (pointY - self.yll) ** 2)
+        # 2. Compute beta
+        beta = math.acos((pointX - self.xll) / length) 
+        if(pointY < self.yll):
+            beta = math.pi * 2 - beta
            
+        # 3. Compute offsets
+        offsetX = math.cos(beta) * length - math.cos(self._angle_rd + beta) * length
+        offsetY = math.sin(self._angle_rd + beta) * length - math.sin(beta) * length 
+        return (pointX - offsetX, pointY + offsetY)
                 

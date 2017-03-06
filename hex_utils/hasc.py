@@ -142,31 +142,20 @@ class HASC (Grid):
     
         newField = ogr.FieldDefn("value", ogr.OFTReal)
         outLayer.GetLayerDefn().AddFieldDefn(newField)
-        
-        # Edge coordinates of an hexagon centered in (x,y) having a side of d:
-        #
-        #           [x-d/2, y+sqrt(3)*d/2]   [x+d/2, y+sqrt(3)*d/2] 
-        #
-        #  [x-d, y]                                                 [x+d, y]
-        #
-        #           [x-d/2, y-sqrt(3)*d/2]   [x+d/2, y-sqrt(3)*d/2]
     
         for j in range(self._nrows):
             for i in range(self._ncols):
-                
-                x = self._xll + i * 3 * self._side / 2
-                y = self._yll + j * 2 * self._hexPerp
-                if (i % 2) != 0:
-                    y += self._hexPerp
+                    
+                cellVertexes = self.getCellVertexes(i, j)
                     
                 polygon = ogr.CreateGeometryFromWkt("POLYGON ((" +
-                    str(x - self._side)     + " " +  str(y)                 + ", " +
-                    str(x - self._side / 2) + " " +  str(y - self._hexPerp) + ", " +
-                    str(x + self._side / 2) + " " +  str(y - self._hexPerp) + ", " +
-                    str(x + self._side)     + " " +  str(y)                 + ", " +
-                    str(x + self._side / 2) + " " +  str(y + self._hexPerp) + ", " +
-                    str(x - self._side / 2) + " " +  str(y + self._hexPerp) + ", " +
-                    str(x - self._side)     + " " +  str(y)                 + "))")
+                    str(cellVertexes[0][0]) + " " + str(cellVertexes[0][1]) + ", " +
+                    str(cellVertexes[1][0]) + " " + str(cellVertexes[1][1]) + ", " +
+                    str(cellVertexes[2][0]) + " " + str(cellVertexes[2][1]) + ", " +
+                    str(cellVertexes[3][0]) + " " + str(cellVertexes[3][1]) + ", " +
+                    str(cellVertexes[4][0]) + " " + str(cellVertexes[4][1]) + ", " +
+                    str(cellVertexes[5][0]) + " " + str(cellVertexes[5][1]) + ", " +
+                    str(cellVertexes[0][0]) + " " + str(cellVertexes[0][1]) + "))")
                 
                 outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
                 outFeature.SetGeometryDirectly(polygon)

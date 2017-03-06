@@ -115,9 +115,14 @@ class HASC (Grid):
             f.write(self._key_nodata + "\t" + str(self._nodata) + "\n") 
         if self._angle != None :
             f.write(self._key_angle + "\t" + str(self._angle) + "\n") 
-            
-            
+     
+     
     def getCellCentroidCoords(self, i, j):
+        
+        return self.rotatePoint(self._getUnrotatedCellCentroidCoords(i, j))
+    
+    
+    def _getUnrotatedCellCentroidCoords(self, i, j):    
         
         x = self._xll + i * 3 * self._side / 2
         y = self._yll + (self._nrows - 1 - j) * 2 * self._hexPerp + (i % 2) * self._hexPerp
@@ -192,9 +197,33 @@ class HASC (Grid):
         
         with open(outputFilePath, 'w') as fp:
             dump(collection, fp)
+            
+            
+    def getCellVertexes(self, i, j):
+        """
+         Edge coordinates of an hexagon centered in (x,y) having a side of d:
+        
+                   [x-d/2, y+sqrt(3)*d/2]   [x+d/2, y+sqrt(3)*d/2] 
+        
+          [x-d, y]                                                 [x+d, y]
+        
+                   [x-d/2, y-sqrt(3)*d/2]   [x+d/2, y-sqrt(3)*d/2]
+        """
+        
+        # Using unrotated centroid coordinates to avoid an extra computation
+        x,y = self._getUnrotatedCellCentroidCoords(i, j)
+        
+        return [
+            self.rotatePoint(x - self._side,      y                 ),  
+            self.rotatePoint(x - self._side / 2,  y - self._hexPerp ), 
+            self.rotatePoint(x + self._side / 2,  y - self._hexPerp ), 
+            self.rotatePoint(x + self._side,      y                 ),                 
+            self.rotatePoint(x + self._side / 2,  y + self._hexPerp ),
+            self.rotatePoint(x - self._side / 2,  y + self._hexPerp ), 
+            ]
         
         
-    def rotate(self, pointX, pointY):
+    def rotatePoint(self, pointX, pointY):
         """
         Rotates a point relative to the mesh origin by the angle specified in the angle property.
         Uses the angle formed between the segment linked the point or interest to the origin and

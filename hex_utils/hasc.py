@@ -186,18 +186,18 @@ class HASC (Grid):
         for j in range(self._nrows):
             for i in range(self._ncols):
                 
-                x,y = self.getCellCentroidCoords(i, j)
+                cellVertexes = self.getCellVertexes(i, j)
                 
                 collection.features.append(
                     Feature(
                         geometry = Polygon([[
-                            (x - self._side,      y                 ),  
-                            (x - self._side / 2,  y - self._hexPerp ), 
-                            (x + self._side / 2,  y - self._hexPerp ), 
-                            (x + self._side,      y                 ),                 
-                            (x + self._side / 2,  y + self._hexPerp ),
-                            (x - self._side / 2,  y + self._hexPerp ), 
-                            (x - self._side,      y                 )
+                            cellVertexes[0],  
+                            cellVertexes[1], 
+                            cellVertexes[2], 
+                            cellVertexes[3],                 
+                            cellVertexes[4],
+                            cellVertexes[5], 
+                            cellVertexes[0]
                            ]]), 
                         properties = {"value": str(self._grid[i][j])}))
         

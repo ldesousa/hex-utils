@@ -52,9 +52,9 @@ class HASC (Grid):
     def init(self, ncols, nrows, xll, yll, side, nodata = "", angle = None):
         
         Grid.init(self, ncols, nrows, xll, yll, nodata)  
-        self._set_side( side)
+        self._set_side(side)
         self._angle    = angle 
-        self._hexPerp  = math.sqrt(3) * self._side / 2
+        self._hexPerp  = math.sqrt(3) * self._side / 2.0
         if angle != None:
             self._angle_rd = math.radians(angle)
         
@@ -63,7 +63,7 @@ class HASC (Grid):
         
         # Calculate hexagonal cell geometry
         self._side = side
-        self._hexPerp = math.sqrt(3) * self._side / 2
+        self._hexPerp = math.sqrt(3) * self._side / 2.0
         
         # Calculate grid span
         self._set_nrows(math.ceil((ytr - yll) / (2 * self._hexPerp))) 
@@ -125,8 +125,8 @@ class HASC (Grid):
     
     def _getUnrotatedCellCentroidCoords(self, i, j):    
         
-        x = self._xll + i * 3 * self._side / 2
-        y = self._yll + (self._nrows - 1 - j) * 2 * self._hexPerp + (i % 2) * self._hexPerp
+        x = self._xll + i * 3.0 * self._side / 2.0
+        y = self._yll + (self._nrows - 1.0 - j) * 2.0 * self._hexPerp + (i % 2) * self._hexPerp
         
         return (x, y)
             
@@ -215,12 +215,12 @@ class HASC (Grid):
         x,y = self._getUnrotatedCellCentroidCoords(i, j)
         
         return [
-            self.rotatePoint(x - self._side,      y                 ),  
-            self.rotatePoint(x - self._side / 2,  y - self._hexPerp ), 
-            self.rotatePoint(x + self._side / 2,  y - self._hexPerp ), 
-            self.rotatePoint(x + self._side,      y                 ),                 
-            self.rotatePoint(x + self._side / 2,  y + self._hexPerp ),
-            self.rotatePoint(x - self._side / 2,  y + self._hexPerp ), 
+            self.rotatePoint(x - self._side,       y                 ),  
+            self.rotatePoint(x - self._side / 2.0, y - self._hexPerp ), 
+            self.rotatePoint(x + self._side / 2.0, y - self._hexPerp ), 
+            self.rotatePoint(x + self._side,       y                 ),                 
+            self.rotatePoint(x + self._side / 2.0, y + self._hexPerp ),
+            self.rotatePoint(x - self._side / 2.0, y + self._hexPerp ), 
             ]
         
         
@@ -232,10 +232,10 @@ class HASC (Grid):
         """    
         if(self.angle == 0 or self.angle == None):
             return(pointX, pointY)
-        
               
         # 1. Compute the segment length
         length = math.sqrt((pointX - self.xll) ** 2 + (pointY - self.yll) ** 2)
+        
         # 2. Compute beta
         beta = math.acos((pointX - self.xll) / length) 
         if(pointY < self.yll):

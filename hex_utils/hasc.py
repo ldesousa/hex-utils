@@ -54,8 +54,9 @@ class HASC (Grid):
         Grid.init(self, ncols, nrows, xll, yll, nodata)  
         self._set_side( side)
         self._angle    = angle 
-        self._angle_rd = math.radians(angle)
         self._hexPerp  = math.sqrt(3) * self._side / 2
+        if angle != None:
+            self._angle_rd = math.radians(angle)
         
     
     def initWithExtent(self, side, xll, yll, xtr, ytr, nodata = "", angle = None):

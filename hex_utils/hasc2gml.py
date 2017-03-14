@@ -48,14 +48,14 @@ def main():
     try:
         hexGrid.loadFromFile(inputFile)
     except (ValueError, IOError) as ex:
-        print("Error loading the grid %s: %s" % (inputFile, ex))
+        print("Error loading the raster %s: %s" % (inputFile, ex))
         sys.exit()
     print ("Loaded input HASC, converting...")
     
     try:
         hexGrid.saveAsGML(outputFile)
     except (ImportError, IOError) as ex:
-        print("Error saving the grid %s: %s" % (inputFile, ex))
+        print("Error saving the raster %s: %s" % (inputFile, ex))
         sys.exit()
     print ("Conversion successfully completed.")
 

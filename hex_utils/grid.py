@@ -6,7 +6,7 @@
 # Abstract class for raster grids.
 #
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
-# Date: 08-04-2016 
+# Date: 08-04-2016  
 
 import math
 

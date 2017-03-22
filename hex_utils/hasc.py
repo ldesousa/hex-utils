@@ -29,6 +29,8 @@ class HASC (Grid):
     
     _angle_rd = 0
     
+    __value_field = "value"
+    
     @property
     def side(self):
         return self._side
@@ -40,8 +42,11 @@ class HASC (Grid):
     @property
     def hexPerp(self):
         return self._hexPerp
-
     
+    @property
+    def valueField(self):
+        return self.__value_field
+
     def _set_side(self, side):
                 
         if (side <= 0):
@@ -146,7 +151,7 @@ class HASC (Grid):
             ["XSISCHEMAURI=http://schemas.opengis.net/gml/2.1.2/feature.xsd"])
         outLayer = outSource.CreateLayer("output", None, ogr.wkbUnknown)
     
-        newField = ogr.FieldDefn("value", ogr.OFTReal)
+        newField = ogr.FieldDefn(self.__value_field, ogr.OFTReal)
         outLayer.GetLayerDefn().AddFieldDefn(newField)
     
         for j in range(self._nrows):
@@ -165,7 +170,7 @@ class HASC (Grid):
                 
                 outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
                 outFeature.SetGeometryDirectly(polygon)
-                outFeature.SetField("value", str(self._grid[i][j]))
+                outFeature.SetField(self.__value_field, str(self._grid[i][j]))
                 outLayer.CreateFeature(outFeature)
              
     
@@ -194,7 +199,7 @@ class HASC (Grid):
                             cellVertexes[5], 
                             cellVertexes[0]
                            ]]), 
-                        properties = {"value": str(self._grid[i][j])}))
+                        properties = {self.__value_field: str(self._grid[i][j])}))
         
         with open(outputFilePath, 'w') as fp:
             dump(collection, fp)

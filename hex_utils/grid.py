@@ -8,7 +8,7 @@
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
 # Date: 08-04-2016  
 
-import math
+import math, sys
 
 class Grid:
     
@@ -22,6 +22,9 @@ class Grid:
     
     _file = None
     _nextLine = None 
+    
+    _value_min = sys.float_info.max
+    _value_max = sys.float_info.min
     
     @property
     def ncols(self):
@@ -42,6 +45,14 @@ class Grid:
     @property
     def nodata(self):
         return self._nodata
+    
+    @property
+    def min(self):
+        return self._value_min
+    
+    @property
+    def max(self):
+        return self._value_max
     
     
     def _set_ncols(self, ncols):
@@ -93,7 +104,11 @@ class Grid:
         
         self._checkGridBounds(i, j)
         self._grid[i][j] = val
-        
+        if self._value_max < val:
+            self._value_max = val
+        elif self._value_min > val:
+            self._value_min = val
+    
     
     def _loadHeaderLine(self, line, key, valType, optional = False):
        
@@ -140,7 +155,8 @@ class Grid:
         for val in values:
                 
             try:
-                self._grid[self._colIdx][self._rowIdx] = float(val)
+                #self._grid[self._colIdx][self._rowIdx] = float(val)
+                self.set(self._colIdx, self._rowIdx, float(val))
             except IndexError as ex:
                 raise IndexError(
                     "Accessing cell matrix out of boundaries: [" + 

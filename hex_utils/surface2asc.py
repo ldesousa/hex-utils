@@ -13,13 +13,15 @@
 
 import sys
 import math
+import argparse 
 from hex_utils.asc import ASC
-from hex_utils.surfaceParser import setBasicArguments
+from hex_utils.parserSurface import setBasicArguments
 
 
 def getArguments():
 
-	parser = setBasicArguments()
+	parser = argparse.ArgumentParser(description='Convert continuous surface into ESRI ASCII raster.')
+	parser = setBasicArguments(parser)
 	parser.add_argument("-s", "--size", dest="size", default = 1,
 						type=float, help="cell size (width and height)" )
 	return parser.parse_args()

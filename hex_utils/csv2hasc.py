@@ -26,6 +26,7 @@ import argparse
 from scipy import spatial
 from scipy import interpolate
 from hex_utils.hasc import HASC
+from hex_utils.parserExtent import addExtentArguments
 
 
 def getArguments():
@@ -37,14 +38,7 @@ def getArguments():
            with xx, yy coordinates and values in succession, as:
            xx1;yy1;value1;
            xx2;yy2;value2;''')
-    parser.add_argument("-x", "--xmin", dest="xmin", default = 0,
-                      type=float, help="leftmost xx coordinate" )
-    parser.add_argument("-y", "--ymin", dest="ymin", default = 0,
-                      type=float, help="bottom yy coordinate" )
-    parser.add_argument("-X", "--xmax", dest="xmax", default = 10,
-                      type=float, help="rightmost xx coordinate" )
-    parser.add_argument("-Y", "--ymax", dest="ymax", default = 10,
-                      type=float, help="top xx coordinate" )
+    parser = addExtentArguments(parser)
     parser.add_argument("-s", "--side", dest="side", default = 0.62, # area ~ 1
                       type=float, help="hexagon cell side length" )
     parser.add_argument("-i", "--input", dest="input", required = True,

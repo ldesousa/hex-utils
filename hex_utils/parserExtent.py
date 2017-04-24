@@ -7,13 +7,11 @@
 # Encapsulates argument declaration for surface tools.
 #
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
-# Date: 19-08-2016
+# Date: 24-04-2017
 
-import argparse 
 
-def setBasicArguments():
+def addExtentArguments(parser):
     
-    parser = argparse.ArgumentParser(description='Convert continuous surface into HexASCII raster.')
     parser.add_argument("-x", "--xmin", dest="xmin", default = 0,
                       type=float, help="leftmost xx coordinate" )
     parser.add_argument("-y", "--ymin", dest="ymin", default = 0,
@@ -22,10 +20,4 @@ def setBasicArguments():
                       type=float, help="rightmost xx coordinate" )
     parser.add_argument("-Y", "--ymax", dest="ymax", default = 10,
                       type=float, help="top xx coordinate" )
-    parser.add_argument("-m", "--module", dest="module", required = True,
-                      help="Python module containing the surface function" )
-    parser.add_argument("-f", "--function", dest="function", required = True,
-                      help="surface function" )
-    parser.add_argument("-o", "--output", dest="output", default = "surface.hasc",
-                      help="output raster file" )
     return parser

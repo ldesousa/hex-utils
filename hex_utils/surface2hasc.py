@@ -16,13 +16,15 @@
 
 import sys
 import math
+import argparse 
 from hex_utils.hasc import HASC
-from hex_utils.surfaceParser import setBasicArguments
+from hex_utils.parserSurface import setBasicArguments
 
 
 def getArguments():
     
-    parser = setBasicArguments()
+    parser = argparse.ArgumentParser(description='Convert continuous surface into HexASCII raster.')
+    parser = setBasicArguments(parser)
     parser.add_argument("-s", "--side", dest="side", default = 1,
                       type=float, help="hexagon side length" )
     return parser.parse_args()

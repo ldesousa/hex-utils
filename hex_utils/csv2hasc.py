@@ -2,6 +2,7 @@
 # coding=utf8
 #
 # Copyright (c) 2016-2017 - Luís Moreira de Sousa
+# Licenced under EUPL 1.1. Please consult the LICENCE file for details.
 #
 # Creates an hexagonal ASCII raster [0] from CSV file with a set of point samples.
 # Values in the new raster are interpolated using the multiquadratic method.

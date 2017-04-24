@@ -2,6 +2,7 @@
 # coding=utf8
 #
 # Copyright (c) 2016-2017 - Luís Moreira de Sousa
+# Licenced under EUPL 1.1. Please consult the LICENCE file for details.
 #
 # Class for the ESRI ASCII grid format [0]. 
 #

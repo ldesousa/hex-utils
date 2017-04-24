@@ -2,6 +2,7 @@
 # coding=utf8
 #
 # Copyright (c) 2016-2017 - Luís Moreira de Sousa
+# Licenced under EUPL 1.1. Please consult the LICENCE file for details.
 #
 # Transforms ASCII encoded cartographic hexagonal rasters [0] into GML.
 # A geometric hexagon is generated for each mesh cell and encoded as a feature

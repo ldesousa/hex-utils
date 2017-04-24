@@ -125,7 +125,8 @@ class HASC (Grid):
      
     def getCellCentroidCoords(self, i, j):
         
-        return self.rotatePoint(self._getUnrotatedCellCentroidCoords(i, j))
+        baseCoords = self._getUnrotatedCellCentroidCoords(i, j)
+        return self.rotatePoint(baseCoords[0], baseCoords[1])
     
     
     def _getUnrotatedCellCentroidCoords(self, i, j):    

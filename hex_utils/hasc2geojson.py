@@ -3,8 +3,8 @@
 #
 # Copyright (c) 2016 - Luís Moreira de Sousa
 #
-# Transforms ASCII encoded cartographic hexagonal grids [0] into GeoJSON.
-# A geometric hexagon is generated for each grid cell and encoded as a feature
+# Transforms ASCII encoded cartographic hexagonal rasters [0] into GeoJSON.
+# A geometric hexagon is generated for each mesh cell and encoded as a feature
 # in the output JSON file. The cell value is saved in the 'value' attribute of 
 # the new feature. 
 #
@@ -43,19 +43,19 @@ def main():
         
     processArguments(sys.argv)
     
-    hexGrid = HASC()
+    hexRaster = HASC()
     
     try:
-        hexGrid.loadFromFile(inputFile)
+        hexRaster.loadFromFile(inputFile)
     except (ValueError, IOError) as ex:
-        print("Error loading the grid %s: %s" % (inputFile, ex))
+        print("Error loading the raster %s: %s" % (inputFile, ex))
         sys.exit()
     print ("Loaded input HASC, converting...")
     
     try:
-        hexGrid.saveAsGeoJSON(outputFile)
+        hexRaster.saveAsGeoJSON(outputFile)
     except (ImportError, IOError) as ex:
-        print("Error saving the grid %s: %s" % (inputFile, ex))
+        print("Error saving the raster %s: %s" % (inputFile, ex))
         sys.exit()
     print ("Conversion successfully completed.")
 

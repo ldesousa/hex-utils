@@ -3,8 +3,8 @@
 #
 # Copyright (c) 2016 - Luís Moreira de Sousa
 #
-# Transforms ASCII encoded cartographic hexagonal grids [0] into GML.
-# A geometric hexagon is generated for each grid cell and encoded as a feature
+# Transforms ASCII encoded cartographic hexagonal rasters [0] into GML.
+# A geometric hexagon is generated for each mesh cell and encoded as a feature
 # in the output GML file. The cell value is saved in the 'value' attribute of 
 # the new feature. 
 #
@@ -43,17 +43,17 @@ def main():
         
     processArguments(sys.argv)
     
-    hexGrid = HASC()
+    hexRaster = HASC()
     
     try:
-        hexGrid.loadFromFile(inputFile)
+        hexRaster.loadFromFile(inputFile)
     except (ValueError, IOError) as ex:
         print("Error loading the raster %s: %s" % (inputFile, ex))
         sys.exit()
     print ("Loaded input HASC, converting...")
     
     try:
-        hexGrid.saveAsGML(outputFile)
+        hexRaster.saveAsGML(outputFile)
     except (ImportError, IOError) as ex:
         print("Error saving the raster %s: %s" % (inputFile, ex))
         sys.exit()

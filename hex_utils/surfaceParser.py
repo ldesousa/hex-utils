@@ -12,7 +12,7 @@ import argparse
 
 def setBasicArguments():
     
-    parser = argparse.ArgumentParser(description='Convert continuous surface into HASC grid.')
+    parser = argparse.ArgumentParser(description='Convert continuous surface into HexASCII raster.')
     parser.add_argument("-x", "--xmin", dest="xmin", default = 0,
                       type=float, help="leftmost xx coordinate" )
     parser.add_argument("-y", "--ymin", dest="ymin", default = 0,
@@ -26,5 +26,5 @@ def setBasicArguments():
     parser.add_argument("-f", "--function", dest="function", required = True,
                       help="surface function" )
     parser.add_argument("-o", "--output", dest="output", default = "surface.hasc",
-                      help="output grid file" )
+                      help="output raster file" )
     return parser

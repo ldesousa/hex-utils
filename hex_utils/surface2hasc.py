@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2016 - Luís Moreira de Sousa
 #
-# Creates an hexagonal ASCII grid [0] by sampling a a given surface.
+# Creates an hexagonal ASCII raster [0] by sampling a a given surface.
 # Usage examples:
 # surface2hasc -x 0 -y 0 -X 2001 -Y 2001 -s 12.4080647880 -m surfaces.eat2Gaussian -f fun -o output.hasc
 # surface2hasc -x 0 -y 0 -X 2001 -Y 2001 -s 13.2191028998 -m surfaces.eat2Gaussian -f fun -o output.hasc
@@ -43,25 +43,25 @@ def main():
     hexRows = math.ceil(args.xmax / (2 * hexPerp)) 
     hexCols = math.ceil(args.ymax / (3 * args.side / 2))
 
-    grid = HASC()
-    grid.init(hexCols, hexRows, hexXLL, hexYLL, args.side, "9999")
+    raster = HASC()
+    raster.init(hexCols, hexRows, hexXLL, hexYLL, args.side, "9999")
     
     # Dynamically import surface function
     module = __import__(args.module, globals(), locals(), [args.function])
     function = getattr(module, args.function)
     
-    for i in range(grid.ncols):
-        for j in range(grid.nrows):
-            x, y = grid.getCellCentroidCoords(i, j)
-            grid.set(i, j, function(x, y))
+    for i in range(raster.ncols):
+        for j in range(raster.nrows):
+            x, y = raster.getCellCentroidCoords(i, j)
+            raster.set(i, j, function(x, y))
         
     try:
-        grid.save(args.output)
-        grid.saveAsGML(args.output + ".gml")
+        raster.save(args.output)
+        raster.saveAsGML(args.output + ".gml")
     except (ImportError, IOError) as ex:
-        print("Error saving the grid %s: %s" % (args.output, ex))
+        print("Error saving the raster %s: %s" % (args.output, ex))
         sys.exit()
     
-    print("Created new grid successfully")
+    print("Created new raster successfully")
     
 main()

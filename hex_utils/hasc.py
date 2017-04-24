@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2016 - Luís Moreira de Sousa
 #
-# Class for HASC grid - an ASCII encoded cartographic hexagonal grid [0]. 
+# Class for HexASCII raster - an ASCII encoded cartographic hexagonal grid [0]. 
 #
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
 # Date: 31-03-2016 
@@ -70,7 +70,7 @@ class HASC (Raster):
         self._side = side
         self._hexPerp = math.sqrt(3) * self._side / 2.0
         
-        # Calculate grid span
+        # Calculate mesh span
         self._set_nrows(math.ceil((ytr - yll) / (2 * self._hexPerp))) 
         self._set_ncols(math.ceil((xtr - xll) / (3 * self._side / 2) + (self._side / 2)))
         
@@ -83,7 +83,7 @@ class HASC (Raster):
         if angle != None:
             self._angle = angle
             self._angle_rd = math.radians(angle)
-        self._grid = [[None for x in range(self._nrows)] for y in range(self._ncols)]
+        self._mesh = [[None for x in range(self._nrows)] for y in range(self._ncols)]
     
     
     def cellArea(self):
@@ -172,7 +172,7 @@ class HASC (Raster):
                 
                 outFeature = ogr.Feature(feature_def=outLayer.GetLayerDefn())
                 outFeature.SetGeometryDirectly(polygon)
-                outFeature.SetField(self.__value_field, str(self._grid[i][j]))
+                outFeature.SetField(self.__value_field, str(self._mesh[i][j]))
                 outLayer.CreateFeature(outFeature)
              
     
@@ -201,7 +201,7 @@ class HASC (Raster):
                             cellVertexes[5], 
                             cellVertexes[0]
                            ]]), 
-                        properties = {self.__value_field: str(self._grid[i][j])}))
+                        properties = {self.__value_field: str(self._mesh[i][j])}))
         
         with open(outputFilePath, 'w') as fp:
             dump(collection, fp)

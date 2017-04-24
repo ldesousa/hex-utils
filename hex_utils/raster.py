@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2016 - Luís Moreira de Sousa
 #
-# Abstract class for raster grids.
+# Abstract class for rasters.
 #
 # Author: Luís Moreira de Sousa (luis.de.sousa[@]protonmail.ch)
 # Date: 08-04-2016  
@@ -18,7 +18,7 @@ class Raster:
     _yll    = 0  
     _nodata = ""
 
-    _grid = None
+    _mesh = None
     
     _file = None
     _nextLine = None 
@@ -76,7 +76,7 @@ class Raster:
         self._xll     = xll  
         self._yll     = yll  
         self._nodata  = nodata
-        self._grid    = [[None for x in range(self._nrows)] for y in range(self._ncols)]
+        self._mesh    = [[None for x in range(self._nrows)] for y in range(self._ncols)]
     
     
     def loadFromFile(self, filePath):
@@ -97,13 +97,13 @@ class Raster:
     def get(self, i, j):
         
         self._checkRasterBounds(i, j)
-        return self._grid[i][j]    
+        return self._mesh[i][j]    
         
         
     def set(self, i, j, val):
         
         self._checkRasterBounds(i, j)
-        self._grid[i][j] = val
+        self._mesh[i][j] = val
         if self._value_max < val:
             self._value_max = val
         elif self._value_min > val:
@@ -155,7 +155,7 @@ class Raster:
         for val in values:
                 
             try:
-                #self._grid[self._colIdx][self._rowIdx] = float(val)
+                #self._mesh[self._colIdx][self._rowIdx] = float(val)
                 self.set(self._colIdx, self._rowIdx, float(val))
             except IndexError as ex:
                 raise IndexError(
@@ -175,7 +175,7 @@ class Raster:
         self._colIdx = 0
         self._rowIdx = 0
         
-        self._grid = [[None for x in range(self._nrows)] for y in range(self._ncols)]
+        self._mesh = [[None for x in range(self._nrows)] for y in range(self._ncols)]
         
         if self._nextLine == None:
             self._nextLine = self._file.readline()
@@ -198,9 +198,9 @@ class Raster:
             
             line = ""
             for i in range(self._ncols):
-                if (self._grid[i][j] is None or math.isnan(self._grid[i][j])):
+                if (self._mesh[i][j] is None or math.isnan(self._mesh[i][j])):
                     line += str(self._nodata) + " "
                 else:
-                    line += str(self._grid[i][j]) + " "
+                    line += str(self._mesh[i][j]) + " "
             f.write(line + "\n")        
             

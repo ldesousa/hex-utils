@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2016 - Luís Moreira de Sousa
 #
-# Creates an hexagonal ASCII grid [0] from CSV file with a set of point samples.
+# Creates an hexagonal ASCII raster [0] from CSV file with a set of point samples.
 # Values in the new raster are interpolated using the multiquadratic method.
 # It assumes the CSV file to be organised into three columns, with xx, yy 
 # coordinates and values in succession, as:
@@ -80,23 +80,23 @@ def main():
     max_value = values.max() + (values.max() - values.min()) * tolerance
     min_value = values.min() - (values.max() - values.min()) * tolerance
       
-    hexGrid = HASC()
-    hexGrid.initWithExtent(args.side, args.xmin, args.ymin, args.xmax, args.ymax)
+    hexRaster = HASC()
+    hexRaster.initWithExtent(args.side, args.xmin, args.ymin, args.xmax, args.ymax)
     
     print("Geometries:" + 
-          "\n Hexagon cell area     : " + str(hexGrid.cellArea())  +
-          "\n Hexagon side length   : " + str(hexGrid.side)  +
-          "\n Hexagon perpendicular : " + str(hexGrid.hexPerp)  +
-          "\n Num rows in HASC mesh : " + str(hexGrid.nrows)  +
-          "\n Num cols in hasc mesh : " + str(hexGrid.ncols))
+          "\n Hexagon cell area     : " + str(hexRaster.cellArea())  +
+          "\n Hexagon side length   : " + str(hexRaster.side)  +
+          "\n Hexagon perpendicular : " + str(hexRaster.hexPerp)  +
+          "\n Num rows in HASC mesh : " + str(hexRaster.nrows)  +
+          "\n Num cols in hasc mesh : " + str(hexRaster.ncols))
     
-    for j in range(hexGrid.nrows):
-        for i in range(hexGrid.ncols):
+    for j in range(hexRaster.nrows):
+        for i in range(hexRaster.ncols):
             
             xx = []
             yy = []
             vals = []
-            x, y = hexGrid.getCellCentroidCoords(i, j)
+            x, y = hexRaster.getCellCentroidCoords(i, j)
             d, ind = tree.query(numpy.array([x, y]),neighbours)  
             
             for n in range(neighbours):
@@ -107,15 +107,15 @@ def main():
             f = interpolate.Rbf(xx, yy, vals, epsilon=epsilon)
             new_value = f(x,y)
             if new_value < min_value:
-                hexGrid.set(i, j, min_value)
+                hexRaster.set(i, j, min_value)
             elif new_value > max_value:
-                hexGrid.set(i, j, max_value)
+                hexRaster.set(i, j, max_value)
             else:
-                hexGrid.set(i, j, new_value)
+                hexRaster.set(i, j, new_value)
             
-    hexGrid.save(args.output)        
-    hexGrid.saveAsGeoJSON(args.output + ".json") 
-    hexGrid.saveAsGML(args.output + ".gml")
+    hexRaster.save(args.output)        
+    hexRaster.saveAsGeoJSON(args.output + ".json") 
+    hexRaster.saveAsGML(args.output + ".gml")
             
     print("\nSuccessfully created new HexASCII raster.")        
             

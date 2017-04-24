@@ -68,7 +68,7 @@ class ASC (Raster):
         i, j = self._getNearestNeighbourRasterCoords(x, y)
  
         try:
-            return self._grid[i][j]
+            return self._mesh[i][j]
         except IndexError:
             raise IndexError("Wrong indexes in nearest neighbour:" + 
                 "i: " + str(i) + " j: " + str(j) + " x: " + str(x) + " y: " + str(y))
@@ -128,10 +128,10 @@ class ASC (Raster):
         ii, jj = self._getNeighbourhoodRasterCoords(i, j)
         
         for n in range(len(ii)):
-            if ii[n] != None and jj[n] != None and self._grid[ii[n]][jj[n]] != None:
+            if ii[n] != None and jj[n] != None and self._mesh[ii[n]][jj[n]] != None:
                 xx.append(self._xll + ii[n] * self._size + self._size / 2)
                 yy.append(self._yll + self._nrows * self._size - jj[n] * self._size - self._size / 2)
-                vals.append(self._grid[ii[n]][jj[n]])
+                vals.append(self._mesh[ii[n]][jj[n]])
                
         f = interpolate.Rbf(xx, yy, vals, epsilon=epsilon)
         return f(x,y)

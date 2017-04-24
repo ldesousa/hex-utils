@@ -52,9 +52,9 @@ def main():
 	try:	
 		grid.save(args.output)
 	except IOError as ex:
-		print("Error saving the grid %s: %s" % (args.output, ex))
+		print("Error saving the raster %s: %s" % (args.output, ex))
 		sys.exit()
 
-	print("Created new grid successfully")
+	print("Created new ASCII grid successfully")
 	
 main()

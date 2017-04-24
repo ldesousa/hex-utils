@@ -29,9 +29,9 @@ setup(
     # metadata for upload to PyPI
     author = "Luís Moreira de Sousa",
     author_email = "luis.de.sousa@protonmail.ch",
-    description = "Utilities for ASCII encoded hexagonal grids",
+    description = "Utilities for ASCII encoded hexagonal rasters (HexASCII)",
     license = "EUPL v1.1",
-    keywords = "hexagon hexagonal grid HASC",
+    keywords = "hexagon hexagonal raster HexASCII",
     url = "https://github.com/ldesousa/hex-utils",   # project home page, if any
     classifiers = [
         "Programming Language :: Python",

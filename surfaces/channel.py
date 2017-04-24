@@ -12,7 +12,7 @@ from surfaces.surface import Surface
 
 class Channel(Surface):
     
-    angle = 15
+    angle = 0
     slope = 0.014893617021
     centre_x = 5
     centre_y = 5
@@ -20,6 +20,7 @@ class Channel(Surface):
     radius = 0.15
     depth = 0.3
     length = 7
+    pre_chamber = 0.5
     weir_height = 0.15
     weir_lenght = 0.05
     
@@ -54,6 +55,9 @@ class Channel(Surface):
                dist_centre > (self.length / 2) and \
                dist_centre < (self.length / 2 + self.weir_lenght):
                     return plane - self.depth + self.weir_height
+            
+            elif x < self.centre_x and dist_centre > (self.length / 2 + self.pre_chamber):
+                return plane
                  
             else:
                 return plane - self.depth

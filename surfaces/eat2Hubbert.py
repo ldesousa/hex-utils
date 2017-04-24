@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # coding=utf8
 #
-# Copyright (c) 2016 - Luís Moreira de Sousa
+# Copyright (c) 2016-2017 - Luís Moreira de Sousa
 #
 # Creates a synthetic surface with Hubbertian pits.
 #

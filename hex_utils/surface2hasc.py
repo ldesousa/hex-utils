@@ -35,19 +35,8 @@ def main():
     
     args = getArguments()
     
-    # Calculate hexagonal cell geometry
-    hexPerp = math.sqrt(3) * args.side / 2
-    
-    # Position first hexagon
-    hexXLL = args.xmin + args.side / 2
-    hexYLL = args.ymin + hexPerp / 2 # this / 2 is a cosmetic option
-    
-    # Calculate grid span
-    hexRows = math.ceil(args.xmax / (2 * hexPerp)) 
-    hexCols = math.ceil(args.ymax / (3 * args.side / 2))
-
     raster = HASC()
-    raster.init(hexCols, hexRows, hexXLL, hexYLL, args.side, "9999")
+    raster.initWithExtent(args.side, args.xmin, args.ymin, args.xmax, args.ymax)
     
     # Dynamically import surface function
     module = __import__(args.module, globals(), locals(), [args.function])

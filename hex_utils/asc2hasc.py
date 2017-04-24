@@ -29,7 +29,6 @@ class Method(Enum):
     NEAREST_NEIGHBOUR = 'nn' 
 
 
-
 def setArguments():
     
     parser = argparse.ArgumentParser(description='Converts an ESRI ASCII grid into an HexASCII (HASC) grid.')
@@ -72,33 +71,22 @@ def main():
     else:
         hexArea = esriArea
     
-    # Calculate hexagonal cell geometry as function of area
+    # Compute hexagonal cell geometry as function of area
     hexSide = math.sqrt(2 * hexArea / (3 * math.sqrt(3)))
-    hexPerp = math.sqrt(3) * hexSide / 2
     
-    # Calculate mesh span
-    hexRows = math.ceil((esriGrid.nrows * esriGrid.size) / (2 * hexPerp)) 
-    hexCols = math.ceil((esriGrid.ncols * esriGrid.size) / (3 * hexSide / 2))
-    
-        
-    # Position first hexagon
-    # yy position tries to minimise the area of square cells outside the HASC mesh
-    hexXLL = esriGrid.xll + hexSide / 2
-    hexYLL = (esriGrid.yll + esriGrid.nrows * esriGrid.size) - \
-        hexRows * 2 * hexPerp + hexPerp
+    hexRaster = HASC()
+    hexRaster.initWithExtent(hexSide, esriGrid.xll, esriGrid.yll, 
+                             esriGrid.ncols * esriGrid.size, esriGrid.nrows * esriGrid.size)
     
     print("Geometries:" + 
           "\n Input square cell area    : " + str(esriArea) + 
           "\n Hexagon cell area         : " + str(hexArea)  +
           "\n Hexagon side length       : " + str(hexSide)  +
-          "\n Hexagon perpendicular     : " + str(hexPerp)  +
-          "\n Num rows in HexASCII mesh : " + str(hexRows)  +
-          "\n Num cols in HexASCII mesh : " + str(hexCols))
+          "\n Hexagon perpendicular     : " + str(hexRaster.hexPerp)  +
+          "\n Num rows in HexASCII mesh : " + str(hexRaster.nrows)  +
+          "\n Num cols in HexASCII mesh : " + str(hexRaster.ncols))
     
     print("\nConverting ...")
-    
-    hexRaster = HASC()
-    hexRaster.init(hexCols, hexRows, hexXLL, hexYLL, hexSide, esriGrid.nodata)
     
     if(args.method == Method.MULTIQUADRATIC):
         interpol = esriGrid.getNearestNeighbour

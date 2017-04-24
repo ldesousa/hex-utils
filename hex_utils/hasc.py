@@ -73,12 +73,12 @@ class HASC (Raster):
         
         # Calculate mesh span
         self._set_nrows(math.ceil((ytr - yll) / (2 * self._hexPerp))) 
-        self._set_ncols(math.ceil((xtr - xll) / (3 * self._side / 2) + (self._side / 2)))
+        self._set_ncols(math.ceil((xtr - xll) / (3 * self._side / 2)))
         
         # Position first hexagon
         # yy position tries to minimise the area of square cells outside the given extent
         self._xll = xll + self._side / 2
-        self._xll = ytr - self._nrows * 2 * self._hexPerp + self._hexPerp
+        self._yll = ytr - self._nrows * 2 * self._hexPerp + self._hexPerp
         
         self._nodata = nodata
         if angle != None:

@@ -80,8 +80,9 @@ class HASC (Grid):
         self._xll = ytr - self._nrows * 2 * self._hexPerp + self._hexPerp
         
         self._nodata = nodata
-        self._angle = angle
-        self._angle_rd = math.radians(angle)
+        if angle != None:
+            self._angle = angle
+            self._angle_rd = math.radians(angle)
         self._grid = [[None for x in range(self._nrows)] for y in range(self._ncols)]
     
     

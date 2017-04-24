@@ -12,9 +12,9 @@
 
 import sys, math
 from scipy import interpolate
-from hex_utils.grid import Grid
+from hex_utils.raster import Raster
 
-class ASC (Grid):
+class ASC (Raster):
 
     _key_ncols  = "ncols"
     _key_nrows  = "nrows"
@@ -39,11 +39,11 @@ class ASC (Grid):
     
     def init(self, ncols, nrows, xll, yll, size, nodata = ""):
         
-        Grid.init(self, ncols, nrows, xll, yll, nodata)
+        Raster.init(self, ncols, nrows, xll, yll, nodata)
         self._set_size(size)
         
         
-    def _getNearestNeighbourGridCoords(self, x, y):
+    def _getNearestNeighbourRasterCoords(self, x, y):
         
         if x < self._xll:
             x = self._xll
@@ -65,7 +65,7 @@ class ASC (Grid):
         
     def getNearestNeighbour(self, x, y):
         
-        i, j = self._getNearestNeighbourGridCoords(x, y)
+        i, j = self._getNearestNeighbourRasterCoords(x, y)
  
         try:
             return self._grid[i][j]
@@ -74,7 +74,7 @@ class ASC (Grid):
                 "i: " + str(i) + " j: " + str(j) + " x: " + str(x) + " y: " + str(y))
             
             
-    def _getNeighbourhoodGridCoords(self, i, j):
+    def _getNeighbourhoodRasterCoords(self, i, j):
         
         ii = []
         jj = []
@@ -124,8 +124,8 @@ class ASC (Grid):
         xx = []
         yy = []
         vals = []
-        i, j = self._getNearestNeighbourGridCoords(x, y)
-        ii, jj = self._getNeighbourhoodGridCoords(i, j)
+        i, j = self._getNearestNeighbourRasterCoords(x, y)
+        ii, jj = self._getNeighbourhoodRasterCoords(i, j)
         
         for n in range(len(ii)):
             if ii[n] != None and jj[n] != None and self._grid[ii[n]][jj[n]] != None:

@@ -10,7 +10,7 @@
 
 import math, sys
 
-class Grid:
+class Raster:
     
     _ncols  = 0
     _nrows  = 0
@@ -87,22 +87,22 @@ class Grid:
         self._file.close()
         
         
-    def _checkGridBounds(self, i, j):
+    def _checkRasterBounds(self, i, j):
         
         if i < 0 or i >= self._ncols or j < 0 or  j >= self._nrows:
-            raise IndexError("Grid index [" + str(i) + "][" + str(j) + "] out of bounds. " + 
+            raise IndexError("Raster index [" + str(i) + "][" + str(j) + "] out of bounds. " + 
                              "nCols: " + str(self._ncols) + " nRows: " + str(self._nrows))
    
         
     def get(self, i, j):
         
-        self._checkGridBounds(i, j)
+        self._checkRasterBounds(i, j)
         return self._grid[i][j]    
         
         
     def set(self, i, j, val):
         
-        self._checkGridBounds(i, j)
+        self._checkRasterBounds(i, j)
         self._grid[i][j] = val
         if self._value_max < val:
             self._value_max = val

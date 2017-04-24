@@ -11,9 +11,9 @@
 # [0] https://github.com/ldesousa/HexAsciiBNF
 
 import math
-from hex_utils.grid import Grid
+from hex_utils.raster import Raster
 
-class HASC (Grid):
+class HASC (Raster):
     
     _key_ncols  = "ncols"
     _key_nrows  = "nrows"
@@ -56,7 +56,7 @@ class HASC (Grid):
    
     def init(self, ncols, nrows, xll, yll, side, nodata = "", angle = None):
         
-        Grid.init(self, ncols, nrows, xll, yll, nodata)  
+        Raster.init(self, ncols, nrows, xll, yll, nodata)  
         self._set_side(side)
         self._angle    = angle 
         self._hexPerp  = math.sqrt(3) * self._side / 2.0

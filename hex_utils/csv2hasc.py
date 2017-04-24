@@ -117,6 +117,7 @@ def main():
     hexGrid.saveAsGeoJSON(args.output + ".json") 
     hexGrid.saveAsGML(args.output + ".gml")
             
+    print("\nSuccessfully created new HexASCII raster.")        
             
 main()            
             

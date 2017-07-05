@@ -89,9 +89,9 @@ def main():
     print("\nConverting ...")
     
     if(args.method == Method.MULTIQUADRATIC):
-        interpol = esriGrid.getNearestNeighbour
+        interpol = esriGrid.interpolMultiquadratic
     else:
-        interpol = esriGrid.interpolMultiquadratic    
+        interpol = esriGrid.getNearestNeighbour
     
     for j in range(hexRaster.nrows):
         for i in range(hexRaster.ncols):

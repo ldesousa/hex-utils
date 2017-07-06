@@ -5,10 +5,18 @@ Utilities for Hexagonal ASCII grids
 Copyright
 -------------------------------------------------------------------------------
 
-Copyright (c) 2016 Luís Moreira de Sousa. All rights reserved. 
+Copyright (c) 2016-2017 Luís Moreira de Sousa. All rights reserved. 
 Any use of this software constitutes full acceptance of all terms of the 
 document licence.
 
+Project updates
+-------------------------------------------------------------------------------
+
+For the latest updates please consult 
+[`hex-utils` project page](https://www.researchgate.net/project/HexUtils-software-tools-for-hexagonal-rasters) 
+at ResearchGate.
+
+New information is also posted on Twitter under the [#HexASCII](https://twitter.com/hashtag/HexASCII) tag.   
 
 Description
 -------------------------------------------------------------------------------
@@ -31,8 +39,6 @@ these tools on QGIS, making the usage of hexagonal grids even simpler.
 
 
 This tool suite can be installed from the [PyPi repository](https://pypi.python.org/pypi/hex-utils).
-
-
 
 
 Installation Requirements
@@ -75,7 +81,7 @@ It is possible to install directly from the `master` branch, but it is more
 advisable to use of the [tagged releases](https://github.com/ldesousa/hex-utils/releases), 
 *e.g.*:
 
-`git checkout tags/v0.2.2`
+`git checkout tags/v0.3`
 
 Then install the scripts system wide:
 

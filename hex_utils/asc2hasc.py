@@ -97,8 +97,11 @@ def main():
         for i in range(hexRaster.ncols):
             x, y = hexRaster.getCellCentroidCoords(i, j)
             hexRaster.set(i, j, interpol(x, y))
-    
-    hexRaster.save(args.outputFile)
+
+    try:
+        hexRaster.save(args.outputFile)
+    except (ValueError, IOError) as ex:
+        print ("Error saving output file %s: %s" % (args.outputFile, ex))
             
     print ("Finished successfully.")
     

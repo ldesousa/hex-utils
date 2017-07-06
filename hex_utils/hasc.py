@@ -71,9 +71,9 @@ class HASC (Raster):
         self._side = side
         self._hexPerp = math.sqrt(3) * self._side / 2.0
         
-        # Calculate mesh span
-        self._set_nrows(math.ceil((ytr - yll) / (2 * self._hexPerp))) 
-        self._set_ncols(math.ceil((xtr - xll) / (3 * self._side / 2)))
+        # Calculate mesh span - in Python 2 math.ceil returns a float
+        self._set_nrows(int(math.ceil((ytr - yll) / (2 * self._hexPerp)))) 
+        self._set_ncols(int(math.ceil((xtr - xll) / (3 * self._side / 2))))
         
         # Position first hexagon
         # yy position tries to minimise the area of square cells outside the given extent

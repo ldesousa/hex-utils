@@ -16,6 +16,7 @@
 
 import sys
 import math
+import imp
 import argparse 
 from hex_utils.hasc import HASC
 from hex_utils.parserSurface import setBasicArguments
@@ -38,9 +39,17 @@ def main():
     raster = HASC()
     raster.initWithExtent(args.side, args.xmin, args.ymin, args.xmax, args.ymax)
     
+    #modulePath = args.module.rsplit('/', 1)[0]
+    moduleName = args.module.rsplit('/', 1)[1].rsplit('.py', 1)[0]
+    
     # Dynamically import surface function
-    module = __import__(args.module, globals(), locals(), [args.function])
-    function = getattr(module, args.function)
+    try:
+        # This only works with Python 2 - needs another formulation for Python 3        
+        module = imp.load_source(moduleName, args.module)
+        function = getattr(module, args.function)
+    except(Exception) as ex:
+        print("Failed to import module or function: %s" % (ex))
+        sys.exit()
     
     for i in range(raster.ncols):
         for j in range(raster.nrows):

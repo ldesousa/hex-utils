@@ -83,8 +83,8 @@ def main():
           "\n Hexagon cell area         : " + str(hexArea)  +
           "\n Hexagon side length       : " + str(hexSide)  +
           "\n Hexagon perpendicular     : " + str(hexRaster.hexPerp)  +
-          "\n Num rows in HexASCII mesh : " + str(hexRaster.nrows)  +
-          "\n Num cols in HexASCII mesh : " + str(hexRaster.ncols))
+          "\n Number of rows in mesh    : " + str(hexRaster.nrows)  +
+          "\n Number of columns in mesh : " + str(hexRaster.ncols))
     
     print("\nConverting ...")
     

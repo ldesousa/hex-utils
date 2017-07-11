@@ -38,9 +38,14 @@ def main():
     raster = HASC()
     raster.initWithExtent(args.side, args.xmin, args.ymin, args.xmax, args.ymax)
     
-    #modulePath = args.module.rsplit('/', 1)[0]
-    moduleName = args.module.rsplit('/', 1)[1].rsplit('.py', 1)[0]
-    
+    print("Geometries:" + 
+          "\n Hexagon cell area         : " + str(raster.cellArea())  +
+          "\n Hexagon side length       : " + str(raster.side)  +
+          "\n Hexagon perpendicular     : " + str(raster.hexPerp)  +
+          "\n Number of rows in mesh    : " + str(raster.nrows)  +
+          "\n Number of columns in mesh : " + str(raster.ncols))
+
+    moduleName = args.module.rsplit('/', 1)[1].rsplit('.py', 1)[0] 
     # Dynamically import surface function
     try:
         # Pyhton 2 runtime
@@ -52,7 +57,6 @@ def main():
             spec = importlib.util.spec_from_file_location(moduleName, args.module)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
-            
         function = getattr(module, args.function)
     except(Exception) as ex:
         print("Failed to import module or function: %s" % (ex))

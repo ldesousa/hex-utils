@@ -79,11 +79,11 @@ def main():
     hexRaster.initWithExtent(args.side, args.xmin, args.ymin, args.xmax, args.ymax)
     
     print("Geometries:" + 
-          "\n Hexagon cell area     : " + str(hexRaster.cellArea())  +
-          "\n Hexagon side length   : " + str(hexRaster.side)  +
-          "\n Hexagon perpendicular : " + str(hexRaster.hexPerp)  +
-          "\n Num rows in HASC mesh : " + str(hexRaster.nrows)  +
-          "\n Num cols in hasc mesh : " + str(hexRaster.ncols))
+          "\n Hexagon cell area         : " + str(hexRaster.cellArea())  +
+          "\n Hexagon side length       : " + str(hexRaster.side)  +
+          "\n Hexagon perpendicular     : " + str(hexRaster.hexPerp)  +
+          "\n Number of rows in mesh    : " + str(hexRaster.nrows)  +
+          "\n Number of columns in mesh : " + str(hexRaster.ncols))
     
     for j in range(hexRaster.nrows):
         for i in range(hexRaster.ncols):

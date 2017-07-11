@@ -103,7 +103,7 @@ class HASC (Raster):
         # Optional headers
         self._nextLine = self._file.readline()
         nodata = self._loadHeaderLine(self._nextLine, self._key_nodata, type("a"), True)
-        if nodata != "" :
+        if nodata != "" and nodata != None:
             self._nextLine = self._file.readline()
         angle = self._loadHeaderLine(self._nextLine, self._key_angle, type(1.0),  True)
         if angle != None :

@@ -156,7 +156,6 @@ class Raster:
         for val in values:
                 
             try:
-                #self._mesh[self._colIdx][self._rowIdx] = float(val)
                 self.set(self._colIdx, self._rowIdx, float(val))
             except IndexError as ex:
                 raise IndexError(

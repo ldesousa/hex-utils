@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "hex-utils",
-    version = "0.3",
+    version = "0.4",
     packages = find_packages(),#['utils'],
     install_requires=[
         'cycler',

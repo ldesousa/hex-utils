@@ -16,7 +16,6 @@
 
 import sys
 import math
-import imp
 import argparse 
 from hex_utils.hasc import HASC
 from hex_utils.parserSurface import setBasicArguments
@@ -44,8 +43,16 @@ def main():
     
     # Dynamically import surface function
     try:
-        # This only works with Python 2 - needs another formulation for Python 3        
-        module = imp.load_source(moduleName, args.module)
+        # Pyhton 2 runtime
+        if sys.version_info[0] < 3:   
+            import imp     
+            module = imp.load_source(moduleName, args.module)
+        else: # Python 3 runtime
+            import importlib.util
+            spec = importlib.util.spec_from_file_location(moduleName, args.module)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            
         function = getattr(module, args.function)
     except(Exception) as ex:
         print("Failed to import module or function: %s" % (ex))

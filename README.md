@@ -91,6 +91,13 @@ Finally, install the remaining dependencies:
 
 `sudo pip3 install -r requirements.txt`
 
+
+QGis plug-in
+-------------------------------------------------------------------------------
+
+The tools in this package can also be used through a [QGis plug-in](https://github.com/ldesousa/hex-utils-qgi)
+offering a graphical user interface to most of the functionalities. 
+
 Licence
 -------------------------------------------------------------------------------
 

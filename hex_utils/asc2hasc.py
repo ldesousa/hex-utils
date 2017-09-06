@@ -76,7 +76,8 @@ def main():
     
     hexRaster = HASC()
     hexRaster.initWithExtent(hexSide, esriGrid.xll, esriGrid.yll, 
-                             esriGrid.ncols * esriGrid.size, esriGrid.nrows * esriGrid.size)
+                             esriGrid.xll + esriGrid.ncols * esriGrid.size, 
+                             esriGrid.yll + esriGrid.nrows * esriGrid.size)
     
     print("Geometries:" + 
           "\n Input square cell area    : " + str(esriArea) + 

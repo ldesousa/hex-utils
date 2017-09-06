@@ -235,8 +235,8 @@ class HASC (Raster):
     def rotatePoint(self, pointX, pointY):
         """
         Rotates a point relative to the mesh origin by the angle specified in the angle property.
-        Uses the angle formed between the segment linked the point or interest to the origin and
-        the parallel intersection the origin. This angle is called beta in the code.
+        Uses the angle formed between the segment linking the point of interest to the origin and
+        the parallel intersecting the origin. This angle is called beta in the code.
         """    
         if(self.angle == 0 or self.angle == None):
             return(pointX, pointY)

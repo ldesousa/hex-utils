@@ -98,6 +98,13 @@ QGis plug-in
 The tools in this package can also be used through a [QGis plug-in](https://github.com/ldesousa/hex-utils-qgi)
 offering a graphical user interface to most of the functionalities. 
 
+Citing `hex-utils`
+-------------------------------------------------------------------------------
+
+Please use the reference below to cite the `hex-utils`toolkit:
+
+de Sousa L. M. and Leitão, J. P. [Hex-utils: A Tool Set Supporting HexASCII Hexagonal rasters](http://www.scitepress.org/DigitalLibrary/Link.aspx?doi=10.5220/0006275801770183). Proceedings of the 3rd International Conference on Geographical Information Systems Theory, Applications and Management: GISTAM, 1, 177-183,	2017.
+
 Licence
 -------------------------------------------------------------------------------
 

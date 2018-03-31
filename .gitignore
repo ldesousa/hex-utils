@@ -9,7 +9,5 @@ build
 dist
 hex_utils/__pycache__
 movies
-data
 docs
-tests
 helpers

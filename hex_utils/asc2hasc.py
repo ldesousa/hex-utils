@@ -37,7 +37,7 @@ def setArguments():
     parser.add_argument("-r", "--resolution", action='store_true',
                       help = "preserve original spatial resolution")
     parser.add_argument("-m", "--method", default="mq",
-                      help = "Interpolation method: mq - Multiquadratic, nn - Nearest Neighbour")
+                      help = "Interpolation mehonthod: mq - Multiquadratic, nn - Nearest Neighbour")
     parser.add_argument("-i", "--input", dest="inputFile", required = True,
                       help="input ESRI ASCII raster file" )
     parser.add_argument("-o", "--output", dest="outputFile", default = "out.hasc",
@@ -87,12 +87,12 @@ def main():
           "\n Number of rows in mesh    : " + str(hexRaster.nrows)  +
           "\n Number of columns in mesh : " + str(hexRaster.ncols))
     
-    print("\nConverting ...")
-    
-    if(args.method == Method.MULTIQUADRATIC):
+    if(args.method == Method.MULTIQUADRATIC.value[0]):
         interpol = esriGrid.interpolMultiquadratic
+        print("\nConverting with Multi-quadratic interpolation ...")
     else:
         interpol = esriGrid.getNearestNeighbour
+        print("\nConverting with Nearest Neighbour interpolation ...")
     
     for j in range(hexRaster.nrows):
         for i in range(hexRaster.ncols):

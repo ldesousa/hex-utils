@@ -78,10 +78,10 @@ Change to the new folder:
 `cd hex-utils.git`
 
 It is possible to install directly from the `master` branch, but it is more 
-advisable to use of the [tagged releases](https://github.com/ldesousa/hex-utils/releases), 
+advisable one of to use of the [tagged releases](https://github.com/ldesousa/hex-utils/releases), 
 *e.g.*:
 
-`git checkout tags/v0.3`
+`git checkout tags/v0.4.2`
 
 Then install the scripts system wide:
 
@@ -91,6 +91,8 @@ Finally, install the remaining dependencies:
 
 `sudo pip3 install -r requirements.txt`
 
+Note that you may already have some of these packages installed onyour system. 
+That being the case, the best option is to use a [virtual environment](https://docs.python.org/3/tutorial/venv.html).
 
 QGis plug-in
 -------------------------------------------------------------------------------

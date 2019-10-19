@@ -67,6 +67,10 @@ class HASC (Raster):
     
     def initWithExtent(self, side, xll, yll, xtr, ytr, nodata = "", angle = None):
         
+        # Check if the extent is valid
+        if (xtr < xll) or (ytr < yll) or (side < 0):
+        	raise ValueError("Can not initialise an HexASCII raster with the parameters given.")
+		
         # Calculate hexagonal cell geometry
         self._side = side
         self._hexPerp = math.sqrt(3) * self._side / 2.0

@@ -5,11 +5,12 @@ from setuptools import setup, find_packages
 
 setup(
     name = "hex-utils",
-    version = "0.4",
+    version = "0.4.2",
     packages = find_packages(),#['utils'],
     install_requires=[
         'cycler',
         'numpy',
+        'scipy',
         'pyparsing',
         'python-dateutil',
         'pytz',
@@ -32,13 +33,13 @@ setup(
     description = "Utilities for ASCII encoded hexagonal rasters (HexASCII)",
     license = "EUPL v1.1",
     keywords = "hexagon hexagonal raster HexASCII",
-    url = "https://github.com/ldesousa/hex-utils",   # project home page, if any
+    url = "https://codeberg.org/ldesousa/hex-utils",   # project home page, if any
     classifiers = [
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Development Status :: 4 - Beta",
         "Environment :: Console",
-        "Intended Audience :: Science/Research",
+        "Intended Auadience :: Science/Research",
         "License :: OSI Approved :: European Union Public Licence 1.1 (EUPL 1.1)",
         "Operating System :: OS Independent",
         "Topic :: Scientific/Engineering :: GIS",

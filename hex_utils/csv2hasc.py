@@ -4,7 +4,7 @@
 # Copyright (c) 2016-2017 - Luís Moreira de Sousa
 # Licenced under EUPL 1.1. Please consult the LICENCE file for details.
 #
-# Creates an hexagonal ASCII raster [0] from CSV file with a set of point samples.
+# Creates an hexagonal ASCII raster [0] from a CSV file with a set of point samples.
 # Values in the new raster are interpolated using the multiquadratic method.
 # It assumes the CSV file to be organised into three columns, with xx, yy 
 # coordinates and values in succession, as:
@@ -23,11 +23,11 @@
 import csv
 import numpy
 import argparse 
+import warnings
 from scipy import spatial
 from scipy import interpolate
 from hex_utils.hasc import HASC
 from hex_utils.parserExtent import addExtentArguments
-
 
 def getArguments():
 
@@ -74,7 +74,7 @@ def main():
     # Set maximum and minimum admissable values
     max_value = values.max() + (values.max() - values.min()) * tolerance
     min_value = values.min() - (values.max() - values.min()) * tolerance
-      
+
     hexRaster = HASC()
     hexRaster.initWithExtent(args.side, args.xmin, args.ymin, args.xmax, args.ymax)
     
@@ -84,29 +84,37 @@ def main():
           "\n Hexagon perpendicular     : " + str(hexRaster.hexPerp)  +
           "\n Number of rows in mesh    : " + str(hexRaster.nrows)  +
           "\n Number of columns in mesh : " + str(hexRaster.ncols))
+
+    # Supress warnings from numpy
+    with warnings.catch_warnings():
+        warnings.filterwarnings('ignore', r'scipy.linalg.solve')	
     
-    for j in range(hexRaster.nrows):
-        for i in range(hexRaster.ncols):
+        for j in range(hexRaster.nrows):
+          for i in range(hexRaster.ncols):
             
-            xx = []
-            yy = []
-            vals = []
-            x, y = hexRaster.getCellCentroidCoords(i, j)
-            d, ind = tree.query(numpy.array([x, y]),neighbours)  
+              xx = []
+              yy = []
+              vals = []
+              x, y = hexRaster.getCellCentroidCoords(i, j)
+              d, ind = tree.query(numpy.array([x, y]),neighbours)  
             
-            for n in range(neighbours):
-                xx.append(tree.data[ind[n]][0])
-                yy.append(tree.data[ind[n]][1])
-                vals.append(values[ind[n]])
+              for n in range(neighbours):
+                  xx.append(tree.data[ind[n]][0])
+                  yy.append(tree.data[ind[n]][1])
+                  vals.append(values[ind[n]])
                 
-            f = interpolate.Rbf(xx, yy, vals, epsilon=epsilon)
-            new_value = f(x,y)
-            if new_value < min_value:
-                hexRaster.set(i, j, min_value)
-            elif new_value > max_value:
-                hexRaster.set(i, j, max_value)
-            else:
-                hexRaster.set(i, j, new_value)
+              try:
+              	  f = interpolate.Rbf(xx, yy, vals, epsilon=epsilon)
+              	  new_value = f(x,y)
+              except (Exception) as ex:
+                  new_value = sum(vals) / len(vals)
+              else:
+                  if new_value < min_value:
+                      hexRaster.set(i, j, min_value) 
+                  elif new_value > max_value:
+                      hexRaster.set(i, j, max_value)
+                  else:
+                      hexRaster.set(i, j, new_value)
             
     hexRaster.save(args.output)        
     hexRaster.saveAsGeoJSON(args.output + ".json") 
@@ -118,4 +126,6 @@ main()
             
             
               
-                                
+# 2698500,1239000 
+# 2690000,1242500
+# csv2hasc -x 2698500 -y 1239000 -X 2699000 -Y 1242500 -s 1.24 -i ../data/26985.csv -o 26985.hasc

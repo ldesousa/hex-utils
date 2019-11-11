@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # coding=utf8
 #
-# Copyright (c) 2016-2017 - Luís Moreira de Sousa
+# Copyright (c) 2016-2019 - Luís Moreira de Sousa
 # Licenced under EUPL 1.1. Please consult the LICENCE file for details.
 #
 # Creates an hexagonal ASCII raster [0] from a CSV file with a set of point samples.

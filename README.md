@@ -5,7 +5,7 @@ Utilities for Hexagonal ASCII grids
 Copyright
 -------------------------------------------------------------------------------
 
-Copyright (c) 2016-2017 Luís Moreira de Sousa. All rights reserved. 
+Copyright (c) 2016-2019 Luís Moreira de Sousa. All rights reserved. 
 Any use of this software constitutes full acceptance of all terms of the 
 document licence.
 

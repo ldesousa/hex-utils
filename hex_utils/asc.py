@@ -149,7 +149,7 @@ class ASC (Raster):
         # Optional headers
         self._nextLine = self._file.readline()
         self._nodata = self._loadHeaderLine(self._nextLine, self._key_nodata, type("a"), True)
-        if self._nodata != "" :
+        if self._nodata is not None :
             self._nextLine = self._file.readline()
   
     
